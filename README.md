@@ -1,2 +1,2 @@
 # rotten-potato
-a Korean film and drama rating website
+# a Korean film and drama rating website.
