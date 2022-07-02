@@ -1,29 +1,33 @@
 import React from "react";
-import { useState, useEffect } from "react";
-
+import { useEffect } from "react";
 import Modal from "./Modal";
 import classes from "./WelcomeModal.module.css";
 import cinema from "../../assets/felix-mooneeram-evlkOfkQ5rE-unsplash.jpg";
 
 const WelcomeModal = (props) => {
-  // const [visible, setVisible] = useState(false);
-
-  // useEffect(() => {
-  //   let modal_status = localStorage.getItem("modal_status");
-  //   if (!modal_status) {
-  //     setVisible(true);
-  //     localStorage.setItem("modal_status", 1);
-  //   }
-  // }, []);
-
-  // if (!visible) return null;
+  const [visible, setVisible] = React.useState(false);
+  useEffect(() => {
+    let pop_status = localStorage.getItem("pop_status");
+    if (!pop_status) {
+      setVisible(true);
+      localStorage.setItem("pop_status", 1);
+    }
+  }, []);
+  if (!visible) return null;
 
   return (
-    <Modal>
+    <Modal onClose={() => setVisible(false)}>
       <div className={classes.wrapper}>
-        <h1 className={classes.modalHeader}>welcome to Rotten potato</h1>
-        <img className={classes.imagestyle} src={cinema}></img>
+        <p className={classes.modalHeader}>welcome to Rotten potato!</p>
+        <img
+          className={classes.imagestyle}
+          src={cinema}
+          alt="cinema-picture"
+        ></img>
       </div>
+      <button className={classes.closeModal} onClick={() => setVisible(false)}>
+        Close
+      </button>
     </Modal>
   );
 };
