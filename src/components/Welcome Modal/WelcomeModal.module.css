@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Arima:wght@500&display=swap");
+
 .wrapper {
   display: flex;
   border-radius: 10px;
@@ -8,6 +10,7 @@
   font-style: bold;
   background-color: rgb(0, 0, 0);
   justify-content: center;
+  font-family: "Arima", cursive;
   font-size: 25px;
   text-align: center;
   margin: 0;
@@ -24,6 +27,7 @@
   display: block;
   width: 100%;
   padding: 10px;
+  font-family: "DM Serif Display", serif;
   font-size: 1rem;
   background-color: rgb(80, 78, 78);
   color: aliceblue;

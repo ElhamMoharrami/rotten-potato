@@ -1,9 +1,13 @@
-import logo from "./logo.svg";
+import { Fragment } from "react";
 import "./App.css";
-import WelcomeModal from "./components/Modals/WelcomeModal";
+import WelcomeModal from "../src/components/Welcome Modal/WelcomeModal";
 
 function App() {
-  return <WelcomeModal />;
+  return (
+    <Fragment>
+      <WelcomeModal />;
+    </Fragment>
+  );
 }
 
 export default App;

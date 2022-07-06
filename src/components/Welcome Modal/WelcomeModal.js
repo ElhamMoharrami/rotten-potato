@@ -1,11 +1,12 @@
 import React from "react";
 import { useEffect } from "react";
-import Modal from "./Modal";
+import Modal from "../UI/Modal";
 import classes from "./WelcomeModal.module.css";
 import cinema from "../../assets/felix-mooneeram-evlkOfkQ5rE-unsplash.jpg";
 
 const WelcomeModal = (props) => {
   const [visible, setVisible] = React.useState(false);
+
   useEffect(() => {
     let pop_status = localStorage.getItem("pop_status");
     if (!pop_status) {
