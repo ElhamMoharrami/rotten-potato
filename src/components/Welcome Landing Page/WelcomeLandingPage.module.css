@@ -1,0 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=Arima:wght@500&display=swap");
+
+.backgroundImg {
+  background-image: url(../../assets/whiteCinema.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.welcomeMsg {
+  color: rgb(17, 14, 14);
+  font-family: "Arima", cursive;
+  position: absolute;
+  left: 26%;
+  top: 20%;
+}
