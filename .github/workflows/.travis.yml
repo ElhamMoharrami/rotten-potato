@@ -1,0 +1,23 @@
+language: node_js
+node_js:
+  - 12.14.0
+cache:
+  directories:
+    - node_modules
+script:
+  - npm test
+  - npm run build
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $github_token
+  local_dir: build
+  on:
+    branch: master
+deploy:
+ provider: pages
+ skip_cleanup: true
+ github_token: $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
+ local_dir: build
+ on:
+   branch: master
