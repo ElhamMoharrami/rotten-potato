@@ -38,3 +38,16 @@ jobs:
       
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
+      
+    - name: Deploy
+      run: |
+       git config --global user.name ElhamMoharrami
+       git config --global user.email elhammoharrami2001@gmail.com
+       git remote set-url origin https://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@github.com/rotten-potato
+       npm run deploy
+       
+        env:
+           user_name: 'github-actions[bot]'
+            user_email: 'github-actions[bot]@users.noreply.github.com'
+            github_token: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
+            repository: ${{ github.repository }}
