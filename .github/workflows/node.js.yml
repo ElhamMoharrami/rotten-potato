@@ -5,49 +5,68 @@ name: CI/CD
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
+    runs-on: windows
 
     strategy:
       matrix:
         node-version: [12.x]
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Run the tests and generate coverage report
-      run: npm test -- --coverage
+      - name: Codecov
+        uses: codecov/codecov-action@v3.1.0
 
-    - name: Build
-      run: npm run build
-      
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      
-    - name: Deploy
-      run: |
-       git config --global user.name ElhamMoharrami
-       git config --global user.email elhammoharrami2001@gmail.com
-       git remote set-url origin https://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@github.com/rotten-potato
-       npm run deploy
-       
-        env:
-           user_name: 'github-actions[bot]'
-            user_email: 'github-actions[bot]@users.noreply.github.com'
-            github_token: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
-            repository: ${{ github.repository }}
+      - uses: actions/checkout@master
+      - uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          files: ./coverage1.xml,./coverage2.xml # optional
+          flags: unittests # optional
+          name: codecov-umbrella # optional
+          fail_ci_if_error: true # optional (default = false)
+          verbose: true # optional (default = false)
+
+
+      - name: Run the tests and generate coverage report
+        run: npm test -- --coverage
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload reports to codecov
+      env:
+        CODECOV_TOKEN: a82a5f41-2196-4cf3-a46d-8a7d93ca4669
+      run: | 
+       curl -Os https://uploader.codecov.io/latest/windows/codecov
+       find . -iregex "codecov.*"
+       chmod +x codecov 
+       ./codecov -t a82a5f41-2196-4cf3-a46d-8a7d93ca4669
+
+      - name: Deploy
+        run: |
+          git config --global user.name ElhamMoharrami
+          git config --global user.email elhammoharrami2001@gmail.com
+          git remote set-url origin https://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@github.com/rotten-potato
+          npm run deploy
+
+           env:
+              user_name: 'github-actions[bot]'
+               user_email: 'github-actions[bot]@users.noreply.github.com'
+               github_token: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
+               repository: git@github.com:ElhamMoharrami/rotten-potato.git
