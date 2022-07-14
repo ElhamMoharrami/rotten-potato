@@ -37,7 +37,7 @@ steps:
           files: ./coverage1.xml,./coverage2.xml # optional
           flags: unittests # optional
           name: codecov-umbrella # optional
-          fail_ci_if_error: true # optional (default = false)
+          fail_ci_if_error: false # optional (default = false)
           verbose: true # optional (default = false)
 
 
@@ -56,15 +56,4 @@ steps:
        chmod +x codecov 
        ./codecov -t a82a5f41-2196-4cf3-a46d-8a7d93ca4669
 
-      # - name: Deploy
-      #   run: |
-      #     git config --global user.name ElhamMoharrami
-      #     git config --global user.email elhammoharrami2001@gmail.com
-      #     git remote set-url origin https://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@github.com/rotten-potato
-      #     npm run deploy
-
-      #      env:
-      #         user_name: 'github-actions[bot]'
-      #          user_email: 'github-actions[bot]@users.noreply.github.com'
-      #          github_token: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
-      #          repository: git@github.com:ElhamMoharrami/rotten-potato.git
+      
