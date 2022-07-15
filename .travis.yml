@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+  - "stable"
+cache:
+  directories:
+    - node_modules
+script:
+  - npm test
+  - npm run build || true
+deploy:
+  provider: pages
+  skip_cleanup: true
+  local_dir: build
+  on:
+    branch: feature/configure-travis
