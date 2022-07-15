@@ -8,3 +8,4 @@ it("should show the welcome message", () => {
   const headingElement = screen.getByRole("heading");
   expect(headingElement).toBeInTheDocument();
 });
+
