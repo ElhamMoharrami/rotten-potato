@@ -5,8 +5,8 @@ import classes from "../Welcome Landing Page/WelcomeLandingPage.module.css";
 const WelcomeLandingPage = () => {
   return (
     <Fragment>
-      <div className={classes.backgroundImg}>
-        <h1 className={classes.welcomeMsg} data-testid="my-test-id">
+      <div className={classes.backgroundImg} data-testid="style-check">
+        <h1 className={classes.welcomeMsg}>
           Welcome to Rotten ...waite for it...Potato!
         </h1>
       </div>
