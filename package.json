@@ -36,8 +36,8 @@
     ]
   },
   "jest": {
-    "collectCoverageFrom": [
-      "src/**/{!(WelcomeLandingPage.module),}.css"
+    "testPathIgnorePatterns": [
+      "src/components/Welcome_Landing_Page/WelcomeLandingPage.module.css"
     ]
   }
 }
