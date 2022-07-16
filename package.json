@@ -36,8 +36,8 @@
     ]
   },
   "jest": {
-    "testPathIgnorePatterns": [
-      "src/components/Welcome_Landing_Page/WelcomeLandingPage.module.css"
+    "watchPathIgnorePatterns": [
+      "<rootDir>/\\.css/"
     ]
   }
 }
