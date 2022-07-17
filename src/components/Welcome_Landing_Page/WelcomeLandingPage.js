@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 
-import classes from "../Welcome Landing Page/WelcomeLandingPage.module.css";
+import classes from "./WelcomeLandingPage.module.css";
 
 const WelcomeLandingPage = () => {
   return (
