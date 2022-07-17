@@ -29,24 +29,19 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      
+      - name: Run the tests and generate coverage report
+        run: npm test -- --coverage
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
 
-     - name: Run unit tests with coverage
-      run: |
-        SUMMARY="$(npm test --coverage --coverageReporters=text-summary | tail -3 | head -1)"
-        TOKENS=($SUMMARY)
-        echo "COVERAGE=$(echo ${TOKENS[2]})" >> $GITHUB_ENV
-
-    - name: Create Coverage Badge
-      uses: schneegans/dynamic-badges-action@v1.1.0
-      with:
-        auth: ${{ secrets.GIST_SECRET }}
-        gistID: 53ae95b6fb38cbdd7aa0c580f46bdca4
-        filename: rotten-potato_coverage.json
-        label: coverage
-        message: ${{ env.COVERAGE }}
-        namedLogo: jest
-        color: blue
-        logoColor: lightblue
+      - name: Create the Badge
+  uses: schneegans/dynamic-badges-action@v1.4.0
+  with:
+    auth: ${{ secrets.GIST_SECRET }}
+    gistID: 53ae95b6fb38cbdd7aa0c580f46bdca4
+    filename: rotten-potato__${{ env.BRANCH }}.json
+    label: Test Coverage
+    message: ${{ env.COVERAGE }}
+    color: orange
+    namedLogo: jest
