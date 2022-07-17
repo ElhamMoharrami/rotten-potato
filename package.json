@@ -37,7 +37,9 @@
   },
   "jest": {
     "watchPathIgnorePatterns": [
-      "<rootDir>/\\.css/"
+      "<rootDir>/\\.css/",
+      "<rootDir>/\\.jpg/",
+      "<rootDir>/\\.html/"
     ]
   }
 }
