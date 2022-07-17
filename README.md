@@ -1,3 +1,5 @@
+![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/ElhamMoharrami/53ae95b6fb38cbdd7aa0c580f46bdca4/raw/rotten-potato__heads_main.json)
+
 # Rotten-potato
 
 ## A Korean film and drama rating website.
