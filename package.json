@@ -14,7 +14,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --coverage",
+    "test": "jest  --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -40,6 +40,11 @@
       "<rootDir>/\\.css/",
       "<rootDir>/\\.jpg/",
       "<rootDir>/\\.html/"
+    ],
+    "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "html"
     ]
   }
 }
