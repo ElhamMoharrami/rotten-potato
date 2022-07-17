@@ -1,4 +1,4 @@
-[![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Elhammoharrami/<script src="https://gist.github.com/ElhamMoharrami/53ae95b6fb38cbdd7aa0c580f46bdca4.js"></script>/raw/rotten-potato\_\_heads_main.json)]
+[![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/ElhamMoharrami/53ae95b6fb38cbdd7aa0c580f46bdca4/raw/rotten-potato__heads_main.json)]
 
 # Rotten-potato
 
