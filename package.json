@@ -14,7 +14,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest  --coverage",
+    "test": "react-scripts test --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -38,8 +38,8 @@
   "jest": {
     "watchPathIgnorePatterns": [
       "<rootDir>/\\.css/",
-      "<rootDir>/\\.jpg/",
-      "<rootDir>/\\.html/"
+      "<rootDir>/\\.html/",
+      "<rootDir>/\\.jpg/"
     ]
   }
 }
