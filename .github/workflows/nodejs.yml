@@ -29,11 +29,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests
-        run: |
-          npx jest --coverage --coverageReporters json-summary
+      - name: Run the tests and generate coverage report
+        run: npm test -- --coverage
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
 
-    
