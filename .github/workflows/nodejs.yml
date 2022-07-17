@@ -47,3 +47,14 @@ jobs:
         color: green
         namedLogo: jest
 
+      - name: Update the Badge URL in the pull request body
+      run: |
+        BODY=$(curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/ElhamMoharrami/rotten-potato/pulls/${{ github.event.pull_request.number }} | jq .body | sed -En "s/protocol__pull_##.json/protocol__pull_${19}.json/p")
+        JSON="{\"body\":$(echo $BODY | jq -sR .)}"
+        curl \
+          -X POST \
+          -H "Authorization: token ${{ secrets.GIST_SECRET }}" \
+          -H "Content-Type: application/json" \
+          -d $JSON \
+          https://api.github.com/repos/ElhamMoharrami/rotten-potato/pulls/${19}
+
