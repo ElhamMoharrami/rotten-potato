@@ -40,11 +40,6 @@
       "<rootDir>/\\.css/",
       "<rootDir>/\\.jpg/",
       "<rootDir>/\\.html/"
-    ],
-    "collectCoverage": true,
-    "coverageReporters": [
-      "json",
-      "html"
     ]
   }
 }
