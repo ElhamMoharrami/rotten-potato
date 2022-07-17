@@ -1,7 +1,6 @@
 import { Fragment } from "react";
-import "./App.css";
-import WelcomeModal from "../src/components/Welcome Modal/WelcomeModal";
-import WelcomeLandingPage from "../src/components/Welcome Landing Page/WelcomeLandingPage";
+
+import WelcomeLandingPage from "./components/Welcome_Landing_Page/WelcomeLandingPage";
 
 function App() {
   return (
