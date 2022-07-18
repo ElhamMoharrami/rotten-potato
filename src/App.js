@@ -1,11 +1,11 @@
 import { Fragment } from "react";
 
-import WelcomeLandingPage from "./components/Welcome_Landing_Page/WelcomeLandingPage";
+import Menu from "../src/components/Menu/Menu";
 
 function App() {
   return (
     <Fragment>
-      <WelcomeLandingPage />
+      <Menu />
     </Fragment>
   );
 }
