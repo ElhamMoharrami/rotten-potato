@@ -1,0 +1,34 @@
+.poster-grid {
+  display: grid;
+  padding: 0;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 10rem;
+}
+
+.pagination {
+  color: black;
+  margin-top: 5rem;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5rem;
+  font-size: 1.2rem;
+  gap: 5px;
+}
+
+.pagination .page-num {
+  padding: 8px 15px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-weight: 400;
+}
+
+.pagination .page-num:hover {
+  background-color: aqua;
+  color: brown;
+}
+
+.pagination .active {
+  background-color: rgb(150, 95, 28);
+}
