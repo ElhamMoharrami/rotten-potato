@@ -1,14 +1,24 @@
 import React, { Fragment } from "react";
-
-import classes from "./MovieCard.module.css";
+import { Link } from "react-router-dom";
+import "./MovieCard.scss";
 
 const MovieList = (props) => {
   const { movie } = props;
   return (
-    <div className={classes["card"]}>
-      <img src={movie.Poster} className={classes["card__image"]} alt="Movie" />
-      <h2 className={classes["card__Title"]}>{movie.Title}</h2>
-      <h3 className={classes["card__score"]}>score 3/10 </h3>
+    <div className="card-item">
+      <Link to={`/movie/${movie.imdbID}`}>
+        <div className="card-inner">
+          <div className="card-top">
+            <img src={movie.Poster} alt={movie.Title} />
+          </div>
+        </div>
+        <div className="card-bottom">
+          <div className="card-info">
+            <h4>{movie.Title}</h4>
+            <p>{movie.Year}</p>
+          </div>
+        </div>
+      </Link>
     </div>
   );
 };

@@ -9,7 +9,7 @@ const MovieList = () => {
   const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
-  const itemsPerPage = 3;
+  const itemsPerPage = 5;
 
   const getMovieRequest = async () => {
     const url = "http://www.omdbapi.com/?s=avengers&apikey=bfea6962";

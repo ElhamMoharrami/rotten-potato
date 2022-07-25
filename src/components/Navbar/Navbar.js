@@ -1,5 +1,5 @@
-import React, { Children } from "react";
-import { Link } from "react-router-dom";
+import React, { Children, useImperativeHandle } from "react";
+import { Link, useMatch, useResolvedPath } from "react-router-dom";
 
 import "./Navbar.css";
 
@@ -18,10 +18,10 @@ const Navbar = () => {
 };
 
 const CustomLink = ({ to, children, ...props }) => {
-  const path = window.location.pathname;
-
+  const resolvedPath = useResolvedPath(to);
+  const isActive = useMatch({ path: resolvedPath.pathname, end: true });
   return (
-    <li className={path === to ? "active" : ""}>
+    <li className={isActive ? "active" : ""}>
       <Link to={to} {...props}>
         {children}
       </Link>
