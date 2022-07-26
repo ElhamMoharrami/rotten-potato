@@ -6,16 +6,16 @@ const MovieList = (props) => {
   const { movie } = props;
   return (
     <div className="card-item">
-      <Link to={`/movie/${movie.imdbID}`}>
+      <Link to={`/`}>
         <div className="card-inner">
           <div className="card-top">
-            <img src={movie.Poster} alt={movie.Title} />
+            <img src={movie.poster} alt={movie.title} />
           </div>
         </div>
         <div className="card-bottom">
           <div className="card-info">
-            <h4>{movie.Title}</h4>
-            <p>{movie.Year}</p>
+            <h4>{movie.title}</h4>
+            <p>{movie.year}</p>
           </div>
         </div>
       </Link>

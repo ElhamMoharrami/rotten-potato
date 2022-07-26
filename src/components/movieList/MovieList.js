@@ -5,25 +5,46 @@ import MovieCard from "../MovieCard/MovieCard";
 import "./MovieList.css";
 
 const MovieList = () => {
+  //defining states
   const [movies, setMovies] = useState([]);
-  const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
-  const [itemOffset, setItemOffset] = useState(0);
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
 
-  const getMovieRequest = async () => {
-    const url = "http://www.omdbapi.com/?s=avengers&apikey=bfea6962";
+  //for the first time that the page loads so we have something to show
+  //calculates the total number of pages we need for pagination
+  useEffect(() => {
+    const getMovieRequest = async () => {
+      const url = `http://localhost:8080/api/movies?page=1&size=${itemsPerPage}`;
+      const response = await fetch(url);
+      const data = await response.json();
+      const total = data.page.totalElements;
+      setPageCount(Math.floor(total / itemsPerPage));
+      setMovies(data.content);
+    };
 
+    getMovieRequest();
+  }, [itemsPerPage]);
+
+  //runs when the page changes
+  const fetchMovieRequest = async (currentPage) => {
+    const url = `http://localhost:8080/api/movies?page=${currentPage}&size=${itemsPerPage}`;
     const response = await fetch(url);
     const data = await response.json();
-
-    setMovies(data.Search);
+    return data.content;
   };
 
-  useEffect(() => {
-    getMovieRequest();
-  }, []);
+  // Invoke when user click to request another page.
+  const handlePageClick = async (event) => {
+    let currentPage = event.selected + 1;
 
+    const moviesFormServer = await fetchMovieRequest(currentPage);
+
+    setMovies(moviesFormServer);
+    // scroll to the top
+    window.scrollTo(0, 0);
+  };
+
+  //make a card for each movie
   const ShowMovies = (props) => {
     return (
       <Fragment>
@@ -34,25 +55,10 @@ const MovieList = () => {
     );
   };
 
-  //pagination
-
-  useEffect(() => {
-    // Fetch items from another resources.
-    const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems(movies.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(movies.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage, movies]);
-
-  // Invoke when user click to request another page.
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % movies.length;
-    setItemOffset(newOffset);
-  };
-
   return (
     <>
       <div className="poster-grid">
-        <ShowMovies movies={currentItems} />
+        <ShowMovies movies={movies} />
       </div>
       <ReactPaginate
         breakLabel="..."
