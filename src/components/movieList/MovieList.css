@@ -1,20 +1,24 @@
 .poster-grid {
   display: grid;
-  padding: 0;
-  grid-template-columns: repeat(3, 1fr);
-  column-gap: 10rem;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-gap: 20px;
+  margin: 20px;
+  margin-top: 45px;
+  padding-top: 30px;
 }
 
 .pagination {
   color: black;
-  margin-top: 5rem;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  padding-left: 0;
+  padding-right: 5px;
   list-style: none;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 5rem;
   font-size: 1.2rem;
-  gap: 5px;
+  gap: 20px;
 }
 
 .pagination .page-num {
@@ -25,10 +29,10 @@
 }
 
 .pagination .page-num:hover {
-  background-color: aqua;
-  color: brown;
+  background-color: #555;
+  color: rgb(17, 16, 16);
 }
 
 .pagination .active {
-  background-color: rgb(150, 95, 28);
+  background-color: rgb(58, 57, 56);
 }
