@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar/Navbar";
 import Movies from "./pages/Movies";
-import Shows from "./pages/Shows";
+import Artists from "./pages/Artists";
 import Home from "./pages/Home";
 
 import "./App.css";
@@ -16,7 +16,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Movies" element={<Movies />} />
-        <Route path="/Shows" element={<Shows />} />
+        <Route path="/Artists" element={<Artists />} />
       </Routes>
     </>
   );

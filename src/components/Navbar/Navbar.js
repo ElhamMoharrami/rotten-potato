@@ -11,7 +11,7 @@ const Navbar = () => {
       </Link>
       <ul>
         <CustomLink to="/Movies">Movies</CustomLink>
-        <CustomLink to="/Shows">Shows</CustomLink>
+        <CustomLink to="/Artists">Artists</CustomLink>
       </ul>
     </nav>
   );
