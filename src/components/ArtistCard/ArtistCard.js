@@ -4,7 +4,7 @@ import "./ArtistCard.scss";
 
 const ArtistCard = (props) => {
   const { artist } = props;
-  console.log(artist.profession);
+  
   const professions=artist.profession.split(',')
 
   const ShowProf = () => {

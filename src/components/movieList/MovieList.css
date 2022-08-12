@@ -1,10 +1,10 @@
 .poster-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  grid-gap: 20px;
+  grid-gap: 40px;
   margin: 20px;
-  margin-top: 45px;
-  padding-top: 30px;
+  margin-top: 55px;
+  padding-top: 100px;
 }
 
 .pagination {
@@ -35,4 +35,35 @@
 
 .pagination .active {
   background-color: rgb(58, 57, 56);
+}
+
+
+.css-wmy1p7-ReactDropdownSelect{
+  border: 2px solid rgb(133, 133, 133) !important;
+  background-color: rgb(207, 196, 196);
+   font-size: 28px;
+   max-width: 30%;
+   
+}
+
+.css-wmy1p7-ReactDropdownSelect:hover,
+.css-wmy1p7-ReactDropdownSelect:active{
+  border-color: rgb(46, 48, 44) !important;
+}
+
+.css-1bep9yo-InputComponent{
+  background-color: red;
+}
+
+input{
+  color: red !important;
+}
+
+.css-jznujr-ContentComponent{
+  color: rgb(88, 88, 88);
+}
+
+.css-z2hyoe-ItemComponent.react-dropdown-select-item-selected{
+  background: rgb(97, 97, 97) !important ;
+  color: rgb(255, 255, 255) ;
 }
