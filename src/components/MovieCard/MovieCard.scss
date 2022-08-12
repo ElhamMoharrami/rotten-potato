@@ -1,10 +1,11 @@
 @import "../../assets/colors.scss";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,300;1,400&display=swap');
 
 .card-item {
   background: $secondary-color;
   cursor: pointer;
   transition: all 0.3s;
-
+width: 250px;
   a {
     text-decoration: none;
   }
@@ -29,9 +30,15 @@
 }
 .card-info {
   color: $font-primary;
+  line-height: 2rem;
   h4 {
     font-size: 22px;
     font-weight: 400;
     margin-bottom: 10px;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  p{
+    font-family: 'Roboto', sans-serif;
   }
 }

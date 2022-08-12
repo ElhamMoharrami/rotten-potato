@@ -1,14 +1,21 @@
 import React, { Fragment, useEffect, useState } from "react";
+import Select from "react-dropdown-select";
 import ReactPaginate from "react-paginate";
 
 import MovieCard from "../MovieCard/MovieCard";
 import "./MovieList.css";
 
 const MovieList = () => {
-  //defining states
   const [movies, setMovies] = useState([]);
   const [pageCount, setPageCount] = useState(0);
-  const itemsPerPage = 10;
+  const [itemsPerPage,setItemsPerPage]=useState(10)
+  
+  const options=[{value:5,label:'five items per page'},{value:10,label:'ten items per page'},{value:15,label:'fifteen items per page'},{value:20,label:'twenty items per page'}]
+
+//change items per page on select
+const itemsPerPageHandler=(selectedOption)=>{
+  setItemsPerPage(selectedOption[0].value)
+}
 
   //for the first time that the page loads so we have something to show
   //calculates the total number of pages we need for pagination
@@ -44,6 +51,18 @@ const MovieList = () => {
     window.scrollTo(0, 0);
   };
 
+  //invoke when dropdown opens
+  const dropdownOpenHandler=()=>{
+    window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
+  }
+
+  //invoke when dropdown closes
+  const dropdownCloseHandler=()=>{
+    window.scrollTo(0, 0);
+  }
+
+
+
   //make a card for each movie
   const ShowMovies = (props) => {
     return (
@@ -60,6 +79,7 @@ const MovieList = () => {
       <div className="poster-grid">
         <ShowMovies movies={movies} />
       </div>
+      
       <ReactPaginate
         breakLabel="..."
         nextLabel="next >"
@@ -74,6 +94,16 @@ const MovieList = () => {
         nextLinkClassName="page-num"
         activeLinkClassName="active"
       />
+      <Select 
+      placeholder={'choose number of items per page '} 
+      options={options}
+       onChange={itemsPerPageHandler} 
+       searchable={false}
+       closeOnSelect={true}
+       onDropdownOpen={dropdownOpenHandler}
+       onDropdownClose={dropdownCloseHandler}
+       />
+      
     </>
   );
 };
