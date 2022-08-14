@@ -1,13 +1,13 @@
 # Rotten-potato
 
 ### Table of contents
-- [what is Rotten Potato](## rotten)
-- [technology](# Used technologies)
-- [run the project locally](# run the project locally)
-- [features](# features)
+##### Table of Contents  
+[Headers](#headers)  
+[Emphasis](#emphasis)  
+...snip...    
+<a name="headers"/>
+## Headers
 
-...snip... 
-<a name="rotten"/>
 ## A  film and drama rating website.
 
 There are a bunch of well known websites for rating movies and series. I created this project
