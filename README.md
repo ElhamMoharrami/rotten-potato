@@ -1,11 +1,11 @@
 # Rotten-potato
 
 ##### Table of Contents  
-[Headers](#headers)  
-[Emphasis](#emphasis)  
-...snip...    
-<a name="headers"/>
-## Headers
+[Rotten-potato](#A  film and drama rating website)  
+[Used technologies](#Used technologies)  
+[run the project locally](#run the project locally)
+[features](#features)
+
 
 ## A  film and drama rating website.
 
