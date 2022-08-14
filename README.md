@@ -3,9 +3,13 @@
 ##### Table of Contents  
 [Rotten-potato](#A  film and drama rating website)  
 [Used technologies](#Used technologies)  
-[run the project locally](#run the project locally)
-[features](#features)
+[run the project locally](# run the project locally)
+[features](# features)
 
+<a name="A  film and drama rating website"/>
+<a name="Used technologies"/>
+<a name="run the project locally"/>
+<a name="features"/>
 
 ## A  film and drama rating website.
 
