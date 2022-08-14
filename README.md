@@ -1,12 +1,13 @@
 # Rotten-potato
 
-### Table of contents
-##### Table of Contents  
-[Headers](#headers)  
-[Emphasis](#emphasis)  
-...snip...    
-<a name="headers"/>
-## Headers
+- [Rotten-potato](#rotten-potato)
+  * [A  film and drama rating website.](#a--film-and-drama-rating-website)
+    + [Used technologies:](#used-technologies-)
+    + [run the project locally](#run-the-project-locally)
+    + [features](#features)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
 
 ## A  film and drama rating website.
 
