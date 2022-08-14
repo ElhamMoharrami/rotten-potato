@@ -1,5 +1,12 @@
 # Rotten-potato
 
+### Table of contents
+- [what is Rotten Potato](## A  film and drama rating website.)
+- [technology](# Used technologies)
+- [run the project locally](# run the project locally)
+- [features](# features)
+
+
 
 ## A  film and drama rating website.
 
