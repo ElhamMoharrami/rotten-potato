@@ -1,4 +1,4 @@
-import React, { Children, useImperativeHandle } from "react";
+import React from "react";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 
 import "./Navbar.css";
@@ -6,10 +6,13 @@ import "./Navbar.css";
 const Navbar = () => {
   return (
     <nav className="nav">
-      <Link to="/" className="site-title">
+      <h1  className="site-title">
         Rotten Potato
-      </Link>
+      </h1>
       <ul>
+      <CustomLink to="/" >
+       Home
+      </CustomLink>
         <CustomLink to="/Movies">Movies</CustomLink>
         <CustomLink to="/Artists">Artists</CustomLink>
       </ul>

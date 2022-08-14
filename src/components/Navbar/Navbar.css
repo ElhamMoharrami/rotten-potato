@@ -16,13 +16,14 @@ body {
   color: white;
   display: flex;
   justify-content: space-between;
-  align-items: stretch;
+  align-items: center;
   gap: 2rem;
   padding: 0 1rem;
+  height: 50px;
 }
 
 .site-title {
-  font-size: 2rem;
+  font-size: 30px;
 }
 
 .nav ul {

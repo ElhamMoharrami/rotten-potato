@@ -2,10 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,300;1,400&display=swap');
 
 .card-item {
-  background: $secondary-color;
+  background: white;
   cursor: pointer;
   transition: all 0.3s;
 width: 250px;
+margin-top: 20px;
   a {
     text-decoration: none;
   }

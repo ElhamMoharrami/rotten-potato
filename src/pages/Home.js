@@ -1,11 +1,8 @@
-import React, { Fragment } from "react";
+import React from "react";
+import HomeWelcome from "../components/Home/HomeWelcome";
 
 const Home = () => {
-  return (
-    <Fragment>
-      <h1>this is Home!</h1>
-    </Fragment>
-  );
+  return <HomeWelcome/>
 };
 
 export default Home;
