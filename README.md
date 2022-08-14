@@ -1,5 +1,12 @@
 # Rotten-potato
 
+##### Table of Contents  
+[Headers](#headers)  
+[Emphasis](#emphasis)  
+...snip...    
+<a name="headers"/>
+## Headers
+
 ## A  film and drama rating website.
 
 There are a bunch of well known websites for rating movies and series. I created this project
