@@ -1,69 +1,55 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect} from "react";
+import { useSelector,useDispatch } from "react-redux";
+
 import Select from "react-dropdown-select";
 import ReactPaginate from "react-paginate";
+
+
+import { comboActions } from "../../store/combo-slice";
+import { dataActions } from "../../store/data-slice";
+import {fetchData} from '../../store/data-slice';
 
 import MovieCard from "../MovieCard/MovieCard";
 import "./MovieList.css";
 
 const MovieList = () => {
-  const [movies, setMovies] = useState([]);
-  const [pageCount, setPageCount] = useState(0);
-  const [itemsPerPage,setItemsPerPage]=useState(10)
-  
-  const options=[{value:5,label:'five items per page'},{value:10,label:'ten items per page'},{value:15,label:'fifteen items per page'},{value:20,label:'twenty items per page'}]
 
-//change items per page on select
-const itemsPerPageHandler=(selectedOption)=>{
-  setItemsPerPage(selectedOption[0].value)
-}
+const dispatch=useDispatch()
 
-  //for the first time that the page loads so we have something to show
-  //calculates the total number of pages we need for pagination
-  useEffect(() => {
-    const getMovieRequest = async () => {
-      const url = `http://localhost:8080/api/movies?page=1&size=${itemsPerPage}`;
-      const response = await fetch(url);
-      const data = await response.json();
-      const total = data.page.totalElements;
-      setPageCount(Math.floor(total / itemsPerPage));
-      setMovies(data.content);
-    };
 
-    getMovieRequest();
-  }, [itemsPerPage]);
+const itemsPerPage=useSelector((state )=>state.combo.itemsPerPage);
+const movies=useSelector(state=>state.data.data)
+const pageCount=useSelector(state=>state.data.pageCount)
+const currentPage=useSelector(state=>state.combo.currentPage)
+const options=useSelector(state=>state.combo.options)
 
-  //runs when the page changes
-  const fetchMovieRequest = async (currentPage) => {
-    const url = `http://localhost:8080/api/movies?page=${currentPage}&size=${itemsPerPage}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    return data.content;
+
+useEffect(() => {
+  const getMovieRequest = async () => {
+    const url = `http://localhost:8080/api/movies?page=${currentPage-1}&size=${itemsPerPage}`;
+    dispatch(fetchData(url))
   };
+  getMovieRequest();
+}, [itemsPerPage, dispatch,currentPage]);
 
-  // Invoke when user click to request another page.
   const handlePageClick = async (event) => {
-    let currentPage = event.selected + 1;
-
-    const moviesFormServer = await fetchMovieRequest(currentPage);
-
-    setMovies(moviesFormServer);
-    // scroll to the top
-    window.scrollTo(0, 0);
+    dispatch(comboActions.changeCurrentPage(event.selected + 1))
   };
 
-  //invoke when dropdown opens
+  const itemsPerPageHandler=(selectedOption)=>{
+    const selectedOpt=selectedOption[0].value;
+      dispatch(comboActions.changeItemsPerPage(selectedOpt))
+  }
+  
   const dropdownOpenHandler=()=>{
-    window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
+   dispatch(comboActions.dropdownOpenHandler())
   }
 
-  //invoke when dropdown closes
   const dropdownCloseHandler=()=>{
-    window.scrollTo(0, 0);
+    dispatch(comboActions.dropdownCloseHandler())
   }
 
 
-
-  //make a card for each movie
   const ShowMovies = (props) => {
     return (
       <Fragment>

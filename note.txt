@@ -1,0 +1,4 @@
+//provider set on index.js
+//store added : no functionality yet
+//useSelectore added to movieList
+//redux and react redux installed
