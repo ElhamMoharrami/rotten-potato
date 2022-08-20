@@ -10,8 +10,8 @@ const ArtistCard = (props) => {
   const ShowProf = () => {
     return (
       <Fragment>
-        {professions.map((prof) => (
-          <p>{prof}</p>
+        {professions.map((prof,index) => (
+          <p key={index}>{prof}</p>
         ))}
       </Fragment>
     );

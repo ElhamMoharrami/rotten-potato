@@ -6,7 +6,6 @@ import ReactPaginate from "react-paginate";
 
 
 import { comboActions } from "../../store/combo-slice";
-import { dataActions } from "../../store/data-slice";
 import {fetchData} from '../../store/data-slice';
 
 import MovieCard from "../MovieCard/MovieCard";
@@ -25,6 +24,7 @@ const options=useSelector(state=>state.combo.options)
 
 
 useEffect(() => {
+  
   const getMovieRequest = async () => {
     const url = `http://localhost:8080/api/movies?page=${currentPage-1}&size=${itemsPerPage}`;
     dispatch(fetchData(url))

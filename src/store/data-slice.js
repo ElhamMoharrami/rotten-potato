@@ -18,8 +18,8 @@ const dataSlice = createSlice({
         state.pageCount=action.payload.pageCount
       },
        clearData(state,action){
-        state.data=[];
-        state.pageCount=0
+        Object.assign(state,initialState);
+        window.location.reload(false);
        }
       
     },

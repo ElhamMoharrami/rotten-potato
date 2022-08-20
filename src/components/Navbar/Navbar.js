@@ -2,7 +2,7 @@ import React from "react";
 import {  dataActions } from "../../store/data-slice";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 
-import { useSelector,useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import "./Navbar.css";
 
@@ -31,7 +31,7 @@ const CustomLink = ({ to, children, ...props }) => {
   const dispatch=useDispatch()
 
   const onClickHandler=(event)=>{
-    event.preventDefault();
+  event.preventDefault()
   dispatch(dataActions.clearData())
   }
 
