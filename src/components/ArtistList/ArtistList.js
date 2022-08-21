@@ -21,7 +21,9 @@ const ArtistList = () => {
 
   useEffect(() => {
     const getArtistRequest = async () => {
-      const url = `http://localhost:8080/api/crews?page=${currentPage}&size=${itemsPerPage}`;
+      const url = `http://localhost:8080/api/crews?page=${
+        currentPage - 1
+      }&size=${itemsPerPage}`;
       dispatch(fetchData(url));
     };
     getArtistRequest();

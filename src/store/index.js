@@ -1,8 +1,4 @@
-import {
-  configureStore,
-  combineReducers,
-  getDefaultMiddleware,
-} from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 
 import comboSlice from "./combo-slice";
 import dataSlice from "./data-slice";

@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import "./ArtistCard.scss";
-
+import blankProfilePicture from "../../assets/blankProfilePicture.png";
 const ArtistCard = (props) => {
   const { artist } = props;
 
@@ -22,7 +22,12 @@ const ArtistCard = (props) => {
       <Link to={`/`}>
         <div className="card-inner">
           <div className="card-top">
-            <img src={artist.poster} alt={artist.name} />
+            {artist.poster !== null && (
+              <img src={artist.poster} alt={artist.name} />
+            )}
+            {artist.poster === null && (
+              <img src={blankProfilePicture} alt={artist.name} />
+            )}
           </div>
         </div>
         <div className="card-bottom">
