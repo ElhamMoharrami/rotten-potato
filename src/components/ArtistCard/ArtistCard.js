@@ -4,13 +4,13 @@ import "./ArtistCard.scss";
 
 const ArtistCard = (props) => {
   const { artist } = props;
-  
-  const professions=artist.profession.split(',')
+
+  const professions = artist.profession.split(",");
 
   const ShowProf = () => {
     return (
       <Fragment>
-        {professions.map((prof,index) => (
+        {professions.map((prof, index) => (
           <p key={index}>{prof}</p>
         ))}
       </Fragment>
@@ -28,7 +28,7 @@ const ArtistCard = (props) => {
         <div className="card-bottom">
           <div className="card-info">
             <h4>{artist.name}</h4>
-            <ShowProf/>
+            <ShowProf />
           </div>
         </div>
       </Link>

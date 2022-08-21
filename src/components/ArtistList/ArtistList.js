@@ -1,55 +1,48 @@
-import React, { Fragment, useEffect} from "react";
-import { useSelector,useDispatch } from "react-redux";
+import React, { Fragment, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import Select from "react-dropdown-select";
 import ReactPaginate from "react-paginate";
 
 import { comboActions } from "../../store/combo-slice";
-import {fetchData} from '../../store/data-slice'
+import { fetchData } from "../../store/data-slice";
 
 import ArtistCard from "../ArtistCard/ArtistCard";
 import "./ArtistList.css";
 
 const ArtistList = () => {
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
 
- 
-  const itemsPerPage=useSelector((state )=>state.combo.itemsPerPage);
-  const artists=useSelector(state=>state.data.data)
-  const pageCount=useSelector(state=>state.data.pageCount)
-  const currentPage=useSelector(state=>state.combo.currentPage)
-  const options=useSelector(state=>state.combo.options)
-  
-  
+  const itemsPerPage = useSelector((state) => state.combo.itemsPerPage);
+  const artists = useSelector((state) => state.data.data);
+  const pageCount = useSelector((state) => state.data.pageCount);
+  const currentPage = useSelector((state) => state.combo.currentPage);
+  const options = useSelector((state) => state.combo.options);
+
   useEffect(() => {
-   
     const getArtistRequest = async () => {
       const url = `http://localhost:8080/api/crews?page=${currentPage}&size=${itemsPerPage}`;
-      dispatch(fetchData(url))
+      dispatch(fetchData(url));
     };
     getArtistRequest();
-  }, [itemsPerPage, dispatch,currentPage]);
-
-
+  }, [itemsPerPage, dispatch, currentPage]);
 
   const handlePageClick = async (event) => {
-    dispatch(comboActions.changeCurrentPage(event.selected + 1))
+    dispatch(comboActions.changeCurrentPage(event.selected + 1));
   };
 
-  const itemsPerPageHandler=(selectedOption)=>{
-    const selectedOpt=selectedOption[0].value;
-      dispatch(comboActions.changeItemsPerPage(selectedOpt))
+  const itemsPerPageHandler = (selectedOption) => {
+    const selectedOpt = selectedOption[0].value;
+    dispatch(comboActions.changeItemsPerPage(selectedOpt));
+  };
 
-  }
-  
-  const dropdownOpenHandler=()=>{
-    dispatch(comboActions.dropdownOpenHandler())
-  }
+  const dropdownOpenHandler = () => {
+    dispatch(comboActions.dropdownOpenHandler());
+  };
 
-  
-  const dropdownCloseHandler=()=>{
-    dispatch(comboActions.dropdownCloseHandler())
-  }
+  const dropdownCloseHandler = () => {
+    dispatch(comboActions.dropdownCloseHandler());
+  };
 
   const ShowArtists = (props) => {
     return (
@@ -80,15 +73,15 @@ const ArtistList = () => {
         nextLinkClassName="page-num"
         activeLinkClassName="active"
       />
-       <Select 
-      placeholder={'choose number of items per page '} 
-      options={options}
-       onChange={itemsPerPageHandler} 
-       searchable={false}
-       closeOnSelect={true}
-       onDropdownOpen={dropdownOpenHandler}
-       onDropdownClose={dropdownCloseHandler}
-       />
+      <Select
+        placeholder={"choose number of items per page "}
+        options={options}
+        onChange={itemsPerPageHandler}
+        searchable={false}
+        closeOnSelect={true}
+        onDropdownOpen={dropdownOpenHandler}
+        onDropdownClose={dropdownCloseHandler}
+      />
     </>
   );
 };

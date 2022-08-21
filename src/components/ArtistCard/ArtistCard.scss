@@ -1,5 +1,5 @@
 @import "../../assets/colors.scss";
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,300;1,400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,300;1,400&display=swap");
 
 .card-item {
   background: $secondary-color;
@@ -31,19 +31,18 @@
 }
 .card-info {
   color: $font-primary;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   h4 {
     font-size: 22px;
     font-weight: 400;
     margin-bottom: 10px;
   }
-
 }
 
-.card-detail{
+.card-detail {
   display: flex;
 
-  p{
+  p {
     color: red;
   }
 }
