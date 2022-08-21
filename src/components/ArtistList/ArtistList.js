@@ -61,29 +61,31 @@ const ArtistList = () => {
       <div className="poster-grid">
         <ShowArtists artists={artists} />
       </div>
-      <ReactPaginate
-        breakLabel="..."
-        nextLabel="next >"
-        onPageChange={handlePageClick}
-        pageRangeDisplayed={3}
-        pageCount={pageCount}
-        previousLabel="< previous"
-        renderOnZeroPageCount={null}
-        containerClassName="pagination"
-        pageLinkClassName="page-num"
-        previousLinkClassName="page-num"
-        nextLinkClassName="page-num"
-        activeLinkClassName="active"
-      />
-      <Select
-        placeholder={"choose number of items per page "}
-        options={options}
-        onChange={itemsPerPageHandler}
-        searchable={false}
-        closeOnSelect={true}
-        onDropdownOpen={dropdownOpenHandler}
-        onDropdownClose={dropdownCloseHandler}
-      />
+      <div className="pag-select">
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel="next >"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={3}
+          pageCount={pageCount}
+          previousLabel="< previous"
+          renderOnZeroPageCount={null}
+          containerClassName="pagination"
+          pageLinkClassName="page-num"
+          previousLinkClassName="page-num"
+          nextLinkClassName="page-num"
+          activeLinkClassName="active"
+        />
+        <Select
+          placeholder="select..."
+          options={options}
+          onChange={itemsPerPageHandler}
+          searchable={false}
+          closeOnSelect={true}
+          onDropdownOpen={dropdownOpenHandler}
+          onDropdownClose={dropdownCloseHandler}
+        />
+      </div>
     </>
   );
 };
