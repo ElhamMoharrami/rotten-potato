@@ -2,11 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./MovieCard.scss";
 
-const MovieList = (props) => {
+const MovieCard = (props) => {
   const { movie } = props;
   return (
     <div className="card-item">
-      <Link to={`/`}>
+      <Link to={`/Movies/${movie.id}`}>
         <div className="card-inner">
           <div className="card-top">
             <img src={movie.poster} alt={movie.title} />
@@ -23,4 +23,4 @@ const MovieList = (props) => {
   );
 };
 
-export default MovieList;
+export default MovieCard;

@@ -5,10 +5,13 @@ import Select from "react-dropdown-select";
 import ReactPaginate from "react-paginate";
 
 import { comboActions } from "../../store/combo-slice";
+import { dataActions } from "../../store/data-slice";
 import { fetchData } from "../../store/data-slice";
 
-import ArtistCard from "../ArtistCard/ArtistCard";
+import ShowArtists from "../ShowArtists/ShowArtists";
 import "./ArtistList.css";
+
+import { ARTISTSURL } from "../../assets/apis/config";
 
 const ArtistList = () => {
   const dispatch = useDispatch();
@@ -21,12 +24,12 @@ const ArtistList = () => {
 
   useEffect(() => {
     const getArtistRequest = async () => {
-      const url = `http://localhost:8080/api/crews?page=${
-        currentPage - 1
-      }&size=${itemsPerPage}`;
-      dispatch(fetchData(url));
+      dispatch(
+        fetchData(`${ARTISTSURL}?page=${currentPage - 1}&size=${itemsPerPage}`)
+      );
     };
     getArtistRequest();
+    dispatch(dataActions.clearData());
   }, [itemsPerPage, dispatch, currentPage]);
 
   const handlePageClick = async (event) => {
@@ -44,16 +47,6 @@ const ArtistList = () => {
 
   const dropdownCloseHandler = () => {
     dispatch(comboActions.dropdownCloseHandler());
-  };
-
-  const ShowArtists = (props) => {
-    return (
-      <Fragment>
-        {props.artists.map((artist, index) => (
-          <ArtistCard key={index} artist={artist} />
-        ))}
-      </Fragment>
-    );
   };
 
   return (
