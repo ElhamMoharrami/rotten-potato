@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import "./ArtistCard.scss";
-import blankProfilePicture from "../../assets/blankProfilePicture.png";
+import blankProfilePicture from "../../assets/images/blankProfilePicture.png";
 const ArtistCard = (props) => {
   const { artist } = props;
 
@@ -19,7 +19,7 @@ const ArtistCard = (props) => {
 
   return (
     <div className="card-item">
-      <Link to={`/`}>
+      <Link to={`/Artists/${artist.id}`}>
         <div className="card-inner">
           <div className="card-top">
             {artist.poster !== null && (

@@ -5,10 +5,13 @@ import Select from "react-dropdown-select";
 import ReactPaginate from "react-paginate";
 
 import { comboActions } from "../../store/combo-slice";
-import { fetchData } from "../../store/data-slice";
+import { dataActions, fetchData } from "../../store/data-slice";
 
-import MovieCard from "../MovieCard/MovieCard";
+import ShowMovies from "../ShowMovies/ShowMovies";
 import "./MovieList.css";
+
+import { MOVIESURL } from "../../assets/apis/config";
+import { pageRangeDisplayed } from "../../assets/apis/config";
 
 const MovieList = () => {
   const dispatch = useDispatch();
@@ -21,12 +24,12 @@ const MovieList = () => {
 
   useEffect(() => {
     const getMovieRequest = async () => {
-      const url = `http://localhost:8080/api/movies?page=${
-        currentPage - 1
-      }&size=${itemsPerPage}`;
-      dispatch(fetchData(url));
+      dispatch(
+        fetchData(`${MOVIESURL}?page=${currentPage - 1}&size=${itemsPerPage}`)
+      );
     };
     getMovieRequest();
+    dispatch(dataActions.clearData());
   }, [itemsPerPage, dispatch, currentPage]);
 
   const handlePageClick = async (event) => {
@@ -46,16 +49,6 @@ const MovieList = () => {
     dispatch(comboActions.dropdownCloseHandler());
   };
 
-  const ShowMovies = (props) => {
-    return (
-      <Fragment>
-        {props.movies.map((movie, index) => (
-          <MovieCard key={index} movie={movie} />
-        ))}
-      </Fragment>
-    );
-  };
-
   return (
     <>
       <div className="poster-grid">
@@ -67,7 +60,7 @@ const MovieList = () => {
           breakLabel="..."
           nextLabel="next >"
           onPageChange={handlePageClick}
-          pageRangeDisplayed={3}
+          pageRangeDisplayed={pageRangeDisplayed}
           pageCount={pageCount}
           previousLabel="< previous"
           renderOnZeroPageCount={null}
