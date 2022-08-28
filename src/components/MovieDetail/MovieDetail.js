@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { fetchDetail, dataActions, fetchCrews } from "../../store/data-slice";
 import { MOVIESURL } from "../../assets/apis/config";
 
-import "./MovieDetail.scss";
+import classes from "./MovieDetail.module.css";
 import ShowArtists from "../ShowArtists/ShowArtists";
 
 const MovieDetail = () => {
@@ -23,55 +23,63 @@ const MovieDetail = () => {
 
   return (
     <>
-      <div className="section-left">
-        <div className="movie-title">{movie.title}</div>
-        <div className="movie-rating">
-          <span>
-            IMDB Rating <i className="fa fa-star"></i> : {movie.imdbRating}
-          </span>
-          <span>
-            IMDB Votes <i className="fa fa-thumbs-up"></i> : {movie.imdbVotes}
-          </span>
-          <span>
-            Runtime <i className="fa fa-film"></i> : {movie.runtime}
-          </span>
-          <span>
-            Year <i className="fa fa-calendar"></i> : {movie.year}
-          </span>
+      <div className={classes.container}>
+        <div className={classes.details}>
+          <p className={classes["movie-title"]}>{movie.title}</p>
+          <div className={classes["movie-rating"]}>
+            <span>
+              IMDB Rating <i></i> : {movie.imdbRating}
+            </span>
+            <span>
+              IMDB Votes <i></i> : {movie.imdbVotes}
+            </span>
+            <span>
+              Runtime <i></i> : {movie.runtime}
+            </span>
+            <span>
+              Year <i></i> : {movie.year}
+            </span>
+          </div>
+          <p className={classes["movie-plot"]}>{movie.plot}</p>
+          <div className={classes["movie-info"]}>
+            <div>
+              <span>Director</span>
+              <span>{movie.director}</span>
+            </div>
+            <div>
+              <span>Stars</span>
+              <span>{movie.actors}</span>
+            </div>
+            <div>
+              <span>Generes</span>
+              <span>{movie.genre}</span>
+            </div>
+            <div>
+              <span>Languages</span>
+              <span>{movie.language}</span>
+            </div>
+            <div>
+              <span>Awards</span>
+              <span>{movie.awards}</span>
+            </div>
+          </div>
         </div>
-        <div className="movie-plot">{movie.plot}</div>
-        <div className="movie-info">
-          <div>
-            <span>Director</span>
-            <span>{movie.director}</span>
-          </div>
-          <div>
-            <span>Stars</span>
-            <span>{movie.actors}</span>
-          </div>
-          <div>
-            <span>Generes</span>
-            <span>{movie.genre}</span>
-          </div>
-          <div>
-            <span>Languages</span>
-            <span>{movie.language}</span>
-          </div>
-          <div>
-            <span>Awards</span>
-            <span>{movie.awards}</span>
-          </div>
+        <div>
+          <img
+            src={movie.poster}
+            alt={movie.title}
+            className={classes["movie-poster"]}
+          />
         </div>
       </div>
-      <div className="section-right">
-        <img src={movie.poster} alt={movie.title} />
-      </div>
-      <div className="poster-grid">
-        <ShowArtists artists={artists} />
+      <div className={classes.crew}>
+        <p className={classes["crew-title"]}>Movie Crew</p>
+        <div className={classes["poster-grid"]}>
+          <ShowArtists artists={artists} />
+        </div>
       </div>
     </>
   );
 };
 
 export default MovieDetail;
-//http://localhost:8080/api/movies/{movie_id}

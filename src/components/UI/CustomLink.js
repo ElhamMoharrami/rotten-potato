@@ -9,6 +9,7 @@ const CustomLink = ({ to, children, ...props }) => {
   const onClickHandler = (event) => {
     event.preventDefault();
     dispatch(dataActions.clearData());
+    window.location.reload(false);
   };
 
   const resolvedPath = useResolvedPath(to);
@@ -21,5 +22,6 @@ const CustomLink = ({ to, children, ...props }) => {
     </li>
   );
 };
+
 
 export default CustomLink;

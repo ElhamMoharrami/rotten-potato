@@ -4,6 +4,7 @@ const initialState = {
   data: [],
   selectedItem: [],
   crew: [],
+  movies: [],
   pageCount: 0,
 };
 
@@ -16,9 +17,7 @@ const dataSlice = createSlice({
       state.pageCount = action.payload.pageCount;
     },
     clearData(state, action) {
-      state.data = [];
-      state.pageCount = 0;
-      state.selectedItem = [];
+      Object.assign(state, initialState);
     },
     setDetail(state, action) {
       state.selectedItem = action.payload.selectedItem;
@@ -26,9 +25,13 @@ const dataSlice = createSlice({
     clearDetail(state) {
       state.selectedItem = [];
       state.crew = [];
+      state.movies = [];
     },
     setCrew(state, action) {
       state.crew = action.payload.crew;
+    },
+    setMovies(state, action) {
+      state.movies = action.payload.movies;
     },
   },
 });
@@ -57,7 +60,6 @@ export const fetchData = (url) => {
   };
 };
 
-//this url has an id
 export const fetchDetail = (url) => {
   return async (dispatch) => {
     try {
@@ -80,6 +82,17 @@ export const fetchCrews = (url) => {
       dispatch(dataActions.setCrew({ crew: getCrew.content }));
     } catch {
       console.log("weeeeeeeeeeeeeeeeeeeep");
+    }
+  };
+};
+
+export const fetchMovies = (url) => {
+  return async (dispatch) => {
+    try {
+      const getMovies = await getDataRequest(url);
+      dispatch(dataActions.setMovies({ movies: getMovies.content }));
+    } catch {
+      console.log("brrrrrrrrrrr");
     }
   };
 };
