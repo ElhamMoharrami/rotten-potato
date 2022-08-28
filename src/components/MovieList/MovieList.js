@@ -11,6 +11,7 @@ import ShowMovies from "../ShowMovies/ShowMovies";
 import "./MovieList.css";
 
 import { MOVIESURL } from "../../assets/apis/config";
+import { pageRangeDisplayed } from "../../assets/apis/config";
 
 const MovieList = () => {
   const dispatch = useDispatch();
@@ -59,7 +60,7 @@ const MovieList = () => {
           breakLabel="..."
           nextLabel="next >"
           onPageChange={handlePageClick}
-          pageRangeDisplayed={3}
+          pageRangeDisplayed={pageRangeDisplayed}
           pageCount={pageCount}
           previousLabel="< previous"
           renderOnZeroPageCount={null}

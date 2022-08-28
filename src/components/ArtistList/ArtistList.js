@@ -12,6 +12,7 @@ import ShowArtists from "../ShowArtists/ShowArtists";
 import "./ArtistList.css";
 
 import { ARTISTSURL } from "../../assets/apis/config";
+import { pageRangeDisplayed } from "../../assets/apis/config";
 
 const ArtistList = () => {
   const dispatch = useDispatch();
@@ -59,7 +60,7 @@ const ArtistList = () => {
           breakLabel="..."
           nextLabel="next >"
           onPageChange={handlePageClick}
-          pageRangeDisplayed={3}
+          pageRangeDisplayed={pageRangeDisplayed}
           pageCount={pageCount}
           previousLabel="< previous"
           renderOnZeroPageCount={null}
