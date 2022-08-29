@@ -9,7 +9,7 @@ const CustomLink = ({ to, children, ...props }) => {
   const onClickHandler = (event) => {
     event.preventDefault();
     dispatch(dataActions.clearData());
-    window.location.reload(false);
+     window.location.reload(false);
   };
 
   const resolvedPath = useResolvedPath(to);

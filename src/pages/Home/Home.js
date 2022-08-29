@@ -1,10 +1,9 @@
 import React from "react";
+import classes from './Home.module.css'
 
-import "./HomeWelcome .css";
-
-const HomeWelcome = () => {
+const Home = () => {
   return (
-    <div className="background-image">
+    <div className={classes['background-image']}>
       <h1> Welcome to Rotten Potato ! </h1>
       <p>
         A movie rating website. youcan also get to know some of the best artists
@@ -14,4 +13,4 @@ const HomeWelcome = () => {
   );
 };
 
-export default HomeWelcome;
+export default Home;

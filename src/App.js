@@ -5,7 +5,7 @@ import Movies from "./pages/Movies";
 import MovieDetail from "./pages/MovieDetailPage.js";
 import ArtistDetail from "./components/ArtistDetail/ArtistDetail";
 import Artists from "./pages/Artists";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 
 import "./App.css";
 

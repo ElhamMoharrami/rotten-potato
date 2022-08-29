@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { RiseLoader } from "react-spinners";
 
 const initialState = {
   data: [],
   selectedItem: [],
   crew: [],
   movies: [],
+  isLoading: true,
   pageCount: 0,
 };
 
@@ -33,6 +35,9 @@ const dataSlice = createSlice({
     setMovies(state, action) {
       state.movies = action.payload.movies;
     },
+    showSpinner(state, action) {
+      state.isLoading = action.payload.isLoading;
+    },
   },
 });
 
@@ -45,6 +50,7 @@ const getDataRequest = async (url) => {
 export const fetchData = (url) => {
   return async (dispatch) => {
     try {
+      dispatch(dataActions.showSpinner({ isLoading: true }));
       const getData = await getDataRequest(url);
 
       dispatch(
@@ -53,9 +59,10 @@ export const fetchData = (url) => {
           pageCount: getData.page.totalPages,
         })
       );
+      dispatch(dataActions.showSpinner({ isLoading: false }));
       window.scrollTo(0, 0);
-    } catch {
-      console.log("tadaaaaaaaaaaaaaaa");
+    } catch(err) {
+      console.log(err);
     }
   };
 };
