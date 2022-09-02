@@ -1,12 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RingLoader } from "react-spinners";
 
-
 const initialState = {
   data: { content: [], pageCount: 0 },
   selectedItem: [],
-  detailList:[],
-  isLoading:false,
+  detailList: [],
+  isLoading: false,
 };
 
 const createDataSlice = (name) => {
@@ -21,15 +20,12 @@ const createDataSlice = (name) => {
       setDetail(state, action) {
         state.selectedItem = action.payload.selectedItem;
       },
-      setDetailList(state,action){
-        state.detailList=action.payload.detailList
+      setDetailList(state, action) {
+        state.detailList = action.payload.detailList;
       },
-      setIsLoading(state,action){
-        state.isLoading=action.payload.isLoading
+      setIsLoading(state, action) {
+        state.isLoading = action.payload.isLoading;
       },
-      sendIsLoading(state){
-        return state.isLoading
-      }
     },
   });
 };

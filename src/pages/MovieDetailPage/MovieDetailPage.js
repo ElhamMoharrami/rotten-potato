@@ -1,15 +1,22 @@
-import React, { useEffect } from "react";
+import React from "react";
+
+import ArtistCard from "../../components/ArtistCard/ArtistCard";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { fetchDetail, fetchDetailList } from "../../store/api-call";
 
-import classes from "./MovieDetail.module.css";
-import ShowList from "../ShowList/ShowList";
+import classes from "./MovieDetailPage.module.css";
+import ShowList from "../../components/ShowList/ShowList";
 
 import { movieActions } from "../../store/data-slice";
 
-const MovieDetail = (props) => {
+const MovieDetailPage = () => {
+  const card = (item) => {
+    return <ArtistCard artist={item} key={item.id} />;
+  };
+
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -75,10 +82,10 @@ const MovieDetail = (props) => {
       <div className={classes.crew}>
         <p className={classes["crew-title"]}>Movie Crew</p>
 
-        <ShowList data={artists} card={props.card} />
+        <ShowList data={artists} card={card} />
       </div>
     </>
   );
 };
 
-export default MovieDetail;
+export default MovieDetailPage;

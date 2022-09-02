@@ -1,24 +1,31 @@
-import React, { useEffect } from "react";
+import React from "react";
+import MovieCard from "../../components/MovieCard/MovieCard";
+
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { fetchDetail, fetchDetailList } from "../../store/api-call";
-import ShowList from "../ShowList/ShowList";
+import ShowList from "../../components/ShowList/ShowList";
 
-import classes from "./ArtistDetail.module.css";
+import classes from "./ArtistDetailPage.module.css";
 import blankProfile from "../../assets/images/blankProfilePicture.png";
 import { artistActions } from "../../store/data-slice";
 
-const ArtistDetail = (props) => {
-  const { id } = useParams()
+const ArtistDetailPage = () => {
+  const card = (item) => {
+    return <MovieCard movie={item} key={item.id} />;
+  };
+
+  const { id } = useParams();
   const dispatch = useDispatch();
 
   const artist = useSelector((state) => state.crews.selectedItem);
   const movies = useSelector((state) => state.crews.detailList);
 
   useEffect(() => {
-    dispatch(fetchDetail(id, "crews",artistActions));
-   dispatch(fetchDetailList(id, "crews", "movies",artistActions));
+    dispatch(fetchDetail(id, "crews", artistActions));
+    dispatch(fetchDetailList(id, "crews", "movies", artistActions));
   }, [dispatch, id]);
 
   return (
@@ -51,10 +58,10 @@ const ArtistDetail = (props) => {
       </div>
       <div className={classes.movies}>
         <p className={classes["movie-title"]}>Movies</p>
-    {/* <ShowList data={movies} card={props.card}/> */}
+        <ShowList data={movies} card={card} />
       </div>
     </>
   );
 };
 
-export default ArtistDetail;
+export default ArtistDetailPage;

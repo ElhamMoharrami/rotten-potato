@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 
 import Select from "react-dropdown-select";
 import ReactPaginate from "react-paginate";
@@ -11,24 +11,28 @@ import classes from "./Listing.module.css";
 import { options } from "../../assets/apis/config";
 
 import { pageRangeDisplayed } from "../../assets/apis/config";
-import { RiseLoader } from "react-spinners"
+import { RiseLoader } from "react-spinners";
 
 const Listing = (props) => {
   const { type } = props;
   const [currentPage, setCurrentPage] = useState();
   const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
- 
 
- 
   useEffect(() => {
+    setIsLoading(true);
     const getDataRequest = async () => {
       dispatch(fetchData(type, itemsPerPage, currentPage, props.action));
       window.scrollTo(0, 0);
     };
 
     getDataRequest();
-  }, [itemsPerPage, dispatch, currentPage, props.action, type]);
+  }, [itemsPerPage, dispatch, currentPage, props.action, type, isLoading]);
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, [isLoading]);
 
   const handlePageClick = async (event) => {
     setCurrentPage(event.selected + 1);
@@ -52,18 +56,12 @@ const Listing = (props) => {
     window.scrollTo(0, 0);
   };
 
-  const isLoading=()=>{
-  dispatch(props.action.sendIsLoading())
-  }
-
-
+  console.log(isLoading);
   return (
     <>
-   {isLoading && <div className={classes['spinner']}>
-    <RiseLoader color='gray'   size={20} />
-    </div>}
+      {isLoading && <RiseLoader color="gray" size={150} />}
       <ShowList data={props.data.content} card={props.card} />
-      <div className={classes['pag-select']}>
+      <div className={classes["pag-select"]}>
         <ReactPaginate
           breakLabel="..."
           nextLabel="next >"
@@ -79,15 +77,17 @@ const Listing = (props) => {
           activeLinkClassName={classes["active"]}
         />
 
-       {!isLoading && <Select
-          placeholder="select..."
-          options={options}
-          onChange={itemsPerPageHandler}
-          searchable={false}
-          closeOnSelect={true}
-          onDropdownOpen={dropdownOpenHandler}
-          onDropdownClose={dropdownCloseHandler}
-        />}
+        {!isLoading && (
+          <Select
+            placeholder="select..."
+            options={options}
+            onChange={itemsPerPageHandler}
+            searchable={false}
+            closeOnSelect={true}
+            onDropdownOpen={dropdownOpenHandler}
+            onDropdownClose={dropdownCloseHandler}
+          />
+        )}
       </div>
     </>
   );

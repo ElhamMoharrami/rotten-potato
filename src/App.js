@@ -2,8 +2,8 @@ import { Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar/Navbar";
 import Movies from "./pages/Movies";
-import MovieDetail from "./pages/MovieDetailPage.js";
-import ArtistDetail from "./components/ArtistDetail/ArtistDetail";
+import MovieDetailPage from "./pages/MovieDetailPage/MovieDetailPage.js";
+import ArtistDetailPage from "./pages/ArtistDetailPage/ArtistDetailPage.js";
 import Artists from "./pages/Artists";
 import Home from "./pages/Home/Home";
 
@@ -17,9 +17,9 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} component={Home} />
         <Route path="/Movies" element={<Movies />} />
-        <Route path="/Movies/:id" element={<MovieDetail />} />
+        <Route path="/Movies/:id" element={<MovieDetailPage />} />
         <Route path="/Artists" element={<Artists />} />
-        <Route path="/Artists/:id" element={<ArtistDetail />} />
+        <Route path="/Artists/:id" element={<ArtistDetailPage />} />
       </Routes>
     </>
   );

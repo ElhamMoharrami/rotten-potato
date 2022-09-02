@@ -9,7 +9,6 @@ const getDataRequest = async (url) => {
 export const fetchData = (type, size, currentPage, action) => {
   return async (dispatch) => {
     try {
-      dispatch(action.setIsLoading({isLoading:true}))
       const url = `${BASEURL}/${type}?page=${currentPage - 1}&size=${size}`;
       const getData = await getDataRequest(url);
 
@@ -19,7 +18,6 @@ export const fetchData = (type, size, currentPage, action) => {
           pageCount: getData.page.totalPages,
         })
       );
-      dispatch(action.setIsLoading({isLoading:false}))
     } catch (err) {
       console.log(err);
     }
