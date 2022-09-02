@@ -1,19 +1,22 @@
 import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 
-import ShowArtists from '../components/ShowArtists/ShowArtists'
 import Listing from "../components/Listing/Listing";
+import ArtistCard from "../components/ArtistCard/ArtistCard";
 
-import { ARTISTSURL } from "../assets/apis/config";
+import { artistActions } from "../store/data-slice";
 
 const Artists = () => {
-  const artists = useSelector((state) => state.data.data);
-  return <>
-    <div className="poster-grid">
-        <ShowArtists artists={artists} />
-      </div>
-<Listing url={ARTISTSURL}/>
-  </>
+  const data = useSelector((state) => state.crews.data);
+
+  const card = (item) => {
+    return <ArtistCard artist={item} key={item.id} />;
+  };
+  return (
+    <>
+      <Listing type={`crews`} data={data} card={card} action={artistActions}  />
+    </>
+  );
 };
 
 export default Artists;

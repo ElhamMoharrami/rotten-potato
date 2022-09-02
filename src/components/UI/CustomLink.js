@@ -6,16 +6,16 @@ import { useDispatch } from "react-redux";
 const CustomLink = ({ to, children, ...props }) => {
   const dispatch = useDispatch();
 
-  const onClickHandler = (event) => {
-    event.preventDefault();
-    dispatch(dataActions.clearData());
-     window.location.reload(false);
-  };
+  // const onClickHandler = (event) => {
+  //   event.preventDefault();
+  //   dispatch(dataActions.clearData());
+  //    window.location.reload(false);
+  // };
 
   const resolvedPath = useResolvedPath(to);
   const isActive = useMatch({ path: resolvedPath.pathname, end: true });
   return (
-    <li className={isActive ? "active" : ""} onClick={onClickHandler}>
+    <li className={isActive ? "active" : ""} >
       <Link to={to} {...props}>
         {children}
       </Link>

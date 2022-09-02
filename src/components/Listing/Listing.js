@@ -1,34 +1,34 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import Select from "react-dropdown-select";
 import ReactPaginate from "react-paginate";
 
-import { dataActions, fetchData } from "../../store/data-slice";
+import { fetchData } from "../../store/api-call";
+import ShowList from "../ShowList/ShowList";
 
-import "./Listing.css";
+import classes from "./Listing.module.css";
 import { options } from "../../assets/apis/config";
 
 import { pageRangeDisplayed } from "../../assets/apis/config";
+import { RiseLoader } from "react-spinners"
 
 const Listing = (props) => {
+  const { type } = props;
   const [currentPage, setCurrentPage] = useState();
-  const [itemsPerPage, setItemsPerPage] = useState();
+  const [itemsPerPage, setItemsPerPage] = useState(5);
   const dispatch = useDispatch();
+ 
 
-  const pageCount = useSelector((state) => state.data.pageCount);
-
+ 
   useEffect(() => {
     const getDataRequest = async () => {
-      dispatch(
-        fetchData(`${props.url}?page=${currentPage - 1}&size=${itemsPerPage}`)
-      );
+      dispatch(fetchData(type, itemsPerPage, currentPage, props.action));
+      window.scrollTo(0, 0);
     };
 
     getDataRequest();
-
-    dispatch(dataActions.clearData());
-  }, [itemsPerPage, dispatch, currentPage]);
+  }, [itemsPerPage, dispatch, currentPage, props.action, type]);
 
   const handlePageClick = async (event) => {
     setCurrentPage(event.selected + 1);
@@ -52,24 +52,34 @@ const Listing = (props) => {
     window.scrollTo(0, 0);
   };
 
+  const isLoading=()=>{
+  dispatch(props.action.sendIsLoading())
+  }
+
+
   return (
     <>
-      <div className="pag-select">
+   {isLoading && <div className={classes['spinner']}>
+    <RiseLoader color='gray'   size={20} />
+    </div>}
+      <ShowList data={props.data.content} card={props.card} />
+      <div className={classes['pag-select']}>
         <ReactPaginate
           breakLabel="..."
           nextLabel="next >"
           onPageChange={handlePageClick}
           pageRangeDisplayed={pageRangeDisplayed}
-          pageCount={pageCount}
+          pageCount={props.data.pageCount}
           previousLabel="< previous"
           renderOnZeroPageCount={null}
-          containerClassName="pagination"
-          pageLinkClassName="page-num"
-          previousLinkClassName="page-num"
-          nextLinkClassName="page-num"
-          activeLinkClassName="active"
+          containerClassName={classes["pagination"]}
+          pageLinkClassName={classes["page-num"]}
+          previousLinkClassName={classes["page-num"]}
+          nextLinkClassName={classes["page-num"]}
+          activeLinkClassName={classes["active"]}
         />
-        <Select
+
+       {!isLoading && <Select
           placeholder="select..."
           options={options}
           onChange={itemsPerPageHandler}
@@ -77,7 +87,7 @@ const Listing = (props) => {
           closeOnSelect={true}
           onDropdownOpen={dropdownOpenHandler}
           onDropdownClose={dropdownCloseHandler}
-        />
+        />}
       </div>
     </>
   );

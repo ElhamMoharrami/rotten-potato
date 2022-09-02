@@ -1,20 +1,22 @@
 import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 
-import ShowMovies from "../components/ShowMovies/ShowMovies";
 import Listing from "../components/Listing/Listing";
 
-import { MOVIESURL } from "../assets/apis/config";
 import "../assets/commonStyle.css";
+import MovieCard from "../components/MovieCard/MovieCard";
+import { movieActions } from "../store/data-slice";
 
 const Movies = () => {
-  const movies = useSelector((state) => state.data.data);
-  return <>
-    <div className="poster-grid">
-        <ShowMovies movies={movies} />
-      </div>
-<Listing url={MOVIESURL}/>
-  </>
+  const data = useSelector((state) => state.movies.data);
+  const card = (item) => {
+    return <MovieCard movie={item} key={item.id} />;
+  };
+  return (
+    <>
+      <Listing type="movies" data={data} card={card} action={movieActions}  />
+    </>
+  );
 };
 
 export default Movies;

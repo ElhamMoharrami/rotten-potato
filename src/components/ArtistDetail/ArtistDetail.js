@@ -2,24 +2,23 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { fetchDetail, dataActions, fetchMovies } from "../../store/data-slice";
-import { ARTISTSURL } from "../../assets/apis/config";
-import ShowMovies from "../ShowMovies/ShowMovies";
+import { fetchDetail, fetchDetailList } from "../../store/api-call";
+import ShowList from "../ShowList/ShowList";
 
 import classes from "./ArtistDetail.module.css";
 import blankProfile from "../../assets/images/blankProfilePicture.png";
+import { artistActions } from "../../store/data-slice";
 
-const ArtistDetail = () => {
-  const { id } = useParams();
+const ArtistDetail = (props) => {
+  const { id } = useParams()
   const dispatch = useDispatch();
 
-  const artist = useSelector((state) => state.data.selectedItem);
-  const movies = useSelector((state) => state.data.movies);
+  const artist = useSelector((state) => state.crews.selectedItem);
+  const movies = useSelector((state) => state.crews.detailList);
 
   useEffect(() => {
-    dispatch(fetchDetail(`${ARTISTSURL}/${id}`));
-    dispatch(fetchMovies(`${ARTISTSURL}/${id}/movies`));
-    dispatch(dataActions.clearDetail());
+    dispatch(fetchDetail(id, "crews",artistActions));
+   dispatch(fetchDetailList(id, "crews", "movies",artistActions));
   }, [dispatch, id]);
 
   return (
@@ -52,9 +51,7 @@ const ArtistDetail = () => {
       </div>
       <div className={classes.movies}>
         <p className={classes["movie-title"]}>Movies</p>
-        <div className={classes["poster-grid"]}>
-          <ShowMovies movies={movies} />
-        </div>
+    {/* <ShowList data={movies} card={props.card}/> */}
       </div>
     </>
   );
