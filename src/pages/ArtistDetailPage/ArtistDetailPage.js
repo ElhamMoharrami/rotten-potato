@@ -1,25 +1,31 @@
-import React, { useEffect } from "react";
+import React from "react";
+import MovieCard from "../../components/MovieCard/MovieCard";
+
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { fetchDetail, dataActions, fetchMovies } from "../../store/data-slice";
-import { ARTISTSURL } from "../../assets/apis/config";
-import ShowMovies from "../ShowMovies/ShowMovies";
+import { fetchDetail, fetchDetailList } from "../../store/api-call";
+import ShowList from "../../components/ShowList/ShowList";
 
-import classes from "./ArtistDetail.module.css";
+import classes from "./ArtistDetailPage.module.css";
 import blankProfile from "../../assets/images/blankProfilePicture.png";
+import { artistActions } from "../../store/data-slice";
 
-const ArtistDetail = () => {
+const ArtistDetailPage = () => {
+  const card = (item) => {
+    return <MovieCard movie={item} key={item.id} />;
+  };
+
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const artist = useSelector((state) => state.data.selectedItem);
-  const movies = useSelector((state) => state.data.movies);
+  const artist = useSelector((state) => state.crews.selectedItem);
+  const movies = useSelector((state) => state.crews.detailList);
 
   useEffect(() => {
-    dispatch(fetchDetail(`${ARTISTSURL}/${id}`));
-    dispatch(fetchMovies(`${ARTISTSURL}/${id}/movies`));
-    dispatch(dataActions.clearDetail());
+    dispatch(fetchDetail(id, "crews", artistActions));
+    dispatch(fetchDetailList(id, "crews", "movies", artistActions));
   }, [dispatch, id]);
 
   return (
@@ -52,12 +58,10 @@ const ArtistDetail = () => {
       </div>
       <div className={classes.movies}>
         <p className={classes["movie-title"]}>Movies</p>
-        <div className={classes["poster-grid"]}>
-          <ShowMovies movies={movies} />
-        </div>
+        <ShowList data={movies} card={card} />
       </div>
     </>
   );
 };
 
-export default ArtistDetail;
+export default ArtistDetailPage;

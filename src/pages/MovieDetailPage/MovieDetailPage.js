@@ -1,24 +1,30 @@
-import React, { useEffect } from "react";
+import React from "react";
+
+import ArtistCard from "../../components/ArtistCard/ArtistCard";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { fetchDetail, dataActions, fetchCrews } from "../../store/data-slice";
-import { MOVIESURL } from "../../assets/apis/config";
+import { fetchDetail, fetchDetailList } from "../../store/api-call";
 
-import classes from "./MovieDetail.module.css";
-import ShowArtists from "../ShowArtists/ShowArtists";
+import classes from "./MovieDetailPage.module.css";
+import ShowList from "../../components/ShowList/ShowList";
 
-const MovieDetail = () => {
+import { movieActions } from "../../store/data-slice";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import { responsive } from "../../assets/apis/config";
+
+const MovieDetailPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const movie = useSelector((state) => state.data.selectedItem);
-  const artists = useSelector((state) => state.data.crew);
+  const movie = useSelector((state) => state.movies.selectedItem);
+  const artists = useSelector((state) => state.movies.detailList);
 
   useEffect(() => {
-    dispatch(fetchDetail(`${MOVIESURL}/${id}`));
-    dispatch(fetchCrews(`${MOVIESURL}/${id}/crews`));
-    dispatch(dataActions.clearDetail());
+    dispatch(fetchDetail(id, "movies", movieActions));
+    dispatch(fetchDetailList(id, "movies", "crews", movieActions));
   }, [dispatch, id]);
 
   return (
@@ -74,12 +80,31 @@ const MovieDetail = () => {
       </div>
       <div className={classes.crew}>
         <p className={classes["crew-title"]}>Movie Crew</p>
-        <div className={classes["poster-grid"]}>
-          <ShowArtists artists={artists} />
+        <div className={classes["carousel-container"]}>
+          <Carousel
+            swipeable={false}
+            draggable={false}
+            showDots={true}
+            responsive={responsive}
+            ssr={true} // means to render carousel on server-side.
+            infinite={true}
+            autoPlaySpeed={1000}
+            keyBoardControl={true}
+            customTransition="all .5"
+            transitionDuration={500}
+            containerClass="carousel-container"
+            removeArrowOnDeviceType={["tablet", "mobile"]}
+            dotListClass="custom-dot-list-style"
+            itemClass="carousel-item-padding-40-px"
+          >
+            {artists.map((item) => (
+              <ArtistCard artist={item} />
+            ))}
+          </Carousel>
         </div>
       </div>
     </>
   );
 };
 
-export default MovieDetail;
+export default MovieDetailPage;

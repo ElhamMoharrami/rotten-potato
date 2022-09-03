@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import "./ArtistCard.scss";
 import blankProfilePicture from "../../assets/images/blankProfilePicture.png";
+
 const ArtistCard = (props) => {
   const { artist } = props;
 
