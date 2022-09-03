@@ -8,13 +8,14 @@ import { artistActions } from "../store/data-slice";
 
 const Artists = () => {
   const data = useSelector((state) => state.crews.data);
+  const isLoading=useSelector((state)=>state.crews.isLoading)
 
   const card = (item) => {
     return <ArtistCard artist={item} key={item.id} />;
   };
   return (
     <>
-      <ListData type={`crews`} data={data} card={card} action={artistActions} />
+      <ListData type={`crews`} data={data} card={card} action={artistActions} isLoading={isLoading} />
     </>
   );
 };
