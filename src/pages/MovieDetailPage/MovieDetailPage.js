@@ -16,10 +16,6 @@ import "react-multi-carousel/lib/styles.css";
 import { responsive } from "../../assets/apis/config";
 
 const MovieDetailPage = () => {
-  const card = (item) => {
-    return <ArtistCard artist={item} key={item.id} />;
-  };
-
   const { id } = useParams();
   const dispatch = useDispatch();
 
