@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 
-import Listing from "../components/Listing/Listing";
+import ListData from "../components/ListData/ListData";
 import ArtistCard from "../components/ArtistCard/ArtistCard";
 
 import { artistActions } from "../store/data-slice";
@@ -14,7 +14,7 @@ const Artists = () => {
   };
   return (
     <>
-      <Listing type={`crews`} data={data} card={card} action={artistActions}  />
+      <ListData type={`crews`} data={data} card={card} action={artistActions}  />
     </>
   );
 };

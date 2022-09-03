@@ -11,6 +11,9 @@ import classes from "./MovieDetailPage.module.css";
 import ShowList from "../../components/ShowList/ShowList";
 
 import { movieActions } from "../../store/data-slice";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import { responsive } from "../../assets/apis/config";
 
 const MovieDetailPage = () => {
   const card = (item) => {
@@ -81,8 +84,28 @@ const MovieDetailPage = () => {
       </div>
       <div className={classes.crew}>
         <p className={classes["crew-title"]}>Movie Crew</p>
-
-        <ShowList data={artists} card={card} />
+        <div className={classes["carousel-container"]}>
+          <Carousel
+            swipeable={false}
+            draggable={false}
+            showDots={true}
+            responsive={responsive}
+            ssr={true} // means to render carousel on server-side.
+            infinite={true}
+            autoPlaySpeed={1000}
+            keyBoardControl={true}
+            customTransition="all .5"
+            transitionDuration={500}
+            containerClass="carousel-container"
+            removeArrowOnDeviceType={["tablet", "mobile"]}
+            dotListClass="custom-dot-list-style"
+            itemClass="carousel-item-padding-40-px"
+          >
+            {artists.map((item) => (
+              <ArtistCard artist={item} />
+            ))}
+          </Carousel>
+        </div>
       </div>
     </>
   );

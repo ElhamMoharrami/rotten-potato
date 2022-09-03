@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 
-import Listing from "../components/Listing/Listing";
+import ListData from "../components/ListData/ListData";
 
 import "../assets/commonStyle.css";
 import MovieCard from "../components/MovieCard/MovieCard";
@@ -14,7 +14,7 @@ const Movies = () => {
   };
   return (
     <>
-      <Listing type="movies" data={data} card={card} action={movieActions}  />
+      <ListData type="movies" data={data} card={card} action={movieActions}  />
     </>
   );
 };

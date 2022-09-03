@@ -7,13 +7,13 @@ import ReactPaginate from "react-paginate";
 import { fetchData } from "../../store/api-call";
 import ShowList from "../ShowList/ShowList";
 
-import classes from "./Listing.module.css";
+import classes from "./ListData.module.css";
 import { options } from "../../assets/apis/config";
 
 import { pageRangeDisplayed } from "../../assets/apis/config";
-import { RiseLoader } from "react-spinners";
 
-const Listing = (props) => {
+
+const ListData = (props) => {
   const { type } = props;
   const [currentPage, setCurrentPage] = useState();
   const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -59,7 +59,7 @@ const Listing = (props) => {
   console.log(isLoading);
   return (
     <>
-      {isLoading && <RiseLoader color="gray" size={150} />}
+     
       <ShowList data={props.data.content} card={props.card} />
       <div className={classes["pag-select"]}>
         <ReactPaginate
@@ -93,4 +93,4 @@ const Listing = (props) => {
   );
 };
 
-export default Listing;
+export default ListData;
