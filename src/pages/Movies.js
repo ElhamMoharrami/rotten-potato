@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 
 import ListData from "../components/ListData/ListData";
@@ -14,7 +14,7 @@ const Movies = () => {
   };
   return (
     <>
-      <ListData type="movies" data={data} card={card} action={movieActions}  />
+      <ListData type="movies" data={data} card={card} action={movieActions} />
     </>
   );
 };

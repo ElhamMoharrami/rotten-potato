@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 
 import Select from "react-dropdown-select";
 import ReactPaginate from "react-paginate";
@@ -10,14 +10,12 @@ import ShowList from "../ShowList/ShowList";
 import classes from "./ListData.module.css";
 import { options } from "../../assets/apis/config";
 
-import { pageRangeDisplayed } from "../../assets/apis/config";
-
-
 const ListData = (props) => {
   const { type } = props;
   const [currentPage, setCurrentPage] = useState();
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [isLoading, setIsLoading] = useState(false);
+  const pageRangeDisplayed = 3;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -59,7 +57,6 @@ const ListData = (props) => {
   console.log(isLoading);
   return (
     <>
-     
       <ShowList data={props.data.content} card={props.card} />
       <div className={classes["pag-select"]}>
         <ReactPaginate

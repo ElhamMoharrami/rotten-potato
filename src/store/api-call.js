@@ -1,4 +1,4 @@
-import { BASEURL } from "../assets/apis/config";
+const BASEURL = `http://localhost:8080/api`;
 
 const getDataRequest = async (url) => {
   const response = await fetch(url);

@@ -8,7 +8,6 @@ import { useParams } from "react-router-dom";
 import { fetchDetail, fetchDetailList } from "../../store/api-call";
 
 import classes from "./MovieDetailPage.module.css";
-import ShowList from "../../components/ShowList/ShowList";
 
 import { movieActions } from "../../store/data-slice";
 import Carousel from "react-multi-carousel";
@@ -86,7 +85,7 @@ const MovieDetailPage = () => {
             draggable={false}
             showDots={true}
             responsive={responsive}
-            ssr={true} // means to render carousel on server-side.
+            ssr={true} 
             infinite={true}
             autoPlaySpeed={1000}
             keyBoardControl={true}
