@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 const initialState = {
   data: { content: [], pageCount: 0 },
   selectedItem: [],

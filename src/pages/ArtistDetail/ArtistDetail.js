@@ -8,11 +8,11 @@ import { useParams } from "react-router-dom";
 import { fetchDetail, fetchDetailList } from "../../store/api-call";
 import ShowList from "../../components/ShowList/ShowList";
 
-import classes from "./ArtistDetailPage.module.css";
+import classes from "./ArtistDetail.module.css";
 import blankProfile from "../../assets/images/blankProfilePicture.png";
 import { artistActions } from "../../store/data-slice";
 
-const ArtistDetailPage = () => {
+const ArtistDetail = () => {
   const card = (item) => {
     return <MovieCard movie={item} key={item.id} />;
   };
@@ -64,4 +64,4 @@ const ArtistDetailPage = () => {
   );
 };
 
-export default ArtistDetailPage;
+export default ArtistDetail;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 
 import Select from "react-dropdown-select";
 import ReactPaginate from "react-paginate";
@@ -8,31 +8,31 @@ import { fetchData } from "../../store/api-call";
 import ShowList from "../ShowList/ShowList";
 
 import classes from "./ListData.module.css";
-import { options } from "../../assets/apis/config";
+import { override } from "../../assets/apis/config";
 
-import { pageRangeDisplayed } from "../../assets/apis/config";
-
+import { PacmanLoader } from "react-spinners";
 
 const ListData = (props) => {
   const { type } = props;
   const [currentPage, setCurrentPage] = useState();
   const [itemsPerPage, setItemsPerPage] = useState(5);
-  const [isLoading, setIsLoading] = useState(false);
+  const pageRangeDisplayed = 3;
+  const options = [
+    { value: 5, label: "5" },
+    { value: 10, label: "10" },
+    { value: 15, label: "15" },
+    { value: 20, label: "20" },
+  ];
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setIsLoading(true);
     const getDataRequest = async () => {
       dispatch(fetchData(type, itemsPerPage, currentPage, props.action));
       window.scrollTo(0, 0);
     };
 
     getDataRequest();
-  }, [itemsPerPage, dispatch, currentPage, props.action, type, isLoading]);
-
-  useEffect(() => {
-    setIsLoading(false);
-  }, [isLoading]);
+  }, [itemsPerPage, dispatch, currentPage, props.action, type]);
 
   const handlePageClick = async (event) => {
     setCurrentPage(event.selected + 1);
@@ -55,11 +55,15 @@ const ListData = (props) => {
   const dropdownCloseHandler = () => {
     window.scrollTo(0, 0);
   };
-
-  console.log(isLoading);
+  
   return (
     <>
-     
+      <div className={classes["spinner"]}>
+        {props.isLoading && (
+          <PacmanLoader color="gray" cssOverride={override} size={150} />
+        )}
+      </div>
+
       <ShowList data={props.data.content} card={props.card} />
       <div className={classes["pag-select"]}>
         <ReactPaginate
@@ -77,7 +81,7 @@ const ListData = (props) => {
           activeLinkClassName={classes["active"]}
         />
 
-        {!isLoading && (
+        {!props.isLoading && (
           <Select
             placeholder="select..."
             options={options}

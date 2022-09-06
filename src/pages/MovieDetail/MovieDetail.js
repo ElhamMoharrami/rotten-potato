@@ -7,15 +7,14 @@ import { useParams } from "react-router-dom";
 
 import { fetchDetail, fetchDetailList } from "../../store/api-call";
 
-import classes from "./MovieDetailPage.module.css";
-import ShowList from "../../components/ShowList/ShowList";
+import classes from "./MovieDetail.module.css";
 
 import { movieActions } from "../../store/data-slice";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { responsive } from "../../assets/apis/config";
 
-const MovieDetailPage = () => {
+const MovieDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -86,7 +85,7 @@ const MovieDetailPage = () => {
             draggable={false}
             showDots={true}
             responsive={responsive}
-            ssr={true} // means to render carousel on server-side.
+            ssr={true} 
             infinite={true}
             autoPlaySpeed={1000}
             keyBoardControl={true}
@@ -98,7 +97,7 @@ const MovieDetailPage = () => {
             itemClass="carousel-item-padding-40-px"
           >
             {artists.map((item) => (
-              <ArtistCard artist={item} />
+              <ArtistCard artist={item} key={item.id} />
             ))}
           </Carousel>
         </div>
@@ -107,4 +106,4 @@ const MovieDetailPage = () => {
   );
 };
 
-export default MovieDetailPage;
+export default MovieDetail;
