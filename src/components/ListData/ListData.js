@@ -55,7 +55,7 @@ const ListData = (props) => {
   const dropdownCloseHandler = () => {
     window.scrollTo(0, 0);
   };
-  console.log(props.isLoading);
+  
   return (
     <>
       <div className={classes["spinner"]}>
