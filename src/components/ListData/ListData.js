@@ -11,6 +11,7 @@ import classes from "./ListData.module.css";
 import { override } from "../../assets/apis/config";
 
 import { PacmanLoader } from "react-spinners";
+import Button from "../UI/CustomButton";
 
 const ListData = (props) => {
   const { type } = props;
@@ -64,6 +65,8 @@ const ListData = (props) => {
         )}
       </div>
 
+     
+
       <ShowList data={props.data.content} card={props.card} />
       <div className={classes["pag-select"]}>
         <ReactPaginate
@@ -92,6 +95,7 @@ const ListData = (props) => {
             onDropdownClose={dropdownCloseHandler}
           />
         )}
+         <Button>Add Movie</Button>
       </div>
     </>
   );
