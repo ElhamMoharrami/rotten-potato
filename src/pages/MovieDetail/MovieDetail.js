@@ -85,7 +85,7 @@ const MovieDetail = () => {
             draggable={false}
             showDots={true}
             responsive={responsive}
-            ssr={true} 
+            ssr={true}
             infinite={true}
             autoPlaySpeed={1000}
             keyBoardControl={true}

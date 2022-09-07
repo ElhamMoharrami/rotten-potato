@@ -6,6 +6,7 @@ import MovieDetail from "./pages/MovieDetail/MovieDetail";
 import ArtistDetail from "./pages/ArtistDetail/ArtistDetail";
 import Artists from "./pages/Artists";
 import Home from "./pages/Home/Home";
+import DataForm from "./components/DataForm/DataForm";
 
 import "./App.css";
 
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="/Movies/:id" element={<MovieDetail />} />
         <Route path="/Artists" element={<Artists />} />
         <Route path="/Artists/:id" element={<ArtistDetail />} />
+        <Route path="/DataForm" element={<DataForm/>}  />
       </Routes>
     </>
   );

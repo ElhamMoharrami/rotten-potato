@@ -12,9 +12,10 @@ import { override } from "../../assets/apis/config";
 
 import { PacmanLoader } from "react-spinners";
 import Button from "../UI/CustomButton";
+import { Link } from "react-router-dom";
 
 const ListData = (props) => {
-  const { type } = props;
+  const { type, isLoading } = props;
   const [currentPage, setCurrentPage] = useState();
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const pageRangeDisplayed = 3;
@@ -56,17 +57,14 @@ const ListData = (props) => {
   const dropdownCloseHandler = () => {
     window.scrollTo(0, 0);
   };
-  
+
   return (
     <>
       <div className={classes["spinner"]}>
-        {props.isLoading && (
+        {isLoading && (
           <PacmanLoader color="gray" cssOverride={override} size={150} />
         )}
       </div>
-
-     
-
       <ShowList data={props.data.content} card={props.card} />
       <div className={classes["pag-select"]}>
         <ReactPaginate
@@ -84,7 +82,7 @@ const ListData = (props) => {
           activeLinkClassName={classes["active"]}
         />
 
-        {!props.isLoading && (
+        {!isLoading && (
           <Select
             placeholder="select..."
             options={options}
@@ -95,7 +93,11 @@ const ListData = (props) => {
             onDropdownClose={dropdownCloseHandler}
           />
         )}
-         <Button>Add Movie</Button>
+        {!isLoading && (
+          <Link to={`/DataForm`}>
+            <Button type="button">Add Movie</Button>{" "}
+          </Link>
+        )}
       </div>
     </>
   );

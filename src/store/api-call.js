@@ -53,3 +53,34 @@ export const fetchDetailList = (id, type, detail, action) => {
     }
   };
 };
+
+export const sendMovieDataToBackend = (url,dataObj) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title:dataObj.movieName,
+          imdbRating:dataObj.imbdRating,
+          imdbVotes:dataObj.imbdVotes,
+          runtime:dataObj.runtime,
+          year:dataObj.year,
+          plot:dataObj.description,
+          director:dataObj.director,
+          actors:dataObj.stars,
+          genre:dataObj.generes,
+          language:dataObj.languages,
+          awards:dataObj.awards,
+          poster:dataObj.poster,
+          
+        }),
+      });
+    const data=response.json()
+    console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
