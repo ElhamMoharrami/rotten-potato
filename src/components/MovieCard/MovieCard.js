@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./MovieCard.scss";
+import '../../assets/CardStyle.scss'
 
 const MovieCard = (props) => {
   const { movie } = props;

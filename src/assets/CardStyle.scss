@@ -1,13 +1,17 @@
-@import "../../assets/colors.scss";
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,300;1,400&display=swap");
 
 .card-item {
-  background: $secondary-color;
+  background-color: #0c0b0b;
   cursor: pointer;
   transition: all 0.3s;
-  height: 560px;
-  margin-bottom: 5rem;
-
+  width: 250px;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+ 
+  border-radius: 100px;
+  height: 600px;
+  box-shadow: 0px -3px 19px 5px rgba(228, 0, 30, 0.77)
+  ;
   a {
     text-decoration: none;
   }
@@ -24,7 +28,8 @@
   img {
     width: 100%;
     height: 100%;
-    color: rgb(255, 255, 255);
+    border-radius: 100px;
+    border-bottom-right-radius: 0;
   }
 }
 
@@ -32,19 +37,16 @@
   padding: 20px;
 }
 .card-info {
-  color: $font-primary;
-  font-family: "Roboto", sans-serif;
+  color:rgb(255, 255, 255);
+  line-height: 2rem;
   h4 {
     font-size: 22px;
     font-weight: 400;
     margin-bottom: 10px;
+    font-family: "Roboto", sans-serif;
   }
-}
-
-.card-detail {
-  display: flex;
 
   p {
-    color: red;
+    font-family: "Roboto", sans-serif;
   }
 }

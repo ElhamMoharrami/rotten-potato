@@ -3,6 +3,7 @@ import Button from "../UI/CustomButton";
 import classes from "./DataForm.module.css";
 import { useDispatch } from "react-redux";
 import { sendMovieDataToBackend } from "../../store/api-call";
+import Card from '../UI/Card/Card'
 
 const DataForm = () => {
   const [movieName, setMovieName] = useState("");
@@ -56,8 +57,9 @@ const DataForm = () => {
   };
 
   return (
+   
     <form onSubmit={formSubmitHandler}>
-      <div className={classes["wrapper"]}>
+      <Card className={classes["wrapper"]}>
         <div className={classes["data-form-input"]}>
           <label>Movie name</label>
           <input
@@ -160,15 +162,16 @@ const DataForm = () => {
         <div className={classes["data-form-input"]}>
           <label>Poster Url:</label>
           <input
-            type="text"
+            type="url"
             value={poster}
             onChange={(e) => setPoster(e.target.value)}
           />
         </div>
 
         <Button type="submit">Submit</Button>
-      </div>
+      </Card>
     </form>
+   
   );
 };
 

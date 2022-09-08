@@ -1,8 +1,8 @@
 .poster-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    grid-gap: 30px;
-    margin: 20px;
-    margin-top: 45px;
-    padding-top: 30px;
-  }
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-gap: 60px;
+  margin: 20px;
+  margin-top: 45px;
+  padding-top: 30px;
+}
