@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import '../../assets/CardStyle.scss'
+import "../../assets/CardStyle.scss";
 
 const MovieCard = (props) => {
   const { movie } = props;
@@ -15,7 +15,10 @@ const MovieCard = (props) => {
         <div className="card-bottom">
           <div className="card-info">
             <h4>{movie.title}</h4>
-            <p>{movie.year}</p>
+          </div>
+          <div className="card-icons">
+            <img src="https://img.icons8.com/clouds/100/000000/delete.png" />
+            <img src="https://img.icons8.com/clouds/100/000000/edit.png" />
           </div>
         </div>
       </Link>

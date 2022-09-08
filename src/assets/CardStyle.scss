@@ -7,11 +7,10 @@
   width: 250px;
   margin-top: 4rem;
   margin-bottom: 4rem;
- 
-  border-radius: 100px;
-  height: 600px;
-  box-shadow: 0px -3px 19px 5px rgba(228, 0, 30, 0.77)
-  ;
+  height: 650px;
+  box-shadow: 0px -3px 19px 5px rgba(228, 0, 30, 0.77);
+  border-radius: 2rem;
+  position: relative;
   a {
     text-decoration: none;
   }
@@ -37,7 +36,7 @@
   padding: 20px;
 }
 .card-info {
-  color:rgb(255, 255, 255);
+  color: rgb(255, 255, 255);
   line-height: 2rem;
   h4 {
     font-size: 22px;
@@ -49,4 +48,12 @@
   p {
     font-family: "Roboto", sans-serif;
   }
+}
+
+.card-icons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
 }

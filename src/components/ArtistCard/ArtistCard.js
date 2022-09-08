@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
-import '../../assets/CardStyle.scss'
+import "../../assets/CardStyle.scss";
 import blankProfilePicture from "../../assets/images/blankProfilePicture.png";
 
 const ArtistCard = (props) => {
