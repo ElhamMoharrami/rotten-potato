@@ -84,3 +84,15 @@ export const sendMovieDataToBackend = (url,dataObj) => {
   };
 };
 
+export const deleteSelectedMovie = (id) => {
+  return async (dispatch) => {
+    try {
+      const url = `${BASEURL}/movies/${id}`;
+      await fetch(url, {
+        method: "DELETE"
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
