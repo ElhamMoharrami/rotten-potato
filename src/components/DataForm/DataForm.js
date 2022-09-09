@@ -37,6 +37,7 @@ const DataForm = () => {
           languages,
           awards,
           poster,
+         
         })
       );
     };
@@ -54,6 +55,7 @@ const DataForm = () => {
     setLanguages("");
     setAwards("");
     setPoster("");
+    
   };
 
   return (

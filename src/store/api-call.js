@@ -6,7 +6,7 @@ const getDataRequest = async (url) => {
   return data;
 };
 
-export const fetchData = (type, size, currentPage, action) => {
+export const fetchData = (type, size, currentPage=1, action) => {
   return async (dispatch) => {
     try {
       dispatch(action.setIsLoading({ isLoading: true }));
@@ -73,7 +73,9 @@ export const sendMovieDataToBackend = (url,dataObj) => {
           language:dataObj.languages,
           awards:dataObj.awards,
           poster:dataObj.poster,
-          
+          crews: [
+            "http://localhost:8080/api/crews/nm0050100"
+        ]
         }),
       });
     const data=response.json()
