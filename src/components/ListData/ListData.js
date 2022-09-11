@@ -94,8 +94,8 @@ const ListData = (props) => {
           />
         )}
         {!isLoading && (
-          <Link to={`/DataForm`}>
-            <Button type="button">Add Movie</Button>{" "}
+          <Link to={`/DataForm/add`}>
+            <Button  type="button">Add Movie</Button>{" "}
           </Link>
         )}
       </div>

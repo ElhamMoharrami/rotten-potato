@@ -25,6 +25,9 @@ const createDataSlice = (name) => {
       setIsLoading(state, action) {
         state.isLoading = action.payload.isLoading;
       },
+      clearSelectedItem(state){
+        state.selectedItem=[]
+      }
     },
   });
 };

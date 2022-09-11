@@ -21,7 +21,8 @@ export default function App() {
         <Route path="/Movies/:id" element={<MovieDetail />} />
         <Route path="/Artists" element={<Artists />} />
         <Route path="/Artists/:id" element={<ArtistDetail />} />
-        <Route path="/DataForm" element={<DataForm/>}  />
+        <Route path="/DataForm/add" element={<DataForm/>}  />
+        <Route path="/DataForm/:id" element={<DataForm/>}  />
       </Routes>
     </>
   );

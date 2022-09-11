@@ -6,7 +6,7 @@ const getDataRequest = async (url) => {
   return data;
 };
 
-export const fetchData = (type, size, currentPage=1, action) => {
+export const fetchData = (type, size, currentPage = 1, action) => {
   return async (dispatch) => {
     try {
       dispatch(action.setIsLoading({ isLoading: true }));
@@ -54,32 +54,31 @@ export const fetchDetailList = (id, type, detail, action) => {
   };
 };
 
-export const sendMovieDataToBackend = (url,dataObj) => {
+export const saveMovie = (dataObj) => {
   return async (dispatch) => {
     try {
+      const url = `${BASEURL}/movies`;
       const response = await fetch(url, {
         method: "POST",
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          title:dataObj.movieName,
-          imdbRating:dataObj.imbdRating,
-          imdbVotes:dataObj.imbdVotes,
-          runtime:dataObj.runtime,
-          year:dataObj.year,
-          plot:dataObj.description,
-          director:dataObj.director,
-          actors:dataObj.stars,
-          genre:dataObj.generes,
-          language:dataObj.languages,
-          awards:dataObj.awards,
-          poster:dataObj.poster,
-          crews: [
-            "http://localhost:8080/api/crews/nm0050100"
-        ]
+          title: dataObj.movieName,
+          imdbRating: dataObj.imdbRating,
+          imdbVotes: dataObj.imdbVotes,
+          runtime: dataObj.runtime,
+          year: dataObj.year,
+          plot: dataObj.description,
+          director: dataObj.director,
+          actors: dataObj.stars,
+          genre: dataObj.generes,
+          language: dataObj.languages,
+          awards: dataObj.awards,
+          poster: dataObj.poster,
+          crews: ["http://localhost:8080/api/crews/nm0050100"],
         }),
       });
-    const data=response.json()
-    console.log(data);
+      const data = response.json();
+      console.log(data);
     } catch (err) {
       console.log(err);
     }
@@ -91,8 +90,40 @@ export const deleteSelectedMovie = (id) => {
     try {
       const url = `${BASEURL}/movies/${id}`;
       await fetch(url, {
-        method: "DELETE"
+        method: "DELETE",
       });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const updateMovie = (id, dataObj) => {
+  return async (dispatch) => {
+    try {
+      const url=`${BASEURL}/movies/${id}`
+      const response = await fetch(url, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: dataObj.id,
+          title: dataObj.movieName,
+          imdbRating: dataObj.imdbRating,
+          imdbVotes: dataObj.imdbVotes,
+          runtime: dataObj.runtime,
+          year: dataObj.year,
+          plot: dataObj.description,
+          director: dataObj.director,
+          actors: dataObj.stars,
+          genre: dataObj.generes,
+          language: dataObj.languages,
+          awards: dataObj.awards,
+          poster: dataObj.poster,
+          crews: ["http://localhost:8080/api/crews/nm0050100"],
+        }),
+      });
+      const data = response.json();
+      console.log(data);
     } catch (err) {
       console.log(err);
     }
