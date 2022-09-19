@@ -6,3 +6,17 @@
   margin-top: 45px;
   padding-top: 30px;
 }
+
+.button{
+  transition: all 0.3s;
+}
+
+.button:hover{
+  transform: scale(1.1);
+  transition: all 0.3s;
+}
+
+.carousel-container {
+ padding: 1rem;
+  overflow: hidden;
+}

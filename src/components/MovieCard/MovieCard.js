@@ -1,26 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { deleteSelectedMovie} from "../../store/api-call";
-import { useDispatch } from "react-redux";
+import { deleteSelectedItem } from "../../store/api-call";
+import { useDispatch, useSelector } from "react-redux";
+import { movieActions } from "../../store/data-slice";
 
 import "../../assets/CardStyle.scss";
-import classes from "./MovieCard.module.css";
+import "../../assets/commonStyle.css";
 
 const MovieCard = (props) => {
   const { movie } = props;
   const dispatch = useDispatch();
 
-  const deleteHandler = (e) => {
-    const deleteMovie = async () => {
-      dispatch(deleteSelectedMovie(movie.id));
-    };
-    deleteMovie();
-    window.location.reload(true);
+  const currentPage = useSelector((state) => state.movies.data.currentPage);
+  const itemsPerPage = useSelector((state) => state.movies.data.itemsPerPage);
+  const content = useSelector((state) => state.movies.data.content);
+
+  const deleteHandler = () => {
+    dispatch(
+      deleteSelectedItem( movie.id, "movies",itemsPerPage, currentPage,movieActions, content.length )
+    );
+    console.log(content.length);
   };
 
   return (
     <div className="card-item">
-      <Link to={`/Movies/${movie.id}`}>
+      <Link to={`/movies/${movie.id}`}>
         <div className="card-inner">
           <div className="card-top">
             <img src={movie.poster} alt={movie.title} />
@@ -32,21 +36,21 @@ const MovieCard = (props) => {
           </div>
         </div>
       </Link>
-      <div className="card-icons">
-        <img
-          onClick={deleteHandler}
-          className={classes["button"]}
-          src="https://img.icons8.com/clouds/100/000000/delete.png"
-          alt='delete link'
-        />
-        <Link to={`/DataForm/${movie.id}`}>
+      {!props.artistDetail && (
+        <div className="card-icons">
           <img
-            className={classes["button"]}
-            src="https://img.icons8.com/clouds/100/000000/edit.png"
-            alt='edit link'
+            className="button"
+            onClick={deleteHandler}
+            src="https://img.icons8.com/material-sharp/24/000000/filled-trash.png"
           />
-        </Link>
-      </div>
+          <Link to={`/movieform/edit/${movie.id}`}>
+            <img
+              className="button"
+              src="https://img.icons8.com/ios-glyphs/30/000000/edit--v1.png"
+            />
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

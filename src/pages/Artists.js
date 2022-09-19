@@ -16,7 +16,7 @@ const Artists = () => {
   return (
     <>
       <ListData
-        type={`crews`}
+        type={'crews'}
         data={data}
         card={card}
         action={artistActions}

@@ -6,17 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { fetchDetail, fetchDetailList } from "../../store/api-call";
-import ShowList from "../../components/ShowList/ShowList";
+import Carousel from "react-multi-carousel";
+import { responsive } from "../../assets/apis/config";
 
 import classes from "./ArtistDetail.module.css";
+import '../../assets/commonStyle.css'
 import blankProfile from "../../assets/images/blankProfilePicture.png";
 import { artistActions } from "../../store/data-slice";
 
-const ArtistDetail = () => {
-  const card = (item) => {
-    return <MovieCard movie={item} key={item.id} />;
-  };
 
+const ArtistDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -57,8 +56,29 @@ const ArtistDetail = () => {
         </div>
       </div>
       <div className={classes.movies}>
-        <p className={classes["movie-title"]}>Movies</p>
-        <ShowList data={movies} card={card} />
+        <p className={classes["movie-title"]}>movies</p>
+        <div className="carousel-container">
+          <Carousel
+            swipeable={false}
+            draggable={false}
+            showDots={true}
+            responsive={responsive}
+            ssr={true}
+            infinite={false}
+            autoPlaySpeed={1000}
+            keyBoardControl={true}
+            customTransition="all .5"
+            transitionDuration={500}
+            containerClass="carousel-container"
+            removeArrowOnDeviceType={["tablet", "mobile"]}
+            dotListClass="custom-dot-list-style"
+            itemClass="carousel-item-padding-40-px"
+          >
+            {movies.map((item) => (
+              <MovieCard artistDetail={true} movie={item} key={item.id} />
+            ))}
+          </Carousel>
+        </div>
       </div>
     </>
   );

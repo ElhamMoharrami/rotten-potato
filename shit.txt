@@ -212,3 +212,108 @@ const DataForm = () => {
 };
 
 export default DataForm;
+
+
+
+
+
+
+
+
+
+
+import React, { useEffect, useState } from "react";
+import Button from "../UI/CustomButton";
+import { useDispatch, useSelector } from "react-redux";
+import { saveMovie, updateMovie } from "../../store/api-call";
+import { fetchDetail } from "../../store/api-call";
+import { movieActions } from "../../store/data-slice";
+import { useParams } from "react-router-dom";
+import Card from "../UI/Card/Card";
+import { useForm } from "react-hook-form";
+import { RiseLoader } from "react-spinners";
+
+//issues : should click twice on 
+//edit button to get the right data
+//the first e.target.value is undefined and needs space
+//just kill me already :(
+
+const MovieForm = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const { register, handleSubmit, reset } = useForm();
+  const isAddMode = !id;
+
+  const movie = useSelector((state) => state.movies.selectedItem);
+  const [movieData, setMovieData] = useState({});
+
+  useEffect(() => {
+    if (!isAddMode) {
+      dispatch(fetchDetail(id, "movies", movieActions));
+      setMovieData(movie);
+    }
+  }, [isAddMode, dispatch]);
+
+ 
+
+  const onchangeHandler = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    setMovieData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+    console.log(movieData);
+  };
+
+  function onSubmit(data) {
+    console.log(data);
+    return isAddMode ? createMovie(data) : updateMovie(id, data);
+  }
+
+  function createMovie(data) {
+    console.log("movie created");
+  }
+
+  function updateMovie(id, data) {
+    console.log("movie updated", data);
+  }
+
+  return (
+    <Card>
+      <h1>{isAddMode ? "Add User" : "Edit User"}</h1>
+      <form onSubmit={handleSubmit(onSubmit)} onReset={reset}>
+        <label>Movie name</label>
+        <input
+          type="text"
+          {...register("title")}
+          onChange={onchangeHandler}
+          value={movie.title}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
+    </Card>
+  );
+};
+
+export default MovieForm;
+
+
+const deleteHandler = () => {
+   
+    const deleteMovie = async() => {
+      dispatch(deleteSelectedMovie(movie.id));
+     setDeleted(false)
+    };
+    deleteMovie();
+
+    console.log(currentPage, itemsPerPage);
+
+    const updatePage = async() => {
+      dispatch(fetchData("movies", itemsPerPage, currentPage, movieActions));
+      setDeleted(false)
+    };
+    updatePage();
+    console.log(currentPage, itemsPerPage);
+  };

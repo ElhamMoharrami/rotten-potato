@@ -13,6 +13,7 @@ import { movieActions } from "../../store/data-slice";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { responsive } from "../../assets/apis/config";
+import '../../assets/commonStyle.css'
 
 const MovieDetail = () => {
   const { id } = useParams();
@@ -24,6 +25,7 @@ const MovieDetail = () => {
   useEffect(() => {
     dispatch(fetchDetail(id, "movies", movieActions));
     dispatch(fetchDetailList(id, "movies", "crews", movieActions));
+
   }, [dispatch, id]);
 
   return (
@@ -33,7 +35,7 @@ const MovieDetail = () => {
           <p className={classes["movie-title"]}>{movie.title}</p>
           <div className={classes["movie-rating"]}>
             <span>
-              IMDB Rating <i></i> : {movie.imdbRating}
+            <img src="https://img.icons8.com/tiny-color/16/000000/star.png"/>   IMDB Rating <i></i> : {movie.imdbRating}
             </span>
             <span>
               IMDB Votes <i></i> : {movie.imdbVotes}
@@ -79,14 +81,14 @@ const MovieDetail = () => {
       </div>
       <div className={classes.crew}>
         <p className={classes["crew-title"]}>Movie Crew</p>
-        <div className={classes["carousel-container"]}>
+        <div className="carousel-container">
           <Carousel
             swipeable={false}
             draggable={false}
             showDots={true}
             responsive={responsive}
             ssr={true}
-            infinite={true}
+            infinite={false}
             autoPlaySpeed={1000}
             keyBoardControl={true}
             customTransition="all .5"
@@ -97,7 +99,7 @@ const MovieDetail = () => {
             itemClass="carousel-item-padding-40-px"
           >
             {artists.map((item) => (
-              <ArtistCard artist={item} key={item.id} />
+              <ArtistCard movieDetail={true} artist={item} key={item.id} />
             ))}
           </Carousel>
         </div>

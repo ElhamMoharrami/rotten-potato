@@ -1,14 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,300;1,400&display=swap");
 
 .card-item {
-  background-color: #0c0b0b;
+  background-color: #640D14;
   cursor: pointer;
   transition: all 0.3s;
-  width: 250px;
+ 
   margin-top: 4rem;
   margin-bottom: 4rem;
-  height: 650px;
-  box-shadow: 0px -3px 19px 5px rgba(228, 0, 30, 0.77);
+  height: 550px;
+  box-shadow: 0px -3px 19px 5px #AD2831;
   border-radius: 2rem;
   position: relative;
   a {
@@ -27,8 +27,8 @@
   img {
     width: 100%;
     height: 100%;
-    border-radius: 100px;
-    border-bottom-right-radius: 0;
+    border-radius: 2rem;
+    // border-bottom-right-radius: 0;
   }
 }
 
@@ -56,5 +56,10 @@
   align-items: center;
   position: absolute;
   bottom: 0;
- gap:50px
+  gap: 50px;
+  width: 250px;
+
+  img{
+    margin: 20px;
+  }
 }
