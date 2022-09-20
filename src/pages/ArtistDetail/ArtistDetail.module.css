@@ -12,24 +12,26 @@
   display: flex;
   justify-content: space-between;
   gap: 5rem;
-  box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px,
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 0px 2px,
     rgba(6, 24, 44, 0.65) 0px 4px 6px -1px,
     rgba(182, 23, 23, 0.08) 0px 1px 0px inset;
 }
 
 .artist-name {
   font-size: 40px;
+  color: white;
 }
 
 .artist-info span {
   margin-right: 20px;
+  color: white;
 }
 
 .artist-profession {
   font-size: 18px;
   margin-top: 30px;
   line-height: 30px;
-  color: rgb(54, 0, 0);
+  color: white
 }
 
 .movie-title {
@@ -38,6 +40,7 @@
   margin-right: 20px;
   align-content: center;
   padding-left: 20px;
+  color: white;
 
   box-shadow: rgba(209, 3, 3, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }

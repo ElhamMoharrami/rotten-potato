@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import Select from "react-dropdown-select";
@@ -11,11 +11,14 @@ import classes from "./ListData.module.css";
 import { override } from "../../assets/apis/config";
 
 import { PacmanLoader } from "react-spinners";
+import Button from "../UI/CustomButton";
+import { Link } from "react-router-dom";
+
+
 
 const ListData = (props) => {
-  const { type } = props;
-  const [currentPage, setCurrentPage] = useState();
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const { type, isLoading } = props;
+
   const pageRangeDisplayed = 3;
   const options = [
     { value: 5, label: "5" },
@@ -24,24 +27,41 @@ const ListData = (props) => {
     { value: 20, label: "20" },
   ];
   const dispatch = useDispatch();
+  const linkCondition=type==='movies'?`/movieform/add`:'/crewform/add'
+
+  
 
   useEffect(() => {
     const getDataRequest = async () => {
-      dispatch(fetchData(type, itemsPerPage, currentPage, props.action));
+      dispatch(
+        fetchData(
+          type,
+          props.data.itemsPerPage,
+          props.data.currentPage,
+          props.action
+        )
+      );
+
       window.scrollTo(0, 0);
     };
 
     getDataRequest();
-  }, [itemsPerPage, dispatch, currentPage, props.action, type]);
+  }, [
+    props.data.itemsPerPage,
+    dispatch,
+    props.data.currentPage,
+    props.action,
+    type,
+  ]);
 
   const handlePageClick = async (event) => {
-    setCurrentPage(event.selected + 1);
+    dispatch(props.action.setCurrentPage({ currentPage: event.selected + 1 }));
   };
 
   const itemsPerPageHandler = (selectedOption) => {
     const selectedOpt = selectedOption[0].value;
 
-    setItemsPerPage(selectedOpt);
+    dispatch(props.action.setItemsPerPage({ itemsPerPage: selectedOpt }));
   };
 
   const dropdownOpenHandler = () => {
@@ -55,15 +75,14 @@ const ListData = (props) => {
   const dropdownCloseHandler = () => {
     window.scrollTo(0, 0);
   };
-  
+
   return (
     <>
       <div className={classes["spinner"]}>
-        {props.isLoading && (
+        {isLoading && (
           <PacmanLoader color="gray" cssOverride={override} size={150} />
         )}
       </div>
-
       <ShowList data={props.data.content} card={props.card} />
       <div className={classes["pag-select"]}>
         <ReactPaginate
@@ -73,6 +92,7 @@ const ListData = (props) => {
           pageRangeDisplayed={pageRangeDisplayed}
           pageCount={props.data.pageCount}
           previousLabel="< previous"
+          initialPage={props.data.currentPage-1}
           renderOnZeroPageCount={null}
           containerClassName={classes["pagination"]}
           pageLinkClassName={classes["page-num"]}
@@ -81,9 +101,10 @@ const ListData = (props) => {
           activeLinkClassName={classes["active"]}
         />
 
-        {!props.isLoading && (
+        {!isLoading && (
           <Select
             placeholder="select..."
+           className={classes['select']}
             options={options}
             onChange={itemsPerPageHandler}
             searchable={false}
@@ -91,6 +112,11 @@ const ListData = (props) => {
             onDropdownOpen={dropdownOpenHandler}
             onDropdownClose={dropdownCloseHandler}
           />
+        )}
+        {!isLoading && (
+          <Link to={linkCondition}>
+    <Button>Add </Button>
+          </Link>
         )}
       </div>
     </>

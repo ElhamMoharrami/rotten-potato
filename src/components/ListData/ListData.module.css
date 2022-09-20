@@ -1,5 +1,9 @@
+a{
+  text-decoration: none;
+}
+
 .pagination {
-  color: black;
+  color: white;
   margin-top: 3rem;
   margin-bottom: 2rem;
   padding-left: 0;
@@ -20,20 +24,30 @@
 }
 
 .pagination .page-num:hover {
-  background-color: #555;
+  background-color:#641220;
   color: rgb(17, 16, 16);
 }
 
 .pagination .active {
-  background-color: rgb(58, 57, 56);
+  background-color: #85182a;
 }
 
 .pag-select {
   display: flex;
   justify-content: center;
   align-items: baseline;
+  gap:50px
 }
 
 .spinner {
   position: relative;
+}
+
+
+.css-wmy1p7-ReactDropdownSelect{
+  color: red;
+}
+
+.css-wmy1p7-ReactDropdownSelect:hover{
+  color: red !important;
 }

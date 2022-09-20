@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  data: { content: [], pageCount: 0 },
+  data: { content: [], pageCount: 0, currentPage:1, itemsPerPage:5 }, 
   selectedItem: [],
   detailList: [],
   isLoading: false,
@@ -25,6 +25,12 @@ const createDataSlice = (name) => {
       setIsLoading(state, action) {
         state.isLoading = action.payload.isLoading;
       },
+      setCurrentPage(state, action) {
+        state.data.currentPage = action.payload.currentPage;
+      },
+      setItemsPerPage(state,action){
+        state.data.itemsPerPage=action.payload.itemsPerPage
+     }
     },
   });
 };

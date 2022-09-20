@@ -9,13 +9,19 @@ import { movieActions } from "../store/data-slice";
 
 const Movies = () => {
   const data = useSelector((state) => state.movies.data);
-  const isLoading=useSelector((state)=>state.movies.isLoading)
+  const isLoading = useSelector((state) => state.movies.isLoading);
   const card = (item) => {
-    return <MovieCard movie={item} key={item.id} />;
+    return <MovieCard movie={item} />;
   };
   return (
     <>
-      <ListData type="movies" data={data} card={card} action={movieActions} isLoading={isLoading} />
+      <ListData
+        type="movies"
+        data={data}
+        card={card}
+        action={movieActions}
+        isLoading={isLoading}
+      />
     </>
   );
 };

@@ -1,0 +1,319 @@
+import React, { useEffect, useState, useRef } from "react";
+import Button from "../UI/CustomButton";
+import classes from "./DataForm.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { saveMovie, updateMovie } from "../../store/api-call";
+import { fetchDetail } from "../../store/api-call";
+import { movieActions } from "../../store/data-slice";
+import { useParams } from "react-router-dom";
+import Card from "../UI/Card/Card";
+
+const DataForm = () => {
+  const movie = useSelector((state) => state.movies.selectedItem);
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  const [movieName, setMovieName] = useState("");
+  const [imdbRating, setImdbRating] = useState("");
+  const [imdbVotes, setImdbVots] = useState("");
+  const [runtime, setRuntime] = useState("");
+  const [year, setYear] = useState("");
+  const [description, setDescription] = useState("");
+  const [director, setDirector] = useState("");
+  const [stars, setStars] = useState("");
+  const [generes, setGeneres] = useState("");
+  const [languages, setLanguages] = useState("");
+  const [awards, setAwards] = useState("");
+  const [poster, setPoster] = useState("");
+  
+  
+
+  useEffect(() => {
+    if (id !== undefined) {
+      dispatch(fetchDetail(id, "movies", movieActions));
+    }
+    if(id===undefined){
+      console.log('fuck');
+    }
+  }, [id]);
+
+  const formSubmitHandler = (e) => {
+    e.preventDefault();
+    if (id === null) {
+      dispatch(
+        saveMovie(`http://localhost:8080/api/movies`, {
+          movieName,
+          imdbRating,
+          imdbVotes,
+          runtime,
+          year,
+          description,
+          director,
+          stars,
+          generes,
+          languages,
+          awards,
+          poster,
+        })
+      );
+    }
+    if (id !==  null) {
+      console.log("this is update");
+      dispatch(
+        updateMovie(`http://localhost:8080/api/movies/${id}`, {
+          id,
+          movieName,
+          imdbRating,
+          imdbVotes,
+          runtime,
+          year,
+          description,
+          director,
+          stars,
+          generes,
+          languages,
+          awards,
+          poster,
+        })
+      );
+    }
+
+    
+    setMovieName("");
+    setImdbRating("");
+    setImdbVots("");
+    setRuntime("");
+    setYear("");
+    setDescription("");
+    setDirector("");
+    setStars("");
+    setGeneres("");
+    setLanguages("");
+    setAwards("");
+    setPoster("");
+  };
+
+  return (
+    <div>
+      <form onSubmit={formSubmitHandler}>
+        <Card className={classes["wrapper"]}>
+          <div className={classes["data-form-input"]}>
+            <label>Movie name</label>
+            <input
+              type="text"
+              defaultValue={id ===undefined ? '':movie.title}
+              required
+              onChange={(e) => setMovieName(e.target.value)}
+            />
+          </div>
+          <div className={classes["data-form-input"]}>
+            <label>IMDB rating</label>
+            <input
+              type="text"
+              defaultValue={id ===undefined ? '': movie.imdbRating}
+              required
+              onChange={(e) => setImdbRating(e.target.value)}
+            />
+          </div>
+          <div className={classes["data-form-input"]}>
+            <label>IMDB votes</label>
+            <input
+              type="text"
+              defaultValue={id ===undefined ? '': movie.imdbVotes}
+              required
+              onChange={(e) => setImdbVots(e.target.value)}
+            />
+          </div>
+          <div className={classes["data-form-input"]}>
+            <label>Runtime</label>
+            <input
+              type="text"
+              defaultValue={id ===undefined ? '': movie.runtime}
+              required
+              onChange={(e) => setRuntime(e.target.value)}
+            />
+          </div>
+          <div className={classes["data-form-input"]}>
+            <label>Year</label>
+            <input
+              type="text"
+              defaultValue={id ===undefined ? '': movie.year}
+              required
+              onChange={(e) => setYear(e.target.value)}
+            />
+          </div>
+          <div className={classes["data-form-input"]}>
+            <label>Description</label>
+            <input
+              type="text"
+              defaultValue={id ===undefined ? '': movie.plot}
+              required
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+          <div className={classes["data-form-input"]}>
+            <label>Director</label>
+            <input
+              type="text"
+              defaultValue={id ===undefined ? '': movie.director}
+              required
+              onChange={(e) => setDirector(e.target.value)}
+            />
+          </div>
+          <div className={classes["data-form-input"]}>
+            <label>Stars</label>
+            <input
+              type="text"
+              defaultValue={id ===undefined ? '': movie.actors}
+              required
+              onChange={(e) => setStars(e.target.value)}
+            />
+          </div>
+          <div className={classes["data-form-input"]}>
+            <label>Generes</label>
+            <input
+              type="text"
+              defaultValue={id ===undefined ? '': movie.genre}
+              required
+              onChange={(e) => setGeneres(e.target.value)}
+            />
+          </div>
+          <div className={classes["data-form-input"]}>
+            <label>Languages</label>
+            <input
+              type="text"
+              defaultValue={id ===undefined ? '':movie.language}
+              required
+              onChange={(e) => setLanguages(e.target.value)}
+            />
+          </div>
+          <div className={classes["data-form-input"]}>
+            <label>Awards</label>
+            <input
+              type="text"
+              defaultValue={id ===undefined ? '':movie.awards}
+              required
+              onChange={(e) => setAwards(e.target.value)}
+            />
+          </div>
+          <div className={classes["data-form-input"]}>
+            <label>Poster Url:</label>
+            <input
+              type="text"
+              defaultValue={id ===undefined ? '':movie.poster}
+              onChange={(e) => setPoster(e.target.value)}
+            />
+          </div>
+
+          <Button type="submit">Submit</Button>
+        </Card>
+      </form>
+    </div>
+  );
+};
+
+export default DataForm;
+
+
+
+
+
+
+
+
+
+
+import React, { useEffect, useState } from "react";
+import Button from "../UI/CustomButton";
+import { useDispatch, useSelector } from "react-redux";
+import { saveMovie, updateMovie } from "../../store/api-call";
+import { fetchDetail } from "../../store/api-call";
+import { movieActions } from "../../store/data-slice";
+import { useParams } from "react-router-dom";
+import Card from "../UI/Card/Card";
+import { useForm } from "react-hook-form";
+import { RiseLoader } from "react-spinners";
+
+//issues : should click twice on 
+//edit button to get the right data
+//the first e.target.value is undefined and needs space
+//just kill me already :(
+
+const MovieForm = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const { register, handleSubmit, reset } = useForm();
+  const isAddMode = !id;
+
+  const movie = useSelector((state) => state.movies.selectedItem);
+  const [movieData, setMovieData] = useState({});
+
+  useEffect(() => {
+    if (!isAddMode) {
+      dispatch(fetchDetail(id, "movies", movieActions));
+      setMovieData(movie);
+    }
+  }, [isAddMode, dispatch]);
+
+ 
+
+  const onchangeHandler = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    setMovieData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+    console.log(movieData);
+  };
+
+  function onSubmit(data) {
+    console.log(data);
+    return isAddMode ? createMovie(data) : updateMovie(id, data);
+  }
+
+  function createMovie(data) {
+    console.log("movie created");
+  }
+
+  function updateMovie(id, data) {
+    console.log("movie updated", data);
+  }
+
+  return (
+    <Card>
+      <h1>{isAddMode ? "Add User" : "Edit User"}</h1>
+      <form onSubmit={handleSubmit(onSubmit)} onReset={reset}>
+        <label>Movie name</label>
+        <input
+          type="text"
+          {...register("title")}
+          onChange={onchangeHandler}
+          value={movie.title}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
+    </Card>
+  );
+};
+
+export default MovieForm;
+
+
+const deleteHandler = () => {
+   
+    const deleteMovie = async() => {
+      dispatch(deleteSelectedMovie(movie.id));
+     setDeleted(false)
+    };
+    deleteMovie();
+
+    console.log(currentPage, itemsPerPage);
+
+    const updatePage = async() => {
+      dispatch(fetchData("movies", itemsPerPage, currentPage, movieActions));
+      setDeleted(false)
+    };
+    updatePage();
+    console.log(currentPage, itemsPerPage);
+  };
