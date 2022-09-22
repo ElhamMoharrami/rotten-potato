@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { movieActions } from "../../store/data-slice";
 
 import "../../assets/CardStyle.scss";
-import "../../assets/commonStyle.css";
+import "../../assets/commonStyle.scss";
 
 const MovieCard = (props) => {
   const { movie } = props;

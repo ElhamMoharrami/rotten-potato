@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import "../../assets/commonStyle.css";
+import "../../assets/commonStyle.scss";
 
 const ShowList = (props) => {
   return (

@@ -4,7 +4,7 @@ import blankProfilePicture from "../../assets/images/blankProfilePicture.png";
 import {  deleteSelectedItem } from "../../store/api-call";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import "../../assets/commonStyle.css";
+import "../../assets/commonStyle.scss";
 import "../../assets/CardStyle.scss";
 import { artistActions } from "../../store/data-slice";
 

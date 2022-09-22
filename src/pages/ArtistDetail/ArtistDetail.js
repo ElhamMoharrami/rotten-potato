@@ -10,7 +10,7 @@ import Carousel from "react-multi-carousel";
 import { responsive } from "../../assets/apis/config";
 
 import classes from "./ArtistDetail.module.css";
-import '../../assets/commonStyle.css'
+import '../../assets/commonStyle.scss'
 import blankProfile from "../../assets/images/blankProfilePicture.png";
 import { artistActions } from "../../store/data-slice";
 

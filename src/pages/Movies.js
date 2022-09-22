@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 import ListData from "../components/ListData/ListData";
 
-import "../assets/commonStyle.css";
+import "../assets/commonStyle.scss";
 import MovieCard from "../components/MovieCard/MovieCard";
 import { movieActions } from "../store/data-slice";
 

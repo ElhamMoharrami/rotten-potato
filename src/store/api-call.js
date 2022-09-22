@@ -1,4 +1,4 @@
-import { movieActions } from "./data-slice";
+import { artistActions, movieActions } from "./data-slice";
 
 const BASEURL = `http://localhost:8080/api`;
 
@@ -185,3 +185,61 @@ export const updateCrew = (id, dataObj) => {
     }
   };
 };
+
+
+export const fetchSearchedTitle=(type,title,currentPage,itemsPerPage,action)=>{
+  return async(dispatch)=>{
+    try{
+      const url=`http://localhost:8080/api/${type}/search/byTitle?title=${title}&page=${currentPage-1}&size=${itemsPerPage}`
+      const getData=await getDataRequest(url)
+      dispatch(
+        action.setData({
+          fetchedData: getData.content,
+          pageCount: getData.page.totalPages,
+        })
+      );
+      
+    }catch(err){
+      console.log(err);
+    }
+  }
+}
+
+
+export const fetchSearchedYear=(startYear,endYear,currentPage,itemsPerPage)=>{
+  return async(dispatch)=>{
+    try{
+      const url=`http://localhost:8080/api/movies/search/byYear?from=${startYear}&to=${endYear}&page=${currentPage}&size=${itemsPerPage}`
+      const getData=await getDataRequest(url)
+      dispatch(
+        movieActions.setData({
+          fetchedData: getData.content,
+          pageCount: getData.page.totalPages,
+        })
+      );
+      
+    }catch(err){
+      console.log(err);
+    }
+  }
+}
+
+
+export const fetchSearchedProfession=(profession,currentPage,itemsPerPage)=>{
+  return async(dispatch)=>{
+    try{
+      const url=`http://localhost:8080/api/crews/search/byProfession?profession=${profession}&page=${currentPage}&size=${itemsPerPage}`
+      const getData=await getDataRequest(url)
+      dispatch(
+        artistActions.setData({
+          fetchedData: getData.content,
+          pageCount: getData.page.totalPages,
+        })
+      );
+      
+    }catch(err){
+      console.log(err);
+    }
+  }
+}
+

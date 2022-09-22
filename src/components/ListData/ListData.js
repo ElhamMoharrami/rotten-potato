@@ -13,8 +13,9 @@ import { override } from "../../assets/apis/config";
 import { PacmanLoader } from "react-spinners";
 import Button from "../UI/CustomButton";
 import { Link } from "react-router-dom";
-
-
+import SearchByTitle from "../Search/SearchByTitle/SearchByTitle";
+import SearchByYear from "../Search/SearchByYear/SearchByYear";
+import SearchByProfession from "../Search/SearchByProfession/SearchByProfession";
 
 const ListData = (props) => {
   const { type, isLoading } = props;
@@ -27,9 +28,7 @@ const ListData = (props) => {
     { value: 20, label: "20" },
   ];
   const dispatch = useDispatch();
-  const linkCondition=type==='movies'?`/movieform/add`:'/crewform/add'
-
-  
+  const linkCondition = type === "movies" ? `/movieform/add` : "/crewform/add";
 
   useEffect(() => {
     const getDataRequest = async () => {
@@ -83,6 +82,21 @@ const ListData = (props) => {
           <PacmanLoader color="gray" cssOverride={override} size={150} />
         )}
       </div>
+      <div className={classes["search-wrapper"]}>
+        <div className={classes["search-box"]}>
+          <SearchByTitle
+            type={type}
+            itemsPerPage={props.data.itemsPerPage}
+            currentPage={props.data.currentPage}
+            action={props.action}
+          />
+        {type==='movies' &&  <SearchByYear
+            itemsPerPage={props.data.itemsPerPage}
+            currentPage={props.data.currentPage}
+          />}
+          {type==='crews' && <SearchByProfession/>}
+        </div>
+      </div>
       <ShowList data={props.data.content} card={props.card} />
       <div className={classes["pag-select"]}>
         <ReactPaginate
@@ -92,7 +106,7 @@ const ListData = (props) => {
           pageRangeDisplayed={pageRangeDisplayed}
           pageCount={props.data.pageCount}
           previousLabel="< previous"
-          initialPage={props.data.currentPage-1}
+          initialPage={props.data.currentPage - 1}
           renderOnZeroPageCount={null}
           containerClassName={classes["pagination"]}
           pageLinkClassName={classes["page-num"]}
@@ -104,7 +118,7 @@ const ListData = (props) => {
         {!isLoading && (
           <Select
             placeholder="select..."
-           className={classes['select']}
+            className={classes["select"]}
             options={options}
             onChange={itemsPerPageHandler}
             searchable={false}
@@ -115,7 +129,7 @@ const ListData = (props) => {
         )}
         {!isLoading && (
           <Link to={linkCondition}>
-    <Button>Add </Button>
+            <Button>Add </Button>
           </Link>
         )}
       </div>
