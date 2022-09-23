@@ -190,7 +190,10 @@ export const updateCrew = (id, dataObj) => {
 export const fetchSearchedTitle=(type,title,currentPage,itemsPerPage,action)=>{
   return async(dispatch)=>{
     try{
-      const url=`http://localhost:8080/api/${type}/search/byTitle?title=${title}&page=${currentPage-1}&size=${itemsPerPage}`
+      const moviesUrl=`http://localhost:8080/api/${type}/search/byTitle?title=${title}&page=${currentPage-1}&size=${itemsPerPage}`
+      const crewsUrl=`http://localhost:8080/api/${type}/search/byName?name=${title}&page=${currentPage-1}&size=${itemsPerPage}`
+      const url=type==='movies'?moviesUrl:crewsUrl
+      console.log(url);
       const getData=await getDataRequest(url)
       dispatch(
         action.setData({
