@@ -2,31 +2,36 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { fetchSearchedTitle } from "../../../store/api-call";
 import classes from "./SearchByTitle.module.scss";
-import '../../../assets/commonStyle.scss'
+import "../../../assets/commonStyle.scss";
 
 const SearchByTitle = (props) => {
+  const { action, type, currentPage, itemsPerPage } = props;
   const [title, setTitle] = useState("");
   const dispatch = useDispatch();
+  const sortBy = type === "movies" ? "title" : "name";
 
   const keyDownHandler = (event) => {
     if (event.key === "Enter") {
       dispatch(
         fetchSearchedTitle(
-          props.type,
+          type,
           title,
-          props.currentPage,
-          props.itemsPerPage,
-          props.action
+          currentPage,
+          itemsPerPage,
+          action,
+          sortBy
         )
       );
       setTitle("");
     }
-   
   };
 
   return (
     <div className={classes["wrapper"]}>
-      <img alt='search icon' src="https://img.icons8.com/external-line-gradient-kendis-lasman/32/000000/external-search-graphic-design-line-gradient-line-gradient-kendis-lasman.png" />
+      <img
+        alt="search icon"
+        src="https://img.icons8.com/external-line-gradient-kendis-lasman/32/000000/external-search-graphic-design-line-gradient-line-gradient-kendis-lasman.png"
+      />
       <span className="input">
         <input
           type="text"

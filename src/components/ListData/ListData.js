@@ -13,12 +13,10 @@ import { override } from "../../assets/apis/config";
 import { PacmanLoader } from "react-spinners";
 import Button from "../UI/CustomButton";
 import { Link } from "react-router-dom";
-import SearchByTitle from "../Search/SearchByTitle/SearchByTitle";
-import SearchByYear from "../Search/SearchByYear/SearchByYear";
-import SearchByProfession from "../Search/SearchByProfession/SearchByProfession";
+import Search from "../Search/Search";
 
 const ListData = (props) => {
-  const { type, isLoading } = props;
+  const { type, isLoading, data, action, card } = props;
 
   const pageRangeDisplayed = 3;
   const options = [
@@ -32,35 +30,22 @@ const ListData = (props) => {
 
   useEffect(() => {
     const getDataRequest = async () => {
-      dispatch(
-        fetchData(
-          type,
-          props.data.itemsPerPage,
-          props.data.currentPage,
-          props.action
-        )
-      );
+      dispatch(fetchData(type, data.itemsPerPage, data.currentPage, action));
 
       window.scrollTo(0, 0);
     };
 
     getDataRequest();
-  }, [
-    props.data.itemsPerPage,
-    dispatch,
-    props.data.currentPage,
-    props.action,
-    type,
-  ]);
+  }, [data.itemsPerPage, dispatch, data.currentPage, action, type]);
 
   const handlePageClick = async (event) => {
-    dispatch(props.action.setCurrentPage({ currentPage: event.selected + 1 }));
+    dispatch(action.setCurrentPage({ currentPage: event.selected + 1 }));
   };
 
   const itemsPerPageHandler = (selectedOption) => {
     const selectedOpt = selectedOption[0].value;
 
-    dispatch(props.action.setItemsPerPage({ itemsPerPage: selectedOpt }));
+    dispatch(action.setItemsPerPage({ itemsPerPage: selectedOpt }));
   };
 
   const dropdownOpenHandler = () => {
@@ -82,31 +67,22 @@ const ListData = (props) => {
           <PacmanLoader color="gray" cssOverride={override} size={150} />
         )}
       </div>
-      <div className={classes["search-wrapper"]}>
-        <div className={classes["search-box"]}>
-          <SearchByTitle
-            type={type}
-            itemsPerPage={props.data.itemsPerPage}
-            currentPage={props.data.currentPage}
-            action={props.action}
-          />
-        {type==='movies' &&  <SearchByYear
-            itemsPerPage={props.data.itemsPerPage}
-            currentPage={props.data.currentPage}
-          />}
-          {type==='crews' && <SearchByProfession/>}
-        </div>
-      </div>
-      <ShowList data={props.data.content} card={props.card} />
+      <Search
+        type={type}
+        itemsPerPage={data.itemsPerPage}
+        currentPage={data.currentPage}
+        action={action}
+      />
+      <ShowList data={data.content} card={card} />
       <div className={classes["pag-select"]}>
         <ReactPaginate
           breakLabel="..."
           nextLabel="next >"
           onPageChange={handlePageClick}
           pageRangeDisplayed={pageRangeDisplayed}
-          pageCount={props.data.pageCount}
+          pageCount={data.pageCount}
           previousLabel="< previous"
-          initialPage={props.data.currentPage - 1}
+          initialPage={data.currentPage - 1}
           renderOnZeroPageCount={null}
           containerClassName={classes["pagination"]}
           pageLinkClassName={classes["page-num"]}
