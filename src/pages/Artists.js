@@ -21,6 +21,7 @@ const Artists = () => {
         card={card}
         action={artistActions}
         isLoading={isLoading}
+        sort='name'
       />
     </>
   );

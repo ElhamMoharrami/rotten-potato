@@ -8,10 +8,7 @@ import { useParams } from "react-router-dom";
 import Card from "../UI/Card/Card";
 import { useForm } from "react-hook-form";
 import classes from "./MovieForm.module.css";
-import { fetchData } from "../../store/api-call";
 import { useNavigate } from "react-router-dom";
-import { useHistory } from "react-router-dom";
-import { hashHistory } from "react-router";
 
 const MovieForm = () => {
   const { id } = useParams();

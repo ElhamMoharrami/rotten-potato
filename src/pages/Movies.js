@@ -21,6 +21,7 @@ const Movies = () => {
         card={card}
         action={movieActions}
         isLoading={isLoading}
+        sort='title'
       />
     </>
   );

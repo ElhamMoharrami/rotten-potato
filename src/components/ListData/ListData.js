@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 import Search from "../Search/Search";
 
 const ListData = (props) => {
-  const { type, isLoading, data, action, card } = props;
+  const { type, isLoading, data, action, card,sort } = props;
 
   const pageRangeDisplayed = 3;
   const options = [
@@ -30,7 +30,7 @@ const ListData = (props) => {
 
   useEffect(() => {
     const getDataRequest = async () => {
-      dispatch(fetchData(type, data.itemsPerPage, data.currentPage, action));
+      dispatch(fetchData(type, data.itemsPerPage, data.currentPage, action,sort));
 
       window.scrollTo(0, 0);
     };

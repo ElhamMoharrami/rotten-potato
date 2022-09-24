@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { deleteSelectedItem } from "../../store/api-call";
 import { useDispatch, useSelector } from "react-redux";

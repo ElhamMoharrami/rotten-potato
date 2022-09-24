@@ -8,11 +8,13 @@ const getDataRequest = async (url) => {
   return data;
 };
 
-export const fetchData = (type, size, currentPage, action) => {
+export const fetchData = (type, size, currentPage, action, sort) => {
   return async (dispatch) => {
     try {
       dispatch(action.setIsLoading({ isLoading: true }));
-      const url = `${BASEURL}/${type}?page=${currentPage - 1}&size=${size}`;
+      const url = `${BASEURL}/${type}?page=${
+        currentPage - 1
+      }&size=${size}&sort=${sort}`;
 
       const getData = await getDataRequest(url);
 
@@ -186,22 +188,11 @@ export const updateCrew = (id, dataObj) => {
   };
 };
 
-export const fetchSearchedTitle = (
-  type,
-  title,
-  currentPage,
-  itemsPerPage,
-  action,
-  sort
-) => {
+export const fetchSearchedTitle = (  type,  title,  currentPage,  itemsPerPage,  action,  sort) => {
   return async (dispatch) => {
     try {
-      const moviesUrl = `http://localhost:8080/api/${type}/search/byTitle?title=${title}&page=${
-        currentPage - 1
-      }&size=${itemsPerPage}&sort=${sort}`;
-      const crewsUrl = `http://localhost:8080/api/${type}/search/byName?name=${title}&page=${
-        currentPage - 1
-      }&size=${itemsPerPage}&sort=${sort}`;
+      const moviesUrl = `${BASEURL}/${type}/search/byTitle?title=${title}&page=${  currentPage - 1 }&size=${itemsPerPage}&sort=${sort}`;
+      const crewsUrl = `${BASEURL}/${type}/search/byName?name=${title}&page=${currentPage - 1 }&size=${itemsPerPage}&sort=${sort}`;
       const url = type === "movies" ? moviesUrl : crewsUrl;
       console.log(url);
       const getData = await getDataRequest(url);
@@ -217,15 +208,10 @@ export const fetchSearchedTitle = (
   };
 };
 
-export const fetchSearchedYear = (
-  startYear,
-  endYear,
-  currentPage,
-  itemsPerPage
-) => {
-  return async (dispatch) => {
+export const fetchSearchedYear = (  startYear,  endYear,  currentPage,  itemsPerPage) => {
+    return async (dispatch) => {
     try {
-      const url = `http://localhost:8080/api/movies/search/byYear?from=${startYear}&to=${endYear}&page=${currentPage}&size=${itemsPerPage}&sort=year,desc`;
+      const url = `${BASEURL}/movies/search/byYear?from=${startYear}&to=${endYear}&page=${currentPage}&size=${itemsPerPage}&sort=year,desc`;
       const getData = await getDataRequest(url);
       dispatch(
         movieActions.setData({
@@ -239,14 +225,10 @@ export const fetchSearchedYear = (
   };
 };
 
-export const fetchSearchedProfession = (
-  profession,
-  currentPage,
-  itemsPerPage
-) => {
-  return async (dispatch) => {
+export const fetchSearchedProfession = (  profession,  currentPage,  itemsPerPage) => {
+    return async (dispatch) => {
     try {
-      const url = `http://localhost:8080/api/crews/search/byProfession?profession=${profession}&page=${currentPage}&size=${itemsPerPage}&sort=profession`;
+      const url = `${BASEURL}/crews/search/byProfession?profession=${profession}&page=${currentPage}&size=${itemsPerPage}&sort=profession`;
       const getData = await getDataRequest(url);
       dispatch(
         artistActions.setData({

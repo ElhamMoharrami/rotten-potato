@@ -58,7 +58,7 @@ const CrewForm = () => {
     if (!isAddMode) {
       dispatch(updateCrew(id, crewData));
 
-      dispatch(fetchData("crews", itemsPerPage, currentPage, artistActions));
+      dispatch(fetchData("crews", itemsPerPage, currentPage, artistActions,'name'));
     }
 
     navigate(-1);
