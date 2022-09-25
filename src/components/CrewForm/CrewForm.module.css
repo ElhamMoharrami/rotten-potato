@@ -17,11 +17,19 @@
   
   .wrapper button{
       grid-column-end: span 2;
-      margin-top: 3rem;
+      margin-top: 1rem;
   }
   
   .data-form-input{
       display: flex;
       flex-direction: column;
       gap: 1rem;
+  }
+
+  .title{
+    grid-column-end: span 2;
+    margin-top: 3rem;
+    text-align: center;
+    font-size: 25px;
+    color: white;
   }

@@ -26,7 +26,7 @@ const ListData = (props) => {
     { value: 20, label: "20" },
   ];
   const dispatch = useDispatch();
-  const linkCondition = type === "movies" ? `/movieform/add` : "/crewform/add";
+  const linkCondition = type === "movies" ? `/movie/form/add` : "/crew/form/add";
 
   useEffect(() => {
     const getDataRequest = async () => {
@@ -36,7 +36,7 @@ const ListData = (props) => {
     };
 
     getDataRequest();
-  }, [data.itemsPerPage, dispatch, data.currentPage, action, type]);
+  }, [data.itemsPerPage, dispatch, data.currentPage, action, type,sort]);
 
   const handlePageClick = async (event) => {
     dispatch(action.setCurrentPage({ currentPage: event.selected + 1 }));

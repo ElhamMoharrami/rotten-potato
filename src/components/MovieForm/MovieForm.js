@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Button from "../UI/CustomButton";
 import { useDispatch, useSelector } from "react-redux";
-import { saveMovie, updateMovie } from "../../store/api-call";
+import { saveData, updateData } from "../../store/api-call";
 import { fetchDetail } from "../../store/api-call";
 import { movieActions } from "../../store/data-slice";
 import { useParams } from "react-router-dom";
@@ -17,15 +17,13 @@ const MovieForm = () => {
   const navigate = useNavigate();
   const {
     register,
-    handleSubmit,
     reset,
     formState,
-    formState: { isSubmitSuccessful },
   } = useForm();
   const isAddMode = !id;
 
   const movie = useSelector((state) => state.movies.selectedItem);
- 
+
   const [movieData, setMovieData] = useState({});
 
   useEffect(() => {
@@ -39,7 +37,7 @@ const MovieForm = () => {
     if (!isAddMode) {
       setMovieData(movie);
     }
-  }, [movie]);
+  }, [movie,isAddMode]);
 
   const onchangeHandler = (e) => {
     const name = e.target.name;
@@ -54,12 +52,16 @@ const MovieForm = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
     if (isAddMode) {
-      dispatch(saveMovie(movieData));
+      dispatch(saveData(movieData,'movies'));
     } else {
-      dispatch(updateMovie(id, movieData));
+      dispatch(updateData('movies',id, movieData));
     }
     navigate("/movies");
   };
+
+  const cancelHandler=()=>{
+    navigate("/movies");
+  }
 
   React.useEffect(() => {
     if (formState.isSubmitSuccessful) {
@@ -84,6 +86,10 @@ const MovieForm = () => {
     <div>
       <form onSubmit={submitHandler}>
         <Card className={classes["wrapper"]}>
+          <div className={classes["title"]}>
+            {" "}
+            {isAddMode ? <p>add</p> : <p>edit</p>}{" "}
+          </div>
           <div className={classes["data-form-input"]}>
             <label>Movie name</label>
             <input
@@ -91,6 +97,7 @@ const MovieForm = () => {
               {...register("title")}
               onChange={onchangeHandler}
               value={movieData.title || ""}
+              required
             />
           </div>
           <div className={classes["data-form-input"]}>
@@ -127,6 +134,7 @@ const MovieForm = () => {
               {...register("year")}
               onChange={onchangeHandler}
               value={movieData.year || ""}
+              required
             />
           </div>
           <div className={classes["data-form-input"]}>
@@ -145,6 +153,7 @@ const MovieForm = () => {
               {...register("director")}
               onChange={onchangeHandler}
               value={movieData.director || ""}
+              required
             />
           </div>
           <div className={classes["data-form-input"]}>
@@ -163,6 +172,7 @@ const MovieForm = () => {
               {...register("genre")}
               onChange={onchangeHandler}
               value={movieData.genre || ""}
+              required
             />
           </div>
           <div className={classes["data-form-input"]}>
@@ -172,6 +182,7 @@ const MovieForm = () => {
               {...register("language")}
               onChange={onchangeHandler}
               value={movieData.language || ""}
+              required
             />
           </div>
           <div className={classes["data-form-input"]}>
@@ -192,7 +203,9 @@ const MovieForm = () => {
               value={movieData.poster || ""}
             />
           </div>
+
           <Button type="submit">Submit</Button>
+          <Button onClick={cancelHandler} >Cancel</Button>
         </Card>
       </form>
     </div>

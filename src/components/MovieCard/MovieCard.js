@@ -39,12 +39,14 @@ const MovieCard = (props) => {
       {!props.artistDetail && (
         <div className="card-icons">
           <img
+          alt='trash icon'
             className="button"
             onClick={deleteHandler}
             src="https://img.icons8.com/material-sharp/24/000000/filled-trash.png"
           />
-          <Link to={`/movieform/edit/${movie.id}`}>
+          <Link to={`/movie/form/edit/${movie.id}`}>
             <img
+            alt="edit icon"
               className="button"
               src="https://img.icons8.com/ios-glyphs/30/000000/edit--v1.png"
             />

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Button from "../UI/CustomButton";
 import { useDispatch, useSelector } from "react-redux";
-import { saveCrew, updateCrew } from "../../store/api-call";
+import { saveData, updateData } from "../../store/api-call";
 import { fetchDetail } from "../../store/api-call";
 import { artistActions } from "../../store/data-slice";
 import { useParams } from "react-router-dom";
@@ -50,18 +50,20 @@ const CrewForm = () => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
-
     if (isAddMode) {
-      dispatch(saveCrew(crewData));
+      dispatch(saveData(crewData,'crews'));
     }
-
     if (!isAddMode) {
-      dispatch(updateCrew(id, crewData));
-
-      dispatch(fetchData("crews", itemsPerPage, currentPage, artistActions,'name'));
+      dispatch(updateData('crews',id, crewData));
+      dispatch(
+        fetchData("crews", itemsPerPage, currentPage, artistActions, "name")
+      );
     }
+    navigate("/artists");
+  };
 
-    navigate(-1);
+  const cancelHandler = () => {
+    navigate("/artists");
   };
 
   React.useEffect(() => {
@@ -80,6 +82,10 @@ const CrewForm = () => {
     <div>
       <form onSubmit={submitHandler}>
         <Card className={classes["wrapper"]}>
+          <div className={classes["title"]}>
+            {" "}
+            {isAddMode ? <p>add</p> : <p>edit</p>}{" "}
+          </div>
           <div className={classes["data-form-input"]}>
             <label>artist name</label>
             <input
@@ -87,6 +93,7 @@ const CrewForm = () => {
               {...register("name")}
               onChange={onchangeHandler}
               value={crewData.name || ""}
+              required
             />
           </div>
           <div className={classes["data-form-input"]}>
@@ -96,6 +103,7 @@ const CrewForm = () => {
               {...register("birth")}
               onChange={onchangeHandler}
               value={crewData.birth || ""}
+              required
             />
           </div>
           <div className={classes["data-form-input"]}>
@@ -114,6 +122,7 @@ const CrewForm = () => {
               {...register("profession")}
               onChange={onchangeHandler}
               value={crewData.profession || ""}
+              required
             />
           </div>
           <div className={classes["data-form-input"]}>
@@ -127,6 +136,7 @@ const CrewForm = () => {
           </div>
 
           <Button type="submit">Submit</Button>
+          <Button onClick={cancelHandler}>Cancel</Button>
         </Card>
       </form>
     </div>
