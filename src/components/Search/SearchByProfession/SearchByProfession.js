@@ -4,6 +4,7 @@ import { Menu, MenuItem, FocusableItem, MenuButton } from "@szhsin/react-menu";
 import "@szhsin/react-menu/dist/index.css";
 import { fetchSearchedProfession } from "../../../store/api-call";
 import { useDispatch, useSelector } from "react-redux";
+import './SearchByProfession.css'
 
 const SearchByProfession = () => {
   const [filter, setFilter] = useState("");

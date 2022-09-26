@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  data: { content: [], pageCount: 0, currentPage:1, itemsPerPage:5 }, 
+  data: { content: [], pageCount: 0, currentPage: 1, itemsPerPage: 5 },
   selectedItem: [],
   detailList: [],
   isLoading: false,
+  isSearching: false,
 };
 
 const createDataSlice = (name) => {
@@ -28,10 +29,14 @@ const createDataSlice = (name) => {
       setCurrentPage(state, action) {
         state.data.currentPage = action.payload.currentPage;
       },
-      setItemsPerPage(state,action){
-        state.data.itemsPerPage=action.payload.itemsPerPage
-     }
+      setItemsPerPage(state, action) {
+        state.data.itemsPerPage = action.payload.itemsPerPage;
+      },
+      setIsSearching(state, action) {
+        state.isSearching = action.payload.isSearching;
+      },
     },
+    
   });
 };
 

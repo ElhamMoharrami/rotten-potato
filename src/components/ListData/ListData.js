@@ -14,9 +14,10 @@ import { PacmanLoader } from "react-spinners";
 import Button from "../UI/CustomButton";
 import { Link } from "react-router-dom";
 import Search from "../Search/Search";
+import Card from "../UI/Card/Card";
 
 const ListData = (props) => {
-  const { type, isLoading, data, action, card,sort } = props;
+  const { type, isLoading, data, action, card, isSearching } = props;
 
   const pageRangeDisplayed = 3;
   const options = [
@@ -26,17 +27,23 @@ const ListData = (props) => {
     { value: 20, label: "20" },
   ];
   const dispatch = useDispatch();
-  const linkCondition = type === "movies" ? `/movie/form/add` : "/crew/form/add";
+  const linkCondition =
+    type === "movies" ? `/movie/form/add` : "/crew/form/add";
 
   useEffect(() => {
-    const getDataRequest = async () => {
-      dispatch(fetchData(type, data.itemsPerPage, data.currentPage, action,sort));
-
+    console.log(isSearching);
+    if (!isSearching) {
+      dispatch(fetchData(type, data.itemsPerPage, data.currentPage, action));
       window.scrollTo(0, 0);
-    };
-
-    getDataRequest();
-  }, [data.itemsPerPage, dispatch, data.currentPage, action, type,sort]);
+    }
+  }, [
+    data.itemsPerPage,
+    dispatch,
+    data.currentPage,
+    action,
+    type,
+    isSearching,
+  ]);
 
   const handlePageClick = async (event) => {
     dispatch(action.setCurrentPage({ currentPage: event.selected + 1 }));
@@ -44,7 +51,6 @@ const ListData = (props) => {
 
   const itemsPerPageHandler = (selectedOption) => {
     const selectedOpt = selectedOption[0].value;
-
     dispatch(action.setItemsPerPage({ itemsPerPage: selectedOpt }));
   };
 
@@ -72,8 +78,17 @@ const ListData = (props) => {
         itemsPerPage={data.itemsPerPage}
         currentPage={data.currentPage}
         action={action}
+        isSearching={isSearching}
       />
-      <ShowList data={data.content} card={card} />
+      {data.content.length > 1 ? (
+        <ShowList data={data.content} card={card} />
+      ) : (
+        <Card>
+          <p className={classes["no-result"]}>
+            The term you entered did not bring any results.
+          </p>
+        </Card>
+      )}
       <div className={classes["pag-select"]}>
         <ReactPaginate
           breakLabel="..."

@@ -8,13 +8,11 @@ const getDataRequest = async (url) => {
   return data;
 };
 
-export const fetchData = (type, size, currentPage, action, sort) => {
+export const fetchData = (type, size, currentPage, action) => {
   return async (dispatch) => {
     try {
       dispatch(action.setIsLoading({ isLoading: true }));
-      const url = `${BASEURL}/${type}?page=${
-        currentPage - 1
-      }&size=${size}&sort=${sort}`;
+      const url = `${BASEURL}/${type}?page=${currentPage - 1}&size=${size}`;
       const getData = await getDataRequest(url);
       dispatch(
         action.setData({
@@ -108,6 +106,7 @@ export const updateData = (type, id, dataObj) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dataObj),
       });
+      //dispatch fetch data
     } catch (err) {
       console.log(err);
     }
@@ -124,21 +123,18 @@ export const fetchSearchedTitle = (
 ) => {
   return async (dispatch) => {
     try {
-      const moviesUrl = `${BASEURL}/${type}/search/byTitle?title=${title}&page=${
-        currentPage - 1
-      }&size=${itemsPerPage}&sort=${sort}`;
-      const crewsUrl = `${BASEURL}/${type}/search/byName?name=${title}&page=${
-        currentPage - 1
-      }&size=${itemsPerPage}&sort=${sort}`;
+     
+      const moviesUrl = `${BASEURL}/${type}/search/byTitle?title=${title}&page=${currentPage - 1}&size=${itemsPerPage}&sort=${sort}`;
+      const crewsUrl = `${BASEURL}/${type}/search/byName?name=${title}&page=${currentPage - 1 }&size=${itemsPerPage}&sort=${sort}`;
       const url = type === "movies" ? moviesUrl : crewsUrl;
-      console.log(url);
       const getData = await getDataRequest(url);
       dispatch(
         action.setData({
           fetchedData: getData.content,
           pageCount: getData.page.totalPages,
         })
-      );
+      );   
+     
     } catch (err) {
       console.log(err);
     }

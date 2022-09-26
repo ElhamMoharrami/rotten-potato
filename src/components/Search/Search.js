@@ -24,5 +24,5 @@ const Search = (props) => {
     </div>
   );
 };
-
+//separate movie and crew search
 export default Search;

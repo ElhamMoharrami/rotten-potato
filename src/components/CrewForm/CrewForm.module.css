@@ -26,10 +26,14 @@
       gap: 1rem;
   }
 
+  label{
+    color: #03045E;
+  }
+
   .title{
     grid-column-end: span 2;
     margin-top: 3rem;
     text-align: center;
     font-size: 25px;
-    color: white;
+    color: #03045E;
   }

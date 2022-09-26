@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { fetchSearchedTitle } from "../../../store/api-call";
 import classes from "./SearchByTitle.module.scss";
@@ -12,19 +12,27 @@ const SearchByTitle = (props) => {
 
   const keyDownHandler = (event) => {
     if (event.key === "Enter") {
-      dispatch(
-        fetchSearchedTitle(
-          type,
-          title,
-          currentPage,
-          itemsPerPage,
-          action,
-          sortBy
-        )
-      );
-      setTitle("");
+      if (event.key === "Enter") {
+        dispatch(action.setIsSearching({ isSearching: true }));
+        dispatch(
+          fetchSearchedTitle(type, title, currentPage, itemsPerPage, action, sortBy)
+        );
+      }
     }
   };
+
+  useEffect(()=>{
+    dispatch(
+      fetchSearchedTitle(
+        type,
+        title,
+        currentPage,
+        itemsPerPage,
+        action,
+        sortBy
+      )
+    );
+  },[currentPage,itemsPerPage])
 
   return (
     <div className={classes["wrapper"]}>
@@ -41,6 +49,7 @@ const SearchByTitle = (props) => {
           onChange={(event) => setTitle(event.target.value)}
           value={title}
         />
+       
       </span>
     </div>
   );

@@ -1,4 +1,4 @@
-a{
+a {
   text-decoration: none;
 }
 
@@ -24,43 +24,33 @@ a{
 }
 
 .pagination .page-num:hover {
-  background-color:#641220;
+  background-color: #00b4d8;
   color: rgb(17, 16, 16);
 }
 
 .pagination .active {
-  background-color: #85182a;
+  background-color: #48cae4;
 }
 
 .pag-select {
   display: flex;
   justify-content: center;
   align-items: baseline;
-  gap:50px
+  gap: 50px;
 }
 
 .spinner {
   position: relative;
 }
 
-
-.css-wmy1p7-ReactDropdownSelect{
-  color: red;
-}
-
-.css-wmy1p7-ReactDropdownSelect:hover{
-  color: red !important;
-}
-
-.search-wrapper{
+.search-wrapper {
   width: 100%;
   height: 100px;
   margin-top: 50px;
-  /* background-color: aqua; */
   position: relative;
 }
 
-.search-box{
+.search-box {
   position: absolute;
   top: 50%;
   margin-top: -25px;
@@ -69,4 +59,9 @@ a{
   align-items: center;
   justify-content: center;
   gap: 50px;
+}
+
+.no-result{
+  font-size: 36px;
+  text-align: center;
 }
