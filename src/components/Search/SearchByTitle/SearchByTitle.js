@@ -9,7 +9,7 @@ const SearchByTitle = (props) => {
   const [title, setTitle] = useState("");
   const dispatch = useDispatch();
   const sortBy = type === "movies" ? "title" : "name";
-
+//bug fixed
   const keyDownHandler = (event) => {
     if (event.key === "Enter") {
       if (event.key === "Enter") {
