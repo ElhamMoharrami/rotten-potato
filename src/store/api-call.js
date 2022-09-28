@@ -55,7 +55,7 @@ export const fetchDetailList = (id, type, detail, action) => {
   };
 };
 
-export const saveData = (dataObj, type) => {
+export const saveData = (dataObj,type,itemsPerPage,currentPage,action) => {
   return async (dispatch) => {
     try {
       const url = `${BASEURL}/${type}`;
@@ -64,6 +64,7 @@ export const saveData = (dataObj, type) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dataObj),
       });
+      dispatch(fetchData(type, itemsPerPage, currentPage, action));
     } catch (err) {
       console.log(err);
     }
@@ -81,11 +82,9 @@ export const deleteSelectedItem = (
   return async (dispatch) => {
     try {
       const url = `${BASEURL}/${type}/${id}`;
-
       await fetch(url, {
         method: "DELETE",
       });
-
       if (contentLength <= 1) {
         dispatch(fetchData(type, itemsPerPage, currentPage - 1, action));
       } else {
@@ -97,7 +96,7 @@ export const deleteSelectedItem = (
   };
 };
 
-export const updateData = (type, id, dataObj) => {
+export const updateData = (type, id, dataObj,itemsPerPage,currentPage,action) => {
   return async (dispatch) => {
     try {
       const url = `${BASEURL}/${type}/${id}`;
@@ -106,35 +105,45 @@ export const updateData = (type, id, dataObj) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dataObj),
       });
-      //dispatch fetch data
+      dispatch(fetchData(type, itemsPerPage, currentPage, action));
     } catch (err) {
       console.log(err);
     }
   };
 };
 
-export const fetchSearchedTitle = (
-  type,
-  title,
-  currentPage,
-  itemsPerPage,
-  action,
-  sort
-) => {
+export const fetchSearchedTitle = (title, currentPage, itemsPerPage) => {
   return async (dispatch) => {
     try {
-     
-      const moviesUrl = `${BASEURL}/${type}/search/byTitle?title=${title}&page=${currentPage - 1}&size=${itemsPerPage}&sort=${sort}`;
-      const crewsUrl = `${BASEURL}/${type}/search/byName?name=${title}&page=${currentPage - 1 }&size=${itemsPerPage}&sort=${sort}`;
-      const url = type === "movies" ? moviesUrl : crewsUrl;
+      const url = `${BASEURL}/movies/search/byTitle?title=${title}&page=${
+        currentPage - 1
+      }&size=${itemsPerPage}`;
       const getData = await getDataRequest(url);
       dispatch(
-        action.setData({
+        movieActions.setData({
           fetchedData: getData.content,
           pageCount: getData.page.totalPages,
         })
-      );   
-     
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const fetchSearchedName = (title, currentPage, itemsPerPage) => {
+  return async (dispatch) => {
+    try {
+      const url = `${BASEURL}/crews/search/byName?name=${title}&page=${
+        currentPage - 1
+      }&size=${itemsPerPage}`;
+      const getData = await getDataRequest(url);
+      dispatch(
+        artistActions.setData({
+          fetchedData: getData.content,
+          pageCount: getData.page.totalPages,
+        })
+      );
     } catch (err) {
       console.log(err);
     }
@@ -170,7 +179,7 @@ export const fetchSearchedProfession = (
 ) => {
   return async (dispatch) => {
     try {
-      const url = `${BASEURL}/crews/search/byProfession?profession=${profession}&page=${currentPage}&size=${itemsPerPage}&sort=profession`;
+      const url = `${BASEURL}/crews/search/byProfession?profession=${profession}&page=${currentPage-1}&size=${itemsPerPage}&sort=profession`;
       const getData = await getDataRequest(url);
       dispatch(
         artistActions.setData({

@@ -22,10 +22,10 @@ export default function App() {
         <Route path="/movies/:id" element={<MovieDetail />} />
         <Route path="/artists" element={<Artists />} />
         <Route path="/artists/:id" element={<ArtistDetail />} />
-        <Route path="/movie/form/add" element={<MovieForm />} />
-        <Route path="/movie/form/edit/:id" element={<MovieForm />} />
-        <Route path="/crew/form/add" element={<CrewForm />} />
-        <Route path="/crew/form/edit/:id" element={<CrewForm />} />
+        <Route path="/movie/add" element={<MovieForm />} />
+        <Route path="/movie/edit/:id" element={<MovieForm />} />
+        <Route path="/crew/add" element={<CrewForm />} />
+        <Route path="/crew/edit/:id" element={<CrewForm />} />
       </Routes>
     </>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { fetchSearchedYear } from "../../../store/api-call";
 import classes from "./SearchByYear.module.scss";
@@ -6,6 +6,7 @@ import Button from "../../UI/CustomButton";
 
 
 const SearchByYear = (props) => {
+  const {itemsPerPage,currentPage,action,isSearching}=props
   const [startYear, setStartYear] = useState(null);
   const [endYear, setEndYear] = useState();
   const dispatch = useDispatch();
@@ -13,15 +14,30 @@ const SearchByYear = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
+     dispatch(action.setIsSearching({ isSearching: 'year'}));
     dispatch(
       fetchSearchedYear(
         startYear,
         endYear,
-        props.currentPage,
-        props.itemsPerPage
+        currentPage,
+        itemsPerPage
       )
     );
   };
+
+  useEffect(() => {
+    if(isSearching==='year'){
+      dispatch(
+        fetchSearchedYear(
+          startYear,
+          endYear,
+          currentPage-1,
+          itemsPerPage
+        )
+      );
+    }
+   
+  }, [currentPage, itemsPerPage,dispatch]);
 
   return (
     <div className={classes["wrapper"]}>
@@ -41,6 +57,7 @@ const SearchByYear = (props) => {
             <input
               className="search-input"
               type="number"
+              min={1900}
               onChange={(event) => setEndYear(event.target.value)}
               placeholder="to"
             />

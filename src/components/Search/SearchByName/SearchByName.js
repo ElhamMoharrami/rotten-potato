@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { fetchSearchedTitle } from "../../../store/api-call";
-import classes from "./SearchByTitle.module.scss";
+import { fetchSearchedName } from "../../../store/api-call";
+import classes from "./SearchByName.module.css";
 import "../../../assets/commonStyle.scss";
 
-const SearchByTitle = (props) => {
-  const { action, currentPage, itemsPerPage, isSearching } = props;
-  const [title, setTitle] = useState("");
+const SearchByName = (props) => {
+  const { action, currentPage, itemsPerPage,isSearching } = props;
+  const [name, setName] = useState("");
   const dispatch = useDispatch();
 
   const keyDownHandler = (event) => {
     if (event.key === "Enter") {
-      dispatch(action.setIsSearching({ isSearching: "title" }));
-      dispatch(fetchSearchedTitle(title, currentPage, itemsPerPage));
+      dispatch(action.setIsSearching({ isSearching: true }));
+      dispatch(fetchSearchedName(name, currentPage, itemsPerPage));
     }
   };
 
   useEffect(() => {
-    if (isSearching === "title") {
-      dispatch(fetchSearchedTitle(title, currentPage, itemsPerPage));
+    if (isSearching === "name") {
+      dispatch(fetchSearchedName(name, currentPage, itemsPerPage));
     }
   }, [currentPage, itemsPerPage]);
 
@@ -34,12 +34,12 @@ const SearchByTitle = (props) => {
           className="search-input"
           placeholder="search"
           onKeyDown={keyDownHandler}
-          onChange={(event) => setTitle(event.target.value)}
-          value={title}
+          onChange={(event) => setName(event.target.value)}
+          value={name}
         />
       </span>
     </div>
   );
 };
 
-export default SearchByTitle;
+export default SearchByName;

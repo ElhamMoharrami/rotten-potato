@@ -5,7 +5,7 @@ const initialState = {
   selectedItem: [],
   detailList: [],
   isLoading: false,
-  isSearching: false,
+  isSearching: '',
 };
 
 const createDataSlice = (name) => {

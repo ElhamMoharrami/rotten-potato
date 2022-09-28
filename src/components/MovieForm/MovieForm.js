@@ -23,6 +23,8 @@ const MovieForm = () => {
   const isAddMode = !id;
 
   const movie = useSelector((state) => state.movies.selectedItem);
+  const itemsPerPage=useSelector((state)=>state.movies.data.itemsPerPage)
+  const currentPage=useSelector((state)=>state.movies.data.currentPage)
 
   const [movieData, setMovieData] = useState({});
 
@@ -52,9 +54,9 @@ const MovieForm = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
     if (isAddMode) {
-      dispatch(saveData(movieData,'movies'));
+      dispatch(saveData(movieData,'movies',itemsPerPage,currentPage,movieActions));
     } else {
-      dispatch(updateData('movies',id, movieData));
+      dispatch(updateData('movies',id, movieData,itemsPerPage,currentPage,movieActions));
     }
     navigate("/movies");
   };

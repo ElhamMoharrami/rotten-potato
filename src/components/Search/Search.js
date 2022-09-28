@@ -1,25 +1,45 @@
 import React from "react";
 import classes from "./Search.module.scss";
 import SearchByTitle from "./SearchByTitle/SearchByTitle";
+import SearchByName from "./SearchByName/SearchByName";
 import SearchByYear from "./SearchByYear/SearchByYear";
 import SearchByProfession from "./SearchByProfession/SearchByProfession";
 
 const Search = (props) => {
-  const { type, itemsPerPage, currentPage, action } = props;
+  const { type, itemsPerPage, currentPage, action, isSearching } = props;
 
   return (
     <div className={classes["search-wrapper"]}>
       <div className={classes["search-box"]}>
-        <SearchByTitle
-          type={type}
-          itemsPerPage={itemsPerPage}
-          currentPage={currentPage}
-          action={action}
-        />
-        {type === "movies" && (
-          <SearchByYear itemsPerPage={itemsPerPage} currentPage={currentPage} />
+        {type === "movies" ? (
+          <SearchByTitle
+            isSearching={isSearching}
+            action={action}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+          />
+        ) : (
+          <SearchByName
+            action={action}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            isSearching={isSearching}
+          />
         )}
-        {type === "crews" && <SearchByProfession />}
+        {type === "movies" ? (
+          <SearchByYear
+            isSearching={isSearching}
+            currentPage={currentPage}
+            itemsPerPage={itemsPerPage}
+            action={action}
+          />
+        ) : (
+          <SearchByProfession
+            isSearching={isSearching}
+            currentPage={currentPage}
+            itemsPerPage={itemsPerPage}
+          />
+        )}
       </div>
     </div>
   );

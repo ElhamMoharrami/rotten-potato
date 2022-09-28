@@ -51,12 +51,19 @@ const CrewForm = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
     if (isAddMode) {
-      dispatch(saveData(crewData,'crews'));
-    }
-    if (!isAddMode) {
-      dispatch(updateData('crews',id, crewData));
       dispatch(
-        fetchData("crews", itemsPerPage, currentPage, artistActions, "name")
+        saveData(crewData, "crews", itemsPerPage, currentPage, artistActions)
+      );
+    } else {
+      dispatch(
+        updateData(
+          "crews",
+          id,
+          crewData,
+          itemsPerPage,
+          currentPage,
+          artistActions
+        )
       );
     }
     navigate("/artists");

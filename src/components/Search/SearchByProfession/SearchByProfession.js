@@ -1,12 +1,14 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, MenuItem, FocusableItem, MenuButton } from "@szhsin/react-menu";
 import "@szhsin/react-menu/dist/index.css";
 import { fetchSearchedProfession } from "../../../store/api-call";
-import { useDispatch, useSelector } from "react-redux";
-import './SearchByProfession.css'
+import { useDispatch } from "react-redux";
+import "./SearchByProfession.css";
+import { artistActions } from "../../../store/data-slice";
 
-const SearchByProfession = () => {
+const SearchByProfession = (props) => {
+  const { isSearching, currentPage, itemsPerPage } = props;
   const [filter, setFilter] = useState("");
   const dispatch = useDispatch();
   const professions = [
@@ -14,54 +16,65 @@ const SearchByProfession = () => {
     "actress",
     "animation_department",
     "art_department",
-    " art_director",
+    "art_director",
     "assistant",
-    " assistant_director",
+    "assistant_director",
     "camera_department",
     "casting_department",
     "casting_director",
-    " cinematographer",
-    " composer",
+    "cinematographer",
+    "composer",
     "costume_department",
-    " costume_designer",
-    " director",
-    " editor",
-    " editorial_department",
-    " executive",
+    "costume_designer",
+    "director",
+    "editor",
+    "editorial_department",
+    "executive",
     "legal",
-    " location_management",
+    "location_management",
     "make_up_department",
-    " manager",
+    "manager",
     "miscellaneous",
-    " music_department",
+    "music_department",
     "producer",
-    " production_designer",
+    "production_designer",
     "production_manager",
-    " programmer",
-    " publicist",
-    " script_department",
+    "programmer",
+    "publicist",
+    "script_department",
     "set_decorator",
     "sound_department",
     "soundtrack",
-    " special_effects",
+    "special_effects",
     "stunts",
     "talent_agent",
-    " transportation_department",
+    "transportation_department",
     "visual_effects",
     "writer",
   ];
-  const currentPage = useSelector((state) => state.crews.data.currentPage);
-  const itemsPerPage = useSelector((state) => state.crews.data.itemsPerPage);
+
 
   const keyDownHandler = (event) => {
     if (event.key === "Enter") {
+      dispatch(artistActions.setIsSearching({ isSearching: "profession" }));
       dispatch(fetchSearchedProfession(filter, currentPage, itemsPerPage));
     }
   };
 
+  const onClickHandler = (e) => {
+    dispatch(artistActions.setIsSearching({ isSearching: "profession" }));
+    setFilter(e.value);
+  };
+
+  useEffect(() => {
+    if (isSearching === "profession" && filter!=='') {
+      dispatch(fetchSearchedProfession(filter, currentPage, itemsPerPage));
+    }
+  }, [currentPage, itemsPerPage, isSearching,filter]);
+
   return (
     <Menu
-      menuButton={<MenuButton>Choose Profession</MenuButton>}
+      menuButton={<MenuButton>{filter!==''?filter:'choose profession'}</MenuButton>}
       onMenuChange={(e) => e.open && setFilter("")}
     >
       <FocusableItem>
@@ -81,7 +94,13 @@ const SearchByProfession = () => {
           profession.toUpperCase().includes(filter.trim().toUpperCase())
         )
         .map((profession) => (
-          <MenuItem key={profession}>{profession}</MenuItem>
+          <MenuItem
+            onClick={onClickHandler}
+            value={profession}
+            key={profession}
+          >
+            { profession[0].toUpperCase() + profession.substring(1).replace(/_/g, " ")}
+          </MenuItem>
         ))}
     </Menu>
   );

@@ -28,10 +28,9 @@ const ListData = (props) => {
   ];
   const dispatch = useDispatch();
   const linkCondition =
-    type === "movies" ? `/movie/form/add` : "/crew/form/add";
+    type === "movies" ? `/movie/add` : "/crew/add";
 
   useEffect(() => {
-    console.log(isSearching);
     if (!isSearching) {
       dispatch(fetchData(type, data.itemsPerPage, data.currentPage, action));
       window.scrollTo(0, 0);
@@ -95,9 +94,9 @@ const ListData = (props) => {
           nextLabel="next >"
           onPageChange={handlePageClick}
           pageRangeDisplayed={pageRangeDisplayed}
-          pageCount={data.pageCount}
+          pageCount={data.pageCount-1}
           previousLabel="< previous"
-          initialPage={data.currentPage - 1}
+          initialPage={data.currentPage-1}
           renderOnZeroPageCount={null}
           containerClassName={classes["pagination"]}
           pageLinkClassName={classes["page-num"]}

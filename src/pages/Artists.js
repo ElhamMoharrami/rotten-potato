@@ -8,6 +8,7 @@ import { artistActions } from "../store/data-slice";
 
 const Artists = () => {
   const data = useSelector((state) => state.crews.data);
+  const isSearching=useSelector((state)=>state.crews.isSearching)
   const isLoading = useSelector((state) => state.crews.isLoading);
 
   const card = (item) => {
@@ -21,7 +22,7 @@ const Artists = () => {
         card={card}
         action={artistActions}
         isLoading={isLoading}
-        sort='name'
+        isSearching={isSearching}
       />
     </>
   );
