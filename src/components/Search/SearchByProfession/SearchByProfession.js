@@ -9,7 +9,8 @@ import { artistActions } from "../../../store/data-slice";
 
 const SearchByProfession = (props) => {
   const { isSearching, currentPage, itemsPerPage } = props;
-  const [filter, setFilter] = useState("");
+  const initialProfession = localStorage.getItem("profession");
+  const [profession, setProfession] = useState(initialProfession || "");
   const dispatch = useDispatch();
   const professions = [
     "actor",
@@ -53,53 +54,41 @@ const SearchByProfession = (props) => {
     "writer",
   ];
 
-
-  const keyDownHandler = (event) => {
-    if (event.key === "Enter") {
-      dispatch(artistActions.setIsSearching({ isSearching: "profession" }));
-      dispatch(fetchSearchedProfession(filter, currentPage, itemsPerPage));
-    }
+  const showProfession = (profession) => {
+    return (
+      profession[0].toUpperCase() + profession.substring(1).replace(/_/g, " ")
+    );
   };
 
-  const onClickHandler = (e) => {
+  const onClickHandler = async (e) => {
+    localStorage.clear();
+    setProfession(e.value);
     dispatch(artistActions.setIsSearching({ isSearching: "profession" }));
-    setFilter(e.value);
+    localStorage.setItem("profession",e.value);
   };
 
   useEffect(() => {
-    if (isSearching === "profession" && filter!=='') {
-      dispatch(fetchSearchedProfession(filter, currentPage, itemsPerPage));
+    if (isSearching === "profession" && profession !== "") {
+      dispatch(fetchSearchedProfession(profession, currentPage, itemsPerPage));
     }
-  }, [currentPage, itemsPerPage, isSearching,filter]);
+  }, [currentPage, itemsPerPage, isSearching, profession, dispatch]);
 
   return (
     <Menu
-      menuButton={<MenuButton>{filter!==''?filter:'choose profession'}</MenuButton>}
-      onMenuChange={(e) => e.open && setFilter("")}
+      menuButton={
+        <MenuButton>
+          {profession !== "" ? showProfession(profession) : "choose profession"}
+        </MenuButton>
+      }
+      onMenuChange={(e) => e.open && setProfession("")}
     >
-      <FocusableItem>
-        {({ ref }) => (
-          <input
-            ref={ref}
-            type="text"
-            placeholder="Type to filter"
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-            onKeyDown={keyDownHandler}
-          />
-        )}
-      </FocusableItem>
       {professions
-        .filter((profession) =>
-          profession.toUpperCase().includes(filter.trim().toUpperCase())
+        .filter((item) =>
+          item.toUpperCase().includes(profession.trim().toUpperCase())
         )
-        .map((profession) => (
-          <MenuItem
-            onClick={onClickHandler}
-            value={profession}
-            key={profession}
-          >
-            { profession[0].toUpperCase() + profession.substring(1).replace(/_/g, " ")}
+        .map((item) => (
+          <MenuItem onClick={onClickHandler} value={item} key={item}>
+            {showProfession(item)}
           </MenuItem>
         ))}
     </Menu>

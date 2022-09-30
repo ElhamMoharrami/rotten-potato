@@ -37,4 +37,10 @@
     color: #03045E;
   }
 
- 
+
+  .invalid-message{
+    padding: 0;
+    margin: 0;
+    font-size: 20px;
+    color: blue;
+  }

@@ -10,37 +10,14 @@ const Search = (props) => {
 
   return (
     <div className={classes["search-wrapper"]}>
-      <div className={classes["search-box"]}>
-        {type === "movies" ? (
-          <SearchByTitle
-            isSearching={isSearching}
-            action={action}
-            itemsPerPage={itemsPerPage}
-            currentPage={currentPage}
-          />
-        ) : (
-          <SearchByName
-            action={action}
-            itemsPerPage={itemsPerPage}
-            currentPage={currentPage}
-            isSearching={isSearching}
-          />
-        )}
-        {type === "movies" ? (
-          <SearchByYear
-            isSearching={isSearching}
-            currentPage={currentPage}
-            itemsPerPage={itemsPerPage}
-            action={action}
-          />
-        ) : (
-          <SearchByProfession
-            isSearching={isSearching}
-            currentPage={currentPage}
-            itemsPerPage={itemsPerPage}
-          />
-        )}
-      </div>
+    
+        <div>
+        <SearchByName/>
+        </div>
+        <div>
+        <SearchByProfession/>
+        </div>
+      
     </div>
   );
 };

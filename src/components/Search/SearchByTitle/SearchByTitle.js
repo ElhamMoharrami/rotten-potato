@@ -6,13 +6,16 @@ import "../../../assets/commonStyle.scss";
 
 const SearchByTitle = (props) => {
   const { action, currentPage, itemsPerPage, isSearching } = props;
-  const [title, setTitle] = useState("");
+  const initialTitle = localStorage.getItem("title");
+  const [title, setTitle] = useState(initialTitle || "");
   const dispatch = useDispatch();
 
   const keyDownHandler = (event) => {
     if (event.key === "Enter") {
+      localStorage.clear()
       dispatch(action.setIsSearching({ isSearching: "title" }));
       dispatch(fetchSearchedTitle(title, currentPage, itemsPerPage));
+      localStorage.setItem("title", title);
     }
   };
 

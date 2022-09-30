@@ -5,7 +5,7 @@ const initialState = {
   selectedItem: [],
   detailList: [],
   isLoading: false,
-  isSearching: '',
+  isSearching: "",
 };
 
 const createDataSlice = (name) => {
@@ -35,8 +35,20 @@ const createDataSlice = (name) => {
       setIsSearching(state, action) {
         state.isSearching = action.payload.isSearching;
       },
+      clearData(state) {
+        state.data = {
+          content: [],
+          pageCount: 0,
+          currentPage: 1,
+          itemsPerPage: 5,
+        };
+        state.selectedItem = [];
+        state.detailList = [];
+        state.isLoading = false;
+        state.isSearching = "";
+        localStorage.clear();
+      },
     },
-    
   });
 };
 

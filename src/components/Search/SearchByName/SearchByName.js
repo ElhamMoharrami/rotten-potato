@@ -5,14 +5,17 @@ import classes from "./SearchByName.module.css";
 import "../../../assets/commonStyle.scss";
 
 const SearchByName = (props) => {
-  const { action, currentPage, itemsPerPage,isSearching } = props;
-  const [name, setName] = useState("");
+  const { action, currentPage, itemsPerPage, isSearching } = props;
+  const initialName = localStorage.getItem("name");
+  const [name, setName] = useState(initialName || "");
   const dispatch = useDispatch();
 
   const keyDownHandler = (event) => {
     if (event.key === "Enter") {
-      dispatch(action.setIsSearching({ isSearching: true }));
+      localStorage.removeItem("name");
+      dispatch(action.setIsSearching({ isSearching: "name" }));
       dispatch(fetchSearchedName(name, currentPage, itemsPerPage));
+      localStorage.setItem("name", name);
     }
   };
 
