@@ -46,7 +46,7 @@ const ArtistCard = (props) => {
             onClick={deleteHandler}
             src="https://img.icons8.com/material-sharp/24/000000/filled-trash.png"
           />
-          <Link to={`/crew/form/edit/${artist.id}`}>
+          <Link to={`/crew/edit/${artist.id}`}>
             <img
             alt="edit icon"
               className="button"

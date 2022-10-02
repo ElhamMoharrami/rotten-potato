@@ -24,6 +24,7 @@ const CrewForm = () => {
   const itemsPerPage = useSelector((state) => state.crews.data.itemsPerPage);
 
   const [crewData, setCreweData] = useState({});
+  const currentYear = new Date().getFullYear();
 
   useEffect(() => {
     dispatch(artistActions.setDetail({ selectedItem: {} }));
@@ -51,12 +52,19 @@ const CrewForm = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
     if (isAddMode) {
-      dispatch(saveData(crewData,'crews'));
-    }
-    if (!isAddMode) {
-      dispatch(updateData('crews',id, crewData));
       dispatch(
-        fetchData("crews", itemsPerPage, currentPage, artistActions, "name")
+        saveData(crewData, "crews", itemsPerPage, currentPage, artistActions)
+      );
+    } else {
+      dispatch(
+        updateData(
+          "crews",
+          id,
+          crewData,
+          itemsPerPage,
+          currentPage,
+          artistActions
+        )
       );
     }
     navigate("/artists");
@@ -93,26 +101,29 @@ const CrewForm = () => {
               {...register("name")}
               onChange={onchangeHandler}
               value={crewData.name || ""}
+              
               required
             />
           </div>
           <div className={classes["data-form-input"]}>
             <label>birth</label>
             <input
-              type="text"
+              type="number"
               {...register("birth")}
               onChange={onchangeHandler}
               value={crewData.birth || ""}
+              min="1900"
               required
             />
           </div>
           <div className={classes["data-form-input"]}>
             <label>death</label>
             <input
-              type="text"
+              type="number"
               {...register("death")}
               onChange={onchangeHandler}
               value={crewData.death || ""}
+              max={currentYear}
             />
           </div>
           <div className={classes["data-form-input"]}>

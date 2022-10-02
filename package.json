@@ -27,6 +27,7 @@
     "react-scripts": "5.0.1",
     "react-spinners": "^0.13.4",
     "redux": "^4.2.0",
+    "redux-persist": "^6.0.0",
     "sass": "^1.53.0",
     "terser": "^5.14.2",
     "web-vitals": "^2.1.4",

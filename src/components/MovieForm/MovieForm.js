@@ -15,16 +15,26 @@ const MovieForm = () => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
-  const {
-    register,
-    reset,
-    formState,
-  } = useForm();
+  const { register, reset, formState } = useForm();
   const isAddMode = !id;
 
   const movie = useSelector((state) => state.movies.selectedItem);
+  const itemsPerPage = useSelector((state) => state.movies.data.itemsPerPage);
+  const currentPage = useSelector((state) => state.movies.data.currentPage);
+  const currentYear = new Date().getFullYear();
 
   const [movieData, setMovieData] = useState({});
+  const [urlIsValid, setUrlIsValid] = useState(true);
+
+  const urlPatternValidation = (url) => {
+    const regex = new RegExp(
+      "(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?"
+    );
+    const result = regex.test(url);
+    if (!result) {
+      setUrlIsValid(false);
+    }
+  };
 
   useEffect(() => {
     dispatch(movieActions.setDetail({ selectedItem: {} }));
@@ -37,7 +47,7 @@ const MovieForm = () => {
     if (!isAddMode) {
       setMovieData(movie);
     }
-  }, [movie,isAddMode]);
+  }, [movie, isAddMode]);
 
   const onchangeHandler = (e) => {
     const name = e.target.name;
@@ -47,21 +57,37 @@ const MovieForm = () => {
       ...prevState,
       [name]: value,
     }));
+
+    if (name === "poster") {
+      urlPatternValidation(value);
+    }
   };
 
   const submitHandler = async (event) => {
     event.preventDefault();
+
     if (isAddMode) {
-      dispatch(saveData(movieData,'movies'));
+      dispatch(
+        saveData(movieData, "movies", itemsPerPage, currentPage, movieActions)
+      );
     } else {
-      dispatch(updateData('movies',id, movieData));
+      dispatch(
+        updateData(
+          "movies",
+          id,
+          movieData,
+          itemsPerPage,
+          currentPage,
+          movieActions
+        )
+      );
     }
     navigate("/movies");
   };
 
-  const cancelHandler=()=>{
+  const cancelHandler = () => {
     navigate("/movies");
-  }
+  };
 
   React.useEffect(() => {
     if (formState.isSubmitSuccessful) {
@@ -81,6 +107,8 @@ const MovieForm = () => {
       });
     }
   }, [formState, movieData, reset]);
+
+  const posterClasses = urlIsValid ? "data-form-input" : "invalid-input";
 
   return (
     <div>
@@ -103,10 +131,13 @@ const MovieForm = () => {
           <div className={classes["data-form-input"]}>
             <label>IMDB rating</label>
             <input
-              type="text"
+              type="number"
               {...register("imdbRating")}
               onChange={onchangeHandler}
               value={movieData.imdbRating || ""}
+              step="0.1"
+              min="1"
+              max="10"
             />
           </div>
           <div className={classes["data-form-input"]}>
@@ -121,7 +152,7 @@ const MovieForm = () => {
           <div className={classes["data-form-input"]}>
             <label>Runtime</label>
             <input
-              type="text"
+              type="number"
               {...register("runtime")}
               onChange={onchangeHandler}
               value={movieData.runtime || ""}
@@ -130,11 +161,13 @@ const MovieForm = () => {
           <div className={classes["data-form-input"]}>
             <label>Year</label>
             <input
-              type="text"
+              type="number"
               {...register("year")}
               onChange={onchangeHandler}
               value={movieData.year || ""}
               required
+              min="1900"
+              max={currentYear}
             />
           </div>
           <div className={classes["data-form-input"]}>
@@ -201,11 +234,17 @@ const MovieForm = () => {
               {...register("poster")}
               onChange={onchangeHandler}
               value={movieData.poster || ""}
+              className={classes[`${posterClasses}`]}
             />
+            {!urlIsValid && (
+              <p className={classes["invalid-message"]}>invalid url</p>
+            )}
           </div>
 
-          <Button type="submit">Submit</Button>
-          <Button onClick={cancelHandler} >Cancel</Button>
+          <Button disabled={urlIsValid ? false : true} type="submit">
+            Submit
+          </Button>
+          <Button onClick={cancelHandler}>Cancel</Button>
         </Card>
       </form>
     </div>

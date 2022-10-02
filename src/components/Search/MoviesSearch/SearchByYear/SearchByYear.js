@@ -1,27 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { fetchSearchedYear } from "../../../store/api-call";
+import { fetchSearchedYear } from "../../../../store/api-call";
 import classes from "./SearchByYear.module.scss";
-import Button from "../../UI/CustomButton";
-
+import Button from "../../../UI/CustomButton";
 
 const SearchByYear = (props) => {
-  const [startYear, setStartYear] = useState(null);
-  const [endYear, setEndYear] = useState();
+  const { itemsPerPage, currentPage, action, isSearching } = props;
+  const initialStartYear = localStorage.getItem("startYear");
+  const initialEndYear = localStorage.getItem("endYear");
+  const [startYear, setStartYear] = useState(initialStartYear);
+  const [endYear, setEndYear] = useState(initialEndYear);
   const dispatch = useDispatch();
   const currentYear = new Date().getFullYear();
 
   const submitHandler = (event) => {
     event.preventDefault();
-    dispatch(
-      fetchSearchedYear(
-        startYear,
-        endYear,
-        props.currentPage,
-        props.itemsPerPage
-      )
-    );
+    localStorage.clear();
+    dispatch(action.setIsSearching({ isSearching: "year" }));
+    dispatch(fetchSearchedYear(startYear, endYear, currentPage, itemsPerPage));
+    localStorage.setItem("startYear", startYear);
+    localStorage.setItem("endYear", endYear);
   };
+
+  useEffect(() => {
+    if (isSearching === "year") {
+      dispatch(
+        fetchSearchedYear(startYear, endYear, currentPage - 1, itemsPerPage)
+      );
+    }
+  }, [currentPage, itemsPerPage, dispatch]);
 
   return (
     <div className={classes["wrapper"]}>
@@ -41,6 +48,7 @@ const SearchByYear = (props) => {
             <input
               className="search-input"
               type="number"
+              min={1900}
               onChange={(event) => setEndYear(event.target.value)}
               placeholder="to"
             />

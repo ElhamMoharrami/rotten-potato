@@ -44,7 +44,7 @@ const MovieCard = (props) => {
             onClick={deleteHandler}
             src="https://img.icons8.com/material-sharp/24/000000/filled-trash.png"
           />
-          <Link to={`/movie/form/edit/${movie.id}`}>
+          <Link to={`/movie/edit/${movie.id}`}>
             <img
             alt="edit icon"
               className="button"

@@ -13,7 +13,7 @@ import classes from "./ArtistDetail.module.css";
 import '../../assets/commonStyle.scss'
 import blankProfile from "../../assets/images/blankProfilePicture.png";
 import { artistActions } from "../../store/data-slice";
-
+import Card from "../../components/UI/Card/Card";
 
 const ArtistDetail = () => {
   const { id } = useParams();
@@ -74,7 +74,7 @@ const ArtistDetail = () => {
             dotListClass="custom-dot-list-style"
             itemClass="carousel-item-padding-40-px"
           >
-            {movies.map((item) => (
+           {movies.map((item) => (
               <MovieCard artistDetail={true} movie={item} key={item.id} />
             ))}
           </Carousel>

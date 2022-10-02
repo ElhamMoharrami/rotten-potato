@@ -9,6 +9,7 @@ import { movieActions } from "../store/data-slice";
 
 const Movies = () => {
   const data = useSelector((state) => state.movies.data);
+  const isSearching=useSelector((state)=>state.movies.isSearching)
   const isLoading = useSelector((state) => state.movies.isLoading);
   const card = (item) => {
     return <MovieCard movie={item} />;
@@ -21,7 +22,7 @@ const Movies = () => {
         card={card}
         action={movieActions}
         isLoading={isLoading}
-        sort='title'
+        isSearching={isSearching}
       />
     </>
   );

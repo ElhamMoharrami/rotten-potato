@@ -1,30 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { fetchSearchedTitle } from "../../../store/api-call";
+import { fetchSearchedTitle } from "../../../../store/api-call";
 import classes from "./SearchByTitle.module.scss";
 import "../../../assets/commonStyle.scss";
 
 const SearchByTitle = (props) => {
-  const { action, type, currentPage, itemsPerPage } = props;
-  const [title, setTitle] = useState("");
+  const { action, currentPage, itemsPerPage, isSearching } = props;
+  const initialTitle = localStorage.getItem("title");
+  const [title, setTitle] = useState(initialTitle || "");
   const dispatch = useDispatch();
-  const sortBy = type === "movies" ? "title" : "name";
 
   const keyDownHandler = (event) => {
     if (event.key === "Enter") {
-      dispatch(
-        fetchSearchedTitle(
-          type,
-          title,
-          currentPage,
-          itemsPerPage,
-          action,
-          sortBy
-        )
-      );
-      setTitle("");
+      localStorage.clear()
+      dispatch(action.setIsSearching({ isSearching: "title" }));
+      dispatch(fetchSearchedTitle(title, currentPage, itemsPerPage));
+      localStorage.setItem("title", title);
     }
   };
+
+  useEffect(() => {
+    if (isSearching === "title") {
+      dispatch(fetchSearchedTitle(title, currentPage, itemsPerPage));
+    }
+  }, [currentPage, itemsPerPage]);
 
   return (
     <div className={classes["wrapper"]}>

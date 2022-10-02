@@ -1,4 +1,6 @@
 .wrapper {
+   margin-top: 450px;
+   background-color: #8fe1ef;
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 2rem;
@@ -26,10 +28,16 @@
       gap: 1rem;
   }
 
+  label{
+    color: #03045E;
+  }
+
   .title{
     grid-column-end: span 2;
     margin-top: 3rem;
     text-align: center;
     font-size: 25px;
-    color: white;
+    color: #03045E;
   }
+
+  
