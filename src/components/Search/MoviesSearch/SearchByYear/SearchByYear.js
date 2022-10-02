@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { fetchSearchedYear } from "../../../store/api-call";
+import { fetchSearchedYear } from "../../../../store/api-call";
 import classes from "./SearchByYear.module.scss";
-import Button from "../../UI/CustomButton";
+import Button from "../../../UI/CustomButton";
 
 const SearchByYear = (props) => {
   const { itemsPerPage, currentPage, action, isSearching } = props;

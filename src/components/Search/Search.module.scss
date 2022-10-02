@@ -1,24 +1,13 @@
-
-
 .search-wrapper {
- display: flex;
- flex-direction: column;
- justify-content: space-between;
- gap: 50px;
- align-items: center;
- margin-top: 50px;
- position: absolute;
- top: 50%;
- margin-top: -25px;
+  position: absolute;
+  background-color: aqua;
+  align-items: center;
 }
 
 .search-box {
-  position: absolute;
-  top: 50%;
-  margin-top: -25px;
-  margin-left: 20px;
+  width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 50px;
+  flex-direction: column;
+  gap: 16px;
+  flex-wrap: wrap;
 }

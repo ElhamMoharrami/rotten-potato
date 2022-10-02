@@ -72,7 +72,7 @@ const ListData = (props) => {
         )}
       </div>
       <div className={classes["container"]}>
-        <div>
+        <div className={classes["search-container"]}>
         <Search
           type={type}
           itemsPerPage={data.itemsPerPage}

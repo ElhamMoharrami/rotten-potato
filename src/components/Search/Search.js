@@ -1,25 +1,25 @@
 import React from "react";
-import classes from "./Search.module.scss";
-import SearchByTitle from "./SearchByTitle/SearchByTitle";
-import SearchByName from "./SearchByName/SearchByName";
-import SearchByYear from "./SearchByYear/SearchByYear";
-import SearchByProfession from "./SearchByProfession/SearchByProfession";
+
+import MoviesSearch from "./MoviesSearch/MoviesSearch";
+import CrewSearch from "./CrewSearch/CrewSearch";
 
 const Search = (props) => {
   const { type, itemsPerPage, currentPage, action, isSearching } = props;
 
   return (
-    <div className={classes["search-wrapper"]}>
-    
-        <div>
-        <SearchByName/>
-        </div>
-        <div>
-        <SearchByProfession/>
-        </div>
-      
-    </div>
+    <>
+      {type === "movies" ? (
+        <MoviesSearch />
+      ) : (
+        <CrewSearch
+          action={action}
+          currentPage={currentPage}
+          itemsPerPage={itemsPerPage}
+          isSearching={isSearching}
+        />
+      )}
+    </>
   );
 };
-//separate movie and crew search
+
 export default Search;

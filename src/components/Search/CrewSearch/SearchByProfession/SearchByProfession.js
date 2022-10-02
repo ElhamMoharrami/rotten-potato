@@ -2,10 +2,10 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Menu, MenuItem, FocusableItem, MenuButton } from "@szhsin/react-menu";
 import "@szhsin/react-menu/dist/index.css";
-import { fetchSearchedProfession } from "../../../store/api-call";
+import { fetchSearchedProfession } from "../../../../store/api-call";
 import { useDispatch } from "react-redux";
 import "./SearchByProfession.css";
-import { artistActions } from "../../../store/data-slice";
+import { artistActions } from "../../../../store/data-slice";
 
 const SearchByProfession = (props) => {
   const { isSearching, currentPage, itemsPerPage } = props;
@@ -64,7 +64,7 @@ const SearchByProfession = (props) => {
     localStorage.clear();
     setProfession(e.value);
     dispatch(artistActions.setIsSearching({ isSearching: "profession" }));
-    localStorage.setItem("profession",e.value);
+    localStorage.setItem("profession", e.value);
   };
 
   useEffect(() => {
@@ -82,6 +82,17 @@ const SearchByProfession = (props) => {
       }
       onMenuChange={(e) => e.open && setProfession("")}
     >
+      <FocusableItem>
+        {({ ref }) => (
+          <input
+            ref={ref}
+            type="text"
+            placeholder="Type to filter"
+            value={profession}
+            onChange={(e) => setProfession(e.target.value)}
+          />
+        )}
+      </FocusableItem>
       {professions
         .filter((item) =>
           item.toUpperCase().includes(profession.trim().toUpperCase())

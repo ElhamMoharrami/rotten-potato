@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { fetchSearchedName } from "../../../store/api-call";
+import { fetchSearchedName } from "../../../../store/api-call";
 import classes from "./SearchByName.module.css";
-import "../../../assets/commonStyle.scss";
+import "../../../../assets/commonStyle.scss";
 
 const SearchByName = (props) => {
   const { action, currentPage, itemsPerPage, isSearching } = props;

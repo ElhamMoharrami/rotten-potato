@@ -1,4 +1,6 @@
 .wrapper {
+   margin-top: 450px;
+   background-color: #8fe1ef;
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 2rem;

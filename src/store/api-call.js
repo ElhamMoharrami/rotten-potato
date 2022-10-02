@@ -55,7 +55,7 @@ export const fetchDetailList = (id, type, detail, action) => {
   };
 };
 
-export const saveData = (dataObj,type,itemsPerPage,currentPage,action) => {
+export const saveData = (dataObj, type, itemsPerPage, currentPage, action) => {
   return async (dispatch) => {
     try {
       const url = `${BASEURL}/${type}`;
@@ -96,7 +96,14 @@ export const deleteSelectedItem = (
   };
 };
 
-export const updateData = (type, id, dataObj,itemsPerPage,currentPage,action) => {
+export const updateData = (
+  type,
+  id,
+  dataObj,
+  itemsPerPage,
+  currentPage,
+  action
+) => {
   return async (dispatch) => {
     try {
       const url = `${BASEURL}/${type}/${id}`;
@@ -179,7 +186,9 @@ export const fetchSearchedProfession = (
 ) => {
   return async (dispatch) => {
     try {
-      const url = `${BASEURL}/crews/search/byProfession?profession=${profession}&page=${currentPage-1}&size=${itemsPerPage}&sort=profession`;
+      const url = `${BASEURL}/crews/search/byProfession?profession=${profession}&page=${
+        currentPage - 1
+      }&size=${itemsPerPage}&sort=profession`;
       const getData = await getDataRequest(url);
       dispatch(
         artistActions.setData({
@@ -192,3 +201,5 @@ export const fetchSearchedProfession = (
     }
   };
 };
+
+

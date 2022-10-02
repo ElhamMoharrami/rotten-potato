@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { fetchSearchedTitle } from "../../../store/api-call";
+import { fetchSearchedTitle } from "../../../../store/api-call";
 import classes from "./SearchByTitle.module.scss";
 import "../../../assets/commonStyle.scss";
 
