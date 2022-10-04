@@ -16,7 +16,7 @@ const SearchMovie = (props) => {
   const dispatch = useDispatch();
   const { register } = useForm();
   const initialData = localStorage.getItem("data");
-  const [data, setData] = useState(JSON.parse(initialData)||{});
+  const [data, setData] = useState(JSON.parse(initialData) || {});
 
   const onchangeHandler = (e) => {
     const name = e.target.name;
@@ -26,6 +26,20 @@ const SearchMovie = (props) => {
       [name]: value,
     }));
   };
+
+  const upArrowClickHandler=()=>{
+    setData((prevState) => ({
+      ...prevState,
+      type: 'asc',
+    }));
+  }
+
+  const downArrowClickHandler=()=>{
+    setData((prevState) => ({
+      ...prevState,
+      type: 'desc',
+    }));
+  }
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -38,6 +52,8 @@ const SearchMovie = (props) => {
         data.startYear,
         data.endYear,
         data.genre,
+        data.sortType,
+        data.type,
         itemsPerPage,
         currentPage
       )
@@ -55,6 +71,8 @@ const SearchMovie = (props) => {
           data.startYear,
           data.endYear,
           data.genre,
+          data.sortType,
+          data.type,
           itemsPerPage,
           currentPage - 1
         )
@@ -157,11 +175,36 @@ const SearchMovie = (props) => {
             </Select>
           </FormControl>
         </div>
-        <div className={classes["movie-search-button"]}>
-          <Button type="submit" variant="outlined">
-            submit
-          </Button>
+
+        <div className={classes["sort-movie-select"]}>
+          <FormControl sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel id="sort-movie">Sort</InputLabel>
+            <Select
+              labelId="sort-movie"
+              id="sort-movie"
+              {...register("sortType")}
+              onChange={onchangeHandler}
+              value={data.sortType || ""}
+              label="sortType"
+            >
+              <MenuItem value={"title"}>Title</MenuItem>
+              <MenuItem value={"year"}>Year</MenuItem>
+            </Select>
+          </FormControl>
+          <div className={classes["sort-movie-upe-down"]}>
+           <div  className="button" onClick={upArrowClickHandler}>
+           <img   src="https://img.icons8.com/ios-glyphs/30/000000/long-arrow-up.png"/>
+           </div>
+           <div className="button" onClick={downArrowClickHandler}>
+           <img src="https://img.icons8.com/ios-glyphs/30/000000/long-arrow-down.png"/>
+           </div>
+          </div>
         </div>
+      </div>
+      <div className={classes["movie-search-button"]}>
+        <Button type="submit" variant="outlined">
+          submit
+        </Button>
       </div>
     </form>
   );

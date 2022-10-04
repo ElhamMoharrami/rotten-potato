@@ -119,25 +119,6 @@ export const updateData = (
   };
 };
 
-export const fetchSearchedTitle = (title, currentPage, itemsPerPage) => {
-  return async (dispatch) => {
-    try {
-      const url = `${BASEURL}/movies/search/byTitle?title=${title}&page=${
-        currentPage - 1
-      }&size=${itemsPerPage}`;
-      const getData = await getDataRequest(url);
-      dispatch(
-        movieActions.setData({
-          fetchedData: getData.content,
-          pageCount: getData.page.totalPages,
-        })
-      );
-    } catch (err) {
-      console.log(err);
-    }
-  };
-};
-
 export const fetchSearchedName = (title, currentPage, itemsPerPage) => {
   return async (dispatch) => {
     try {
@@ -147,28 +128,6 @@ export const fetchSearchedName = (title, currentPage, itemsPerPage) => {
       const getData = await getDataRequest(url);
       dispatch(
         artistActions.setData({
-          fetchedData: getData.content,
-          pageCount: getData.page.totalPages,
-        })
-      );
-    } catch (err) {
-      console.log(err);
-    }
-  };
-};
-
-export const fetchSearchedYear = (
-  startYear,
-  endYear,
-  currentPage,
-  itemsPerPage
-) => {
-  return async (dispatch) => {
-    try {
-      const url = `${BASEURL}/movies/search/byYear?from=${startYear}&to=${endYear}&page=${currentPage}&size=${itemsPerPage}&sort=year,desc`;
-      const getData = await getDataRequest(url);
-      dispatch(
-        movieActions.setData({
           fetchedData: getData.content,
           pageCount: getData.page.totalPages,
         })
@@ -203,17 +162,19 @@ export const fetchSearchedProfession = (
 };
 
 export const fetchSearchMovies = (
-  title,
-  minRate,
-  startYear,
-  endYear,
-  genre,
+  title = "",
+  minRate = "",
+  startYear = "",
+  endYear = "",
+  genre = "",
+  sortType = "",
+  type = "",
   itemsPerPage,
   currentPage
 ) => {
   return async (dispatch) => {
     try {
-      const url = `${BASEURL}/movies/search/search?title=${title}&minRate=${minRate}&yearFrom=${startYear}&yearTo=${endYear}&genre=${genre}&page=${currentPage}&size=${itemsPerPage}`;
+      const url = `${BASEURL}/movies/search/search?title=${title}&minRate=${minRate}&yearFrom=${startYear}&yearTo=${endYear}&genre=${genre}&page=${currentPage}&size=${itemsPerPage}&sort=${sortType},${type}`;
       const getData = await getDataRequest(url);
       dispatch(
         movieActions.setData({
