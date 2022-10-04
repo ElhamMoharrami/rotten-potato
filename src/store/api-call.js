@@ -202,4 +202,27 @@ export const fetchSearchedProfession = (
   };
 };
 
-
+export const fetchSearchMovies = (
+  title,
+  minRate,
+  startYear,
+  endYear,
+  genre,
+  itemsPerPage,
+  currentPage
+) => {
+  return async (dispatch) => {
+    try {
+      const url = `${BASEURL}/movies/search/search?title=${title}&minRate=${minRate}&yearFrom=${startYear}&yearTo=${endYear}&genre=${genre}&page=${currentPage}&size=${itemsPerPage}`;
+      const getData = await getDataRequest(url);
+      dispatch(
+        movieActions.setData({
+          fetchedData: getData.content,
+          pageCount: getData.page.totalPages,
+        })
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};

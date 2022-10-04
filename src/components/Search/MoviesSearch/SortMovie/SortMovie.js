@@ -1,49 +1,36 @@
-import React, { useState } from "react";
-import Card from "../../../UI/Card/Card";
-import classes from "./SortMovie.module.scss";
+import * as React from "react";
+import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import NativeSelect from "@mui/material/NativeSelect";
+import Select from "@mui/material/Select";
+import classes from "./SortMovie.module.scss";
 
-const MovieSort = () => {
+const SortMovie = () => {
+  const [age, setAge] = React.useState("");
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
+
   return (
-    <div className={classes["sort-wrapper"]}>
-      <div>
-        <FormControl fullWidth>
-          <InputLabel variant="standard" htmlFor="uncontrolled-native">
-            sort by year
-          </InputLabel>
-          <NativeSelect
-            // onClick={onClickHandler}
-            defaultValue={"ascending"}
-            inputProps={{
-              name: "year",
-            }}
-          >
-            <option value={"ascending"}>ascending</option>
-            <option value={"descending"}>descending</option>
-          </NativeSelect>
-        </FormControl>
-      </div>
-      <div>
-        <FormControl fullWidth>
-          <InputLabel variant="standard" htmlFor="uncontrolled-native">
-            sort by title
-          </InputLabel>
-          <NativeSelect
-            defaultValue={30}
-            inputProps={{
-              name: "age",
-              id: "uncontrolled-native",
-            }}
-          >
-            <option value={"A-Z"}>A-Z</option>
-            <option value={"Z-A"}>Z-A</option>
-          </NativeSelect>
-        </FormControl>
-      </div>
+    <div className={classes["sort-movie-select"]}>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Age</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={age}
+          label="Age"
+          onChange={handleChange}
+        >
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>
+      </FormControl>
     </div>
   );
 };
 
-export default MovieSort;
+export default SortMovie;

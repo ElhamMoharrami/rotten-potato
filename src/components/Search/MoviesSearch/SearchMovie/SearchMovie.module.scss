@@ -1,0 +1,27 @@
+.movie-search-container {
+    border-bottom: 1px solid blue;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 0px 1px;
+  grid-template-areas:
+    ". ."
+    ". ."
+    ". .";
+}
+
+.movie-search-genre {
+  color: white;
+}
+
+.movie-search-button {
+  position: relative;
+  color: wheat;
+}
+
+.movie-search-button button {
+  color: rgb(0, 0, 0);
+  border: 1px solid rgb(0, 0, 0);
+  margin: 20px;
+}

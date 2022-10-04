@@ -9,7 +9,11 @@ const Search = (props) => {
   return (
     <>
       {type === "movies" ? (
-        <MoviesSearch />
+        <MoviesSearch
+          currentPage={currentPage}
+          itemsPerPage={itemsPerPage}
+          isSearching={isSearching}
+        />
       ) : (
         <CrewSearch
           action={action}
