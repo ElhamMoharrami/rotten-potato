@@ -8,7 +8,6 @@ body {
 
 .nav {
   overflow: hidden;
-  background-color: #023E8A;
   position: fixed;
   top: 0;
   width: 100%;
@@ -44,9 +43,9 @@ body {
 }
 
 .nav li:hover {
-  background-color: #777;
+  background-color: rgb(86, 95, 175);
 }
 
 .nav li.active {
-  background-color: #555;
+  background-color: rgb(17, 87, 153);
 }

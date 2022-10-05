@@ -187,3 +187,29 @@ export const fetchSearchMovies = (
     }
   };
 };
+
+export const fetchSearchCrews = (
+  name = "",
+  sortBy = "",
+  type='',
+  birth='',
+  death='',
+  profession='',
+  itemsPerPage,
+  currentPage
+) => {
+  return async (dispatch) => {
+    try {
+      const url = `http://localhost:8080/api/crews/search/search?name=${name}&birthFrom=${birth}&birthTo=${death}&profession=${profession}&page=${currentPage}&size=${itemsPerPage}&sort=${sortBy},type=${type}`;
+      const getData = await getDataRequest(url);
+      dispatch(
+        artistActions.setData({
+          fetchedData: getData.content,
+          pageCount: getData.page.totalPages,
+        })
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};

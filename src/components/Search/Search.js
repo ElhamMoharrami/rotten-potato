@@ -1,6 +1,5 @@
 import React from "react";
-
-import MoviesSearch from "./MoviesSearch/MoviesSearch";
+import SearchMovie from "./MoviesSearch/SearchMovie";
 import CrewSearch from "./CrewSearch/CrewSearch";
 
 const Search = (props) => {
@@ -9,7 +8,7 @@ const Search = (props) => {
   return (
     <>
       {type === "movies" ? (
-        <MoviesSearch
+        <SearchMovie
           currentPage={currentPage}
           itemsPerPage={itemsPerPage}
           isSearching={isSearching}

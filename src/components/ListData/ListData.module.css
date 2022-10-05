@@ -11,6 +11,7 @@
 
 .search-container{
   position: relative;
+ 
 }
 
 a {
@@ -79,4 +80,11 @@ a {
 .no-result{
   font-size: 36px;
   text-align: center;
+}
+
+.search-message{
+  background-color: rgb(138, 45, 45);
+  color: white;
+  width: 50%;
+  margin: 80px;
 }

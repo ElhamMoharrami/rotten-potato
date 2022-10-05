@@ -73,59 +73,59 @@ const ListData = (props) => {
       </div>
       <div className={classes["container"]}>
         <div className={classes["search-container"]}>
-        <Search
-          type={type}
-          itemsPerPage={data.itemsPerPage}
-          currentPage={data.currentPage}
-          action={action}
-          isSearching={isSearching}
-        />
-        </div>
-       <div>
-        {data.content.length > 1 ? (
-          <ShowList data={data.content} card={card} />
-        ) : (
-          <Card>
-            <p className={classes["no-result"]}>
-              The term you entered did not bring any results.
-            </p>
-          </Card>
-        )}
-        <div className={classes["pag-select"]}>
-          <ReactPaginate
-            breakLabel="..."
-            nextLabel="next >"
-            onPageChange={handlePageClick}
-            pageRangeDisplayed={pageRangeDisplayed}
-            pageCount={data.pageCount}
-            previousLabel="< previous"
-            initialPage={data.currentPage - 1}
-            renderOnZeroPageCount={null}
-            containerClassName={classes["pagination"]}
-            pageLinkClassName={classes["page-num"]}
-            previousLinkClassName={classes["page-num"]}
-            nextLinkClassName={classes["page-num"]}
-            activeLinkClassName={classes["active"]}
+          <Search
+            type={type}
+            itemsPerPage={data.itemsPerPage}
+            currentPage={data.currentPage}
+            action={action}
+            isSearching={isSearching}
           />
-
-          {!isLoading && (
-            <Select
-              placeholder="select..."
-              className={classes["select"]}
-              options={options}
-              onChange={itemsPerPageHandler}
-              searchable={false}
-              closeOnSelect={true}
-              onDropdownOpen={dropdownOpenHandler}
-              onDropdownClose={dropdownCloseHandler}
-            />
-          )}
-          {!isLoading && (
-            <Link to={linkCondition}>
-              <Button>Add </Button>
-            </Link>
-          )}
         </div>
+        <div>
+          {data.content.length > 1 ? (
+            <ShowList data={data.content} card={card} />
+          ) : (
+            <Card className={classes["search-message"]}>
+              <p className={classes["no-result"]}>
+                The term you entered did not bring any results.
+              </p>
+            </Card>
+          )}
+          <div className={classes["pag-select"]}>
+            <ReactPaginate
+              breakLabel="..."
+              nextLabel="next >"
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={pageRangeDisplayed}
+              pageCount={data.pageCount}
+              previousLabel="< previous"
+              initialPage={data.currentPage - 1}
+              renderOnZeroPageCount={null}
+              containerClassName={classes["pagination"]}
+              pageLinkClassName={classes["page-num"]}
+              previousLinkClassName={classes["page-num"]}
+              nextLinkClassName={classes["page-num"]}
+              activeLinkClassName={classes["active"]}
+            />
+
+            {!isLoading && data.content.length > 1 && (
+              <Select
+                placeholder="select..."
+                className={classes["select"]}
+                options={options}
+                onChange={itemsPerPageHandler}
+                searchable={false}
+                closeOnSelect={true}
+                onDropdownOpen={dropdownOpenHandler}
+                onDropdownClose={dropdownCloseHandler}
+              />
+            )}
+            {!isLoading && data.content.length > 1 && (
+              <Link to={linkCondition}>
+                <Button>Add </Button>
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </>

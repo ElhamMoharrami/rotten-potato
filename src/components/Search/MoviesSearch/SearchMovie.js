@@ -6,10 +6,11 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { Button } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { fetchSearchMovies } from "../../../../store/api-call";
+import { fetchSearchMovies } from "../../../store/api-call";
 import { useDispatch } from "react-redux";
 import classes from "./SearchMovie.module.scss";
-import { movieActions } from "../../../../store/data-slice";
+import { movieActions } from "../../../store/data-slice";
+import Card from "../../UI/Card/Card";
 
 const SearchMovie = (props) => {
   const { itemsPerPage, currentPage, isSearching } = props;
@@ -27,19 +28,19 @@ const SearchMovie = (props) => {
     }));
   };
 
-  const upArrowClickHandler=()=>{
+  const upArrowClickHandler = () => {
     setData((prevState) => ({
       ...prevState,
-      type: 'asc',
+      type: "asc",
     }));
-  }
+  };
 
-  const downArrowClickHandler=()=>{
+  const downArrowClickHandler = () => {
     setData((prevState) => ({
       ...prevState,
-      type: 'desc',
+      type: "desc",
     }));
-  }
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -105,6 +106,7 @@ const SearchMovie = (props) => {
               onChange={onchangeHandler}
               value={data.minRate || ""}
               label="minRate"
+              type="number"
             >
               <MenuItem value="">
                 <em>None</em>
@@ -192,12 +194,12 @@ const SearchMovie = (props) => {
             </Select>
           </FormControl>
           <div className={classes["sort-movie-upe-down"]}>
-           <div  className="button" onClick={upArrowClickHandler}>
-           <img   src="https://img.icons8.com/ios-glyphs/30/000000/long-arrow-up.png"/>
-           </div>
-           <div className="button" onClick={downArrowClickHandler}>
-           <img src="https://img.icons8.com/ios-glyphs/30/000000/long-arrow-down.png"/>
-           </div>
+            <div className="button" onClick={upArrowClickHandler}>
+              <img src="https://img.icons8.com/ios-glyphs/30/000000/long-arrow-up.png" />
+            </div>
+            <div className="button" onClick={downArrowClickHandler}>
+              <img src="https://img.icons8.com/ios-glyphs/30/000000/long-arrow-down.png" />
+            </div>
           </div>
         </div>
       </div>
