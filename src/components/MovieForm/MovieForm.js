@@ -464,11 +464,8 @@ const MovieForm = () => {
                 id="poster-input"
                 aria-describedby="poster-input"
               />
+              {!urlIsValid && <FormHelperText>invalid url.</FormHelperText>}
             </FormControl>
-
-            {!urlIsValid && (
-              <p className={classes["invalid-message"]}>invalid url</p>
-            )}
           </div>
 
           <Button disabled={formIsValid ? false : true} type="submit">

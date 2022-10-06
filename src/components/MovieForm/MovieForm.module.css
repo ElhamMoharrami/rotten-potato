@@ -9,16 +9,15 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  /* bring your own prefixes */
+
   transform: translate(-50%, -50%);
 }
 
 .wrapper div {
-  margin: 1rem;
+  margin: 10px;
 }
 
 .wrapper button {
-  /* grid-column-end: span 2; */
   margin-top: 1rem;
 }
 
@@ -37,6 +36,7 @@ label {
   text-align: center;
   font-size: 25px;
   color: #03045e;
+  margin-top: 20px;
 }
 
 .invalid-message {

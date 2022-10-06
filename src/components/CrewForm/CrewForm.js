@@ -8,8 +8,11 @@ import { useParams } from "react-router-dom";
 import Card from "../UI/Card/Card";
 import { useForm } from "react-hook-form";
 import classes from "./CrewForm.module.css";
-import { fetchData } from "../../store/api-call";
 import { useNavigate } from "react-router-dom";
+import { FormControl } from "@mui/material";
+import { InputLabel, Input, FormHelperText } from "@mui/material";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 
 const CrewForm = () => {
   const { id } = useParams();
@@ -25,6 +28,46 @@ const CrewForm = () => {
 
   const [crewData, setCreweData] = useState({});
   const currentYear = new Date().getFullYear();
+
+  const [nameisValid, setNameIsValid] = useState(true);
+  const [birthIsValid, setBirthIsValid] = useState(true);
+  const [deathIsValid, setDeathIsValid] = useState(true);
+  const [professionIsValid, setProfessionIsValid] = useState(true);
+  const [urlIsValid, setUrlIsValid] = useState(true);
+
+  const nameValidation = (name) => {
+    if (name.length > 100) {
+      setNameIsValid(false);
+    }
+  };
+
+  const birthValidation = (birth) => {
+    if (birth.length > 4) {
+      setBirthIsValid(false);
+    }
+  };
+
+  const deathValidation = (death) => {
+    if (death.length > 4) {
+      setDeathIsValid(false);
+    }
+  };
+
+  const professionValidation = (profession) => {
+    if (profession.length > 200) {
+      setProfessionIsValid(false);
+    }
+  };
+
+  const urlPatternValidation = (url) => {
+    const regex = new RegExp(
+      "(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?"
+    );
+    const result = regex.test(url);
+    if (!result) {
+      setUrlIsValid(false);
+    }
+  };
 
   useEffect(() => {
     dispatch(artistActions.setDetail({ selectedItem: {} }));
@@ -47,6 +90,26 @@ const CrewForm = () => {
       ...prevState,
       [name]: value,
     }));
+
+    if (name === "name") {
+      nameValidation(value);
+    }
+
+    if (name === "birth") {
+      birthValidation(value);
+    }
+
+    if (name === "death") {
+      deathValidation(value);
+    }
+
+    if (name === "profession") {
+      professionValidation(value);
+    }
+
+    if (name === "poster") {
+      urlPatternValidation(value);
+    }
   };
 
   const submitHandler = async (event) => {
@@ -86,6 +149,13 @@ const CrewForm = () => {
     }
   }, [formState, crewData, reset]);
 
+  const formIsValid =
+    nameisValid &&
+    birthIsValid &&
+    deathIsValid &&
+    professionIsValid &&
+    urlIsValid;
+
   return (
     <div>
       <form onSubmit={submitHandler}>
@@ -95,58 +165,99 @@ const CrewForm = () => {
             {isAddMode ? <p>add</p> : <p>edit</p>}{" "}
           </div>
           <div className={classes["data-form-input"]}>
-            <label>artist name</label>
-            <input
-              type="text"
-              {...register("name")}
-              onChange={onchangeHandler}
-              value={crewData.name || ""}
-              
-              required
-            />
+            <FormControl>
+              <InputLabel htmlFor="name-input">Artist Name</InputLabel>
+              <Input
+                error={nameisValid ? false : true}
+                {...register("name")}
+                onChange={onchangeHandler}
+                value={crewData.name || ""}
+                id="name-input"
+                aria-describedby="name-input"
+                required
+              />
+              {!nameisValid && (
+                <FormHelperText>
+                  should not be longer than 100 characters
+                </FormHelperText>
+              )}
+            </FormControl>
           </div>
           <div className={classes["data-form-input"]}>
-            <label>birth</label>
-            <input
-              type="number"
-              {...register("birth")}
-              onChange={onchangeHandler}
-              value={crewData.birth || ""}
-              min="1900"
-              required
-            />
+            <FormControl>
+              <InputLabel htmlFor="birth-input">Artist Birth</InputLabel>
+              <Input
+                error={birthIsValid ? false : true}
+                {...register("birth")}
+                onChange={onchangeHandler}
+                value={crewData.birth || ""}
+                id="birth-input"
+                aria-describedby="birth-input"
+                required
+              />
+              {!birthIsValid && (
+                <FormHelperText>
+                  should not be longer than 4 digits.
+                </FormHelperText>
+              )}
+            </FormControl>
           </div>
           <div className={classes["data-form-input"]}>
-            <label>death</label>
-            <input
-              type="number"
-              {...register("death")}
-              onChange={onchangeHandler}
-              value={crewData.death || ""}
-              max={currentYear}
-            />
+            <FormControl>
+              <InputLabel htmlFor="death-input">Artist Death</InputLabel>
+              <Input
+                error={deathIsValid ? false : true}
+                {...register("death")}
+                onChange={onchangeHandler}
+                value={crewData.death || ""}
+                id="death-input"
+                aria-describedby="death-input"
+                required
+              />
+              {!deathIsValid && (
+                <FormHelperText>
+                  should not be longer than 4 digits.
+                </FormHelperText>
+              )}
+            </FormControl>
           </div>
           <div className={classes["data-form-input"]}>
-            <label>profession</label>
-            <input
-              type="text"
-              {...register("profession")}
-              onChange={onchangeHandler}
-              value={crewData.profession || ""}
-              required
-            />
+            <FormControl>
+              <InputLabel htmlFor="death-input">Artist Profession</InputLabel>
+              <Input
+                error={professionIsValid ? false : true}
+                {...register("profession")}
+                onChange={onchangeHandler}
+                value={crewData.profession || ""}
+                id="profession-input"
+                aria-describedby="profession-input"
+                required
+              />
+              {!professionIsValid && (
+                <FormHelperText>
+                  should not be longer than 200 characters.
+                </FormHelperText>
+              )}
+            </FormControl>
           </div>
           <div className={classes["data-form-input"]}>
-            <label>poster</label>
-            <input
-              type="text"
-              {...register("poster")}
-              onChange={onchangeHandler}
-              value={crewData.poster || ""}
-            />
+            <FormControl>
+              <InputLabel htmlFor="poster-input">Poster Url</InputLabel>
+              <Input
+                type="text"
+                {...register("poster")}
+                onChange={onchangeHandler}
+                value={crewData.poster || ""}
+                id="poster-input"
+                aria-describedby="poster-input"
+              />
+              {!urlIsValid && <FormHelperText>invalid url.</FormHelperText>}
+            </FormControl>
           </div>
 
-          <Button type="submit">Submit</Button>
+          <Button disabled={formIsValid ? false : true} type="submit">
+            Submit
+          </Button>
           <Button onClick={cancelHandler}>Cancel</Button>
         </Card>
       </form>
