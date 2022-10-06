@@ -234,7 +234,10 @@ const MovieForm = () => {
           </div>
           <div className={classes["data-form-input"]}>
             <FormControl>
-              <InputLabel htmlFor="title-input">Movie Title</InputLabel>
+              <InputLabel htmlFor="title-input">
+                <img src="https://img.icons8.com/external-royyan-wijaya-detailed-outline-royyan-wijaya/24/000000/external-star-interface-royyan-wijaya-detailed-outline-royyan-wijaya.png" />
+                Movie Title
+              </InputLabel>
               <Input
                 error={titleLengthIsValid ? false : true}
                 {...register("title")}
@@ -253,7 +256,11 @@ const MovieForm = () => {
           </div>
           <div className={classes["data-form-input"]}>
             <FormControl>
-              <InputLabel htmlFor="imdbRating-input">IMDB rating</InputLabel>
+              <InputLabel htmlFor="imdbRating-input">
+                {" "}
+                <img src="https://img.icons8.com/external-royyan-wijaya-detailed-outline-royyan-wijaya/24/000000/external-star-interface-royyan-wijaya-detailed-outline-royyan-wijaya.png" />
+                IMDB rating
+              </InputLabel>
               <Input
                 type="number"
                 error={rateNumberIsValid ? false : true}
@@ -311,7 +318,11 @@ const MovieForm = () => {
           </div>
           <div className={classes["data-form-input"]}>
             <FormControl>
-              <InputLabel htmlFor="year-input">Year</InputLabel>
+              <InputLabel htmlFor="year-input">
+                {" "}
+                <img src="https://img.icons8.com/external-royyan-wijaya-detailed-outline-royyan-wijaya/24/000000/external-star-interface-royyan-wijaya-detailed-outline-royyan-wijaya.png" />
+                Year
+              </InputLabel>
               <Input
                 type="text"
                 error={yearIsValid ? false : true}
@@ -352,7 +363,11 @@ const MovieForm = () => {
           </div>
           <div className={classes["data-form-input"]}>
             <FormControl>
-              <InputLabel htmlFor="director-input">Director</InputLabel>
+              <InputLabel htmlFor="director-input">
+                {" "}
+                <img src="https://img.icons8.com/external-royyan-wijaya-detailed-outline-royyan-wijaya/24/000000/external-star-interface-royyan-wijaya-detailed-outline-royyan-wijaya.png" />
+                Director
+              </InputLabel>
               <Input
                 type="text"
                 error={directorIsValid ? false : true}

@@ -174,7 +174,7 @@ export const fetchSearchMovies = (
 ) => {
   return async (dispatch) => {
     try {
-      const url = `${BASEURL}/movies/search/search?title=${title}&minRate=${minRate}&yearFrom=${startYear}&yearTo=${endYear}&genre=${genre}&page=${currentPage}&size=${itemsPerPage}&sort=${sortType},${type}`;
+      const url = `http://localhost:8080/api/movies/search/search?title=${title}&minRate=${minRate}&yearFrom=${startYear}&yearTo=${endYear}&genre=${genre}&size=${itemsPerPage}&page=${currentPage}&sort=${sortType},${type}`;
       const getData = await getDataRequest(url);
       dispatch(
         movieActions.setData({
@@ -191,16 +191,16 @@ export const fetchSearchMovies = (
 export const fetchSearchCrews = (
   name = "",
   sortBy = "",
-  type='',
-  birth='',
-  death='',
-  profession='',
+  type = "",
+  birth = "",
+  death = "",
+  profession = "",
   itemsPerPage,
   currentPage
 ) => {
   return async (dispatch) => {
     try {
-      const url = `http://localhost:8080/api/crews/search/search?name=${name}&birthFrom=${birth}&birthTo=${death}&profession=${profession}&page=${currentPage}&size=${itemsPerPage}&sort=${sortBy},type=${type}`;
+      const url = `http://localhost:8080/api/crews/search/search?name=${name}&birthFrom=${birth}&birthTo=${death}&profession=${profession}&page=${currentPage}&size=${itemsPerPage}&sort=${sortBy},${type}`;
       const getData = await getDataRequest(url);
       dispatch(
         artistActions.setData({

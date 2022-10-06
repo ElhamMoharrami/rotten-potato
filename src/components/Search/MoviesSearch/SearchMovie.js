@@ -19,6 +19,16 @@ const SearchMovie = (props) => {
   const initialData = localStorage.getItem("data");
   const [data, setData] = useState(JSON.parse(initialData) || {});
 
+  const rates = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const genreOptions = [
+    "action",
+    "thriller",
+    "drama",
+    "animation",
+    "romance",
+    "western",
+  ];
+
   const onchangeHandler = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -111,15 +121,11 @@ const SearchMovie = (props) => {
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              <MenuItem value={1}>1+</MenuItem>
-              <MenuItem value={2}>2+</MenuItem>
-              <MenuItem value={3}>3+</MenuItem>
-              <MenuItem value={4}>4+</MenuItem>
-              <MenuItem value={5}>5+</MenuItem>
-              <MenuItem value={6}>6+</MenuItem>
-              <MenuItem value={7}>7+</MenuItem>
-              <MenuItem value={8}>8+</MenuItem>
-              <MenuItem value={9}>9+</MenuItem>
+              {rates.map((rate, index) => (
+                <MenuItem value={rate} key={index}>
+                  {rate}+
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </div>
@@ -165,15 +171,11 @@ const SearchMovie = (props) => {
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              <MenuItem value={"Action"}>Action</MenuItem>
-              <MenuItem value={"Thriller"}>Thriller</MenuItem>
-              <MenuItem value={"Western"}>Western</MenuItem>
-              <MenuItem value={"Drama"}>Drama</MenuItem>
-              <MenuItem value={"Horror"}>Horror</MenuItem>
-              <MenuItem value={"Romance"}>Romance</MenuItem>
-              <MenuItem value={"Fantasy"}>Fantasy</MenuItem>
-              <MenuItem value={"Adventure"}>Adventure</MenuItem>
-              <MenuItem value={"Animation"}>Animation</MenuItem>
+              {genreOptions.map((genre, index) => (
+                <MenuItem value={genre} key={index}>
+                  {genre}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </div>

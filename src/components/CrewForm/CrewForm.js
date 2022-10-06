@@ -166,7 +166,11 @@ const CrewForm = () => {
           </div>
           <div className={classes["data-form-input"]}>
             <FormControl>
-              <InputLabel htmlFor="name-input">Artist Name</InputLabel>
+              <InputLabel htmlFor="name-input">
+                {" "}
+                <img src="https://img.icons8.com/external-royyan-wijaya-detailed-outline-royyan-wijaya/24/000000/external-star-interface-royyan-wijaya-detailed-outline-royyan-wijaya.png" />
+                Artist Name
+              </InputLabel>
               <Input
                 error={nameisValid ? false : true}
                 {...register("name")}
@@ -185,7 +189,11 @@ const CrewForm = () => {
           </div>
           <div className={classes["data-form-input"]}>
             <FormControl>
-              <InputLabel htmlFor="birth-input">Artist Birth</InputLabel>
+              <InputLabel htmlFor="birth-input">
+                {" "}
+                <img src="https://img.icons8.com/external-royyan-wijaya-detailed-outline-royyan-wijaya/24/000000/external-star-interface-royyan-wijaya-detailed-outline-royyan-wijaya.png" />
+                Artist Birth
+              </InputLabel>
               <Input
                 error={birthIsValid ? false : true}
                 {...register("birth")}
@@ -204,7 +212,7 @@ const CrewForm = () => {
           </div>
           <div className={classes["data-form-input"]}>
             <FormControl>
-              <InputLabel htmlFor="death-input">Artist Death</InputLabel>
+              <InputLabel htmlFor="death-input"> Artist Death</InputLabel>
               <Input
                 error={deathIsValid ? false : true}
                 {...register("death")}
@@ -212,7 +220,6 @@ const CrewForm = () => {
                 value={crewData.death || ""}
                 id="death-input"
                 aria-describedby="death-input"
-                required
               />
               {!deathIsValid && (
                 <FormHelperText>
@@ -223,7 +230,11 @@ const CrewForm = () => {
           </div>
           <div className={classes["data-form-input"]}>
             <FormControl>
-              <InputLabel htmlFor="death-input">Artist Profession</InputLabel>
+              <InputLabel htmlFor="death-input">
+                {" "}
+                <img src="https://img.icons8.com/external-royyan-wijaya-detailed-outline-royyan-wijaya/24/000000/external-star-interface-royyan-wijaya-detailed-outline-royyan-wijaya.png" />
+                Artist Profession
+              </InputLabel>
               <Input
                 error={professionIsValid ? false : true}
                 {...register("profession")}
