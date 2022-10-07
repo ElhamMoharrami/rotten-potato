@@ -11,8 +11,6 @@ import classes from "./CrewForm.module.css";
 import { useNavigate } from "react-router-dom";
 import { FormControl } from "@mui/material";
 import { InputLabel, Input, FormHelperText } from "@mui/material";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
 
 const CrewForm = () => {
   const { id } = useParams();
@@ -27,7 +25,6 @@ const CrewForm = () => {
   const itemsPerPage = useSelector((state) => state.crews.data.itemsPerPage);
 
   const [crewData, setCreweData] = useState({});
-  const currentYear = new Date().getFullYear();
 
   const [nameisValid, setNameIsValid] = useState(true);
   const [birthIsValid, setBirthIsValid] = useState(true);

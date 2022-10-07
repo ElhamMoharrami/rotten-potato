@@ -13,7 +13,6 @@ import { override } from "../../assets/apis/config";
 import { PacmanLoader } from "react-spinners";
 import Button from "../UI/CustomButton";
 import { Link } from "react-router-dom";
-import Search from "../Search/Search";
 import Card from "../UI/Card/Card";
 
 const ListData = (props) => {
@@ -27,7 +26,6 @@ const ListData = (props) => {
     { value: 20, label: "20" },
   ];
   const dispatch = useDispatch();
-  const linkCondition = type === "movies" ? `/movie/add` : "/crew/add";
 
   useEffect(() => {
     if (isSearching === "") {
@@ -65,21 +63,12 @@ const ListData = (props) => {
   };
 
   return (
-    <>
-      <div className={classes["spinner"]}>
-        {isLoading && (
-          <PacmanLoader color="gray" cssOverride={override} size={150} />
-        )}
-      </div>
-      <div className={classes["container"]}>
-        <div className={classes["search-container"]}>
-          <Search
-            type={type}
-            itemsPerPage={data.itemsPerPage}
-            currentPage={data.currentPage}
-            action={action}
-            isSearching={isSearching}
-          />
+  
+      <div>
+        <div className={classes["spinner"]}>
+          {isLoading && (
+            <PacmanLoader color="gray" cssOverride={override} size={150} />
+          )}
         </div>
         <div>
           {data.content.length > 1 ? (
@@ -121,14 +110,14 @@ const ListData = (props) => {
               />
             )}
             {!isLoading && data.content.length > 1 && (
-              <Link to={linkCondition}>
+              <Link to={`/${type}/add`}>
                 <Button>Add </Button>
               </Link>
             )}
           </div>
         </div>
       </div>
-    </>
+  
   );
 };
 

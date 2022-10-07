@@ -13,7 +13,7 @@ import { artistActions } from "../../../store/data-slice";
 import { professions } from "../../../assets/apis/config";
 
 const CrewSearch = (props) => {
-  const { action, currentPage, itemsPerPage, isSearching } = props;
+  const { currentPage, itemsPerPage, isSearching } = props;
   const initialData = localStorage.getItem("data");
 
   const [data, setData] = useState(JSON.parse(initialData) || {});
@@ -66,7 +66,6 @@ const CrewSearch = (props) => {
       )
     );
     localStorage.setItem("data", JSON.stringify(data));
-    console.log(data);
   };
 
   useEffect(() => {
