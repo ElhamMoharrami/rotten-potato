@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { fetchSearchCrews } from "../../../store/api-call";
 import classes from "./CrewSearch.module.css";
 import "../../../assets/commonStyle.scss";
 import { FormControl } from "@mui/material";
@@ -16,6 +15,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import "../../../assets/commonStyle.scss";
+import { fetchSearch } from "../../../store/api-call";
 
 const CrewSearch = (props) => {
   const { currentPage, itemsPerPage, isSearching } = props;
@@ -44,13 +44,17 @@ const CrewSearch = (props) => {
     e.preventDefault();
     localStorage.clear();
     dispatch(artistActions.setIsSearching({ isSearching: "crews" }));
-    dispatch(fetchSearchCrews(data, itemsPerPage, currentPage));
+    dispatch(
+      fetchSearch(data, "crews", artistActions, itemsPerPage, currentPage)
+    );
     localStorage.setItem("data", JSON.stringify(data));
   };
 
   useEffect(() => {
     if (isSearching === "crews") {
-      dispatch(fetchSearchCrews(data, itemsPerPage, currentPage - 1));
+      dispatch(
+        fetchSearch(data, "crews", artistActions, itemsPerPage, currentPage - 1)
+      );
     }
   }, [itemsPerPage, currentPage, dispatch]);
 

@@ -9,13 +9,12 @@ import { fetchDetail, fetchDetailList } from "../../store/api-call";
 import Carousel from "react-multi-carousel";
 import { responsive } from "../../assets/apis/config";
 
-import classes from "./ArtistDetail.module.css";
-import '../../assets/commonStyle.scss'
+import classes from "./CrewsDetail.module.css";
+import "../../assets/commonStyle.scss";
 import blankProfile from "../../assets/images/blankProfilePicture.png";
 import { artistActions } from "../../store/data-slice";
-import Card from "../../components/UI/Card/Card";
 
-const ArtistDetail = () => {
+const CrewsDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -74,7 +73,7 @@ const ArtistDetail = () => {
             dotListClass="custom-dot-list-style"
             itemClass="carousel-item-padding-40-px"
           >
-           {movies.map((item) => (
+            {movies.map((item) => (
               <MovieCard artistDetail={true} movie={item} key={item.id} />
             ))}
           </Carousel>
@@ -84,4 +83,4 @@ const ArtistDetail = () => {
   );
 };
 
-export default ArtistDetail;
+export default CrewsDetail;

@@ -29,13 +29,15 @@ const ListData = (props) => {
 
   useEffect(() => {
     if (isSearching === "") {
-      dispatch(fetchData(type, data.itemsPerPage, data.currentPage, action));
+      dispatch(
+        fetchData(type, data.page.itemsPerPage, data.page.currentPage, action)
+      );
       window.scrollTo(0, 0);
     }
   }, [
-    data.itemsPerPage,
+    data.page.itemsPerPage,
     dispatch,
-    data.currentPage,
+    data.page.currentPage,
     action,
     type,
     isSearching,
@@ -63,61 +65,59 @@ const ListData = (props) => {
   };
 
   return (
-  
-      <div>
-        <div className={classes["spinner"]}>
-          {isLoading && (
-            <PacmanLoader color="gray" cssOverride={override} size={150} />
-          )}
-        </div>
-        <div className={classes["list-data"]}>
-          {data.content.length > 1 ? (
-            <ShowList data={data.content} card={card} />
-          ) : (
-            <Card className={classes["search-message"]}>
-              <p className={classes["no-result"]}>
-                The term you entered did not bring any results.
-              </p>
-            </Card>
-          )}
-          <div className={classes["pag-select"]}>
-            <ReactPaginate
-              breakLabel="..."
-              nextLabel="next >"
-              onPageChange={handlePageClick}
-              pageRangeDisplayed={pageRangeDisplayed}
-              pageCount={data.pageCount}
-              previousLabel="< previous"
-              initialPage={data.currentPage - 1}
-              renderOnZeroPageCount={null}
-              containerClassName={classes["pagination"]}
-              pageLinkClassName={classes["page-num"]}
-              previousLinkClassName={classes["page-num"]}
-              nextLinkClassName={classes["page-num"]}
-              activeLinkClassName={classes["active"]}
-            />
+    <div>
+      <div className={classes["spinner"]}>
+        {isLoading && (
+          <PacmanLoader color="gray" cssOverride={override} size={150} />
+        )}
+      </div>
+      <div className={classes["list-data"]}>
+        {data.content.length > 1 ? (
+          <ShowList data={data.content} card={card} />
+        ) : (
+          <Card className={classes["search-message"]}>
+            <p className={classes["no-result"]}>
+              The term you entered did not bring any results.
+            </p>
+          </Card>
+        )}
+        <div className={classes["pag-select"]}>
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel="next >"
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={pageRangeDisplayed}
+            pageCount={data.page.pageCount}
+            previousLabel="< previous"
+            initialPage={data.page.currentPage - 1}
+            renderOnZeroPageCount={null}
+            containerClassName={classes["pagination"]}
+            pageLinkClassName={classes["page-num"]}
+            previousLinkClassName={classes["page-num"]}
+            nextLinkClassName={classes["page-num"]}
+            activeLinkClassName={classes["active"]}
+          />
 
-            {!isLoading && data.content.length > 1 && (
-              <Select
-                placeholder="select..."
-                className={classes["select"]}
-                options={options}
-                onChange={itemsPerPageHandler}
-                searchable={false}
-                closeOnSelect={true}
-                onDropdownOpen={dropdownOpenHandler}
-                onDropdownClose={dropdownCloseHandler}
-              />
-            )}
-            {!isLoading && data.content.length > 1 && (
-              <Link to={`/${type}/add`}>
-                <Button>Add </Button>
-              </Link>
-            )}
-          </div>
+          {!isLoading && data.content.length > 1 && (
+            <Select
+              placeholder="select..."
+              className={classes["select"]}
+              options={options}
+              onChange={itemsPerPageHandler}
+              searchable={false}
+              closeOnSelect={true}
+              onDropdownOpen={dropdownOpenHandler}
+              onDropdownClose={dropdownCloseHandler}
+            />
+          )}
+          {!isLoading && data.content.length > 1 && (
+            <Link to={`/${type}/add`}>
+              <Button>Add </Button>
+            </Link>
+          )}
         </div>
       </div>
-  
+    </div>
   );
 };
 

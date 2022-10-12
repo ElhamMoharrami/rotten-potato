@@ -1,6 +1,6 @@
 import React from "react";
 
-import ArtistCard from "../../components/ArtistCard/ArtistCard";
+import ArtistCard from "../../components/CrewCard/CrewCard";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";

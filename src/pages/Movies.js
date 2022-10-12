@@ -2,13 +2,11 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 import ListData from "../components/ListData/ListData";
-import classes from "./Movies.module.css";
 import "../assets/commonStyle.scss";
 import MovieCard from "../components/MovieCard/MovieCard";
 import { movieActions } from "../store/data-slice";
 import SearchMovie from "../components/Search/MoviesSearch/SearchMovie";
 import SearchDrawer from "../components/SearchDrawer/SearchDrawer";
-import Grid2 from "@mui/material/Unstable_Grid2"; // Grid version 2
 
 const Movies = () => {
   const data = useSelector((state) => state.movies.data);
@@ -20,13 +18,13 @@ const Movies = () => {
 
   return (
     <SearchDrawer
-      itemsPerPage={data.itemsPerPage}
-      currentPage={data.currentPage}
+      itemsPerPage={data.page.itemsPerPage}
+      currentPage={data.page.currentPage}
       isSearching={isSearching}
       search={
         <SearchMovie
-          itemsPerPage={data.itemsPerPage}
-          currentPage={data.currentPage}
+          itemsPerPage={data.page.itemsPerPage}
+          currentPage={data.page.currentPage}
           isSearching={isSearching}
         />
       }

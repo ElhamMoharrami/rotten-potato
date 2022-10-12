@@ -6,7 +6,6 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { Button } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { fetchSearchMovies } from "../../../store/api-call";
 import { useDispatch } from "react-redux";
 import classes from "./SearchMovie.module.scss";
 import { movieActions } from "../../../store/data-slice";
@@ -15,6 +14,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import "../../../assets/commonStyle.scss";
+import { fetchSearch } from "../../../store/api-call";
 
 const SearchMovie = (props) => {
   const { itemsPerPage, currentPage, isSearching } = props;
@@ -46,13 +46,23 @@ const SearchMovie = (props) => {
     e.preventDefault();
     localStorage.clear();
     dispatch(movieActions.setIsSearching({ isSearching: "movies" }));
-    dispatch(fetchSearchMovies(data, itemsPerPage, currentPage));
+    dispatch(
+      fetchSearch(data, "movies", movieActions, itemsPerPage, currentPage)
+    );
     localStorage.setItem("data", JSON.stringify(data));
   };
 
   useEffect(() => {
     if (isSearching === "movies") {
-      dispatch(fetchSearchMovies(data, itemsPerPage, currentPage - 1));
+      dispatch(
+        fetchSearch(
+          data,
+          "movies",
+          movieActions,
+          itemsPerPage,
+          currentPage - 1
+        )
+      );
     }
   }, [itemsPerPage, currentPage, dispatch]);
 

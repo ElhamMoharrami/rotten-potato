@@ -161,10 +161,10 @@ export const fetchSearchedProfession = (
   };
 };
 
-export const fetchSearchMovies = (data, itemsPerPage, currentPage) => {
+export const fetchSearch = (data, type, action, itemsPerPage, currentPage) => {
   return async (dispatch) => {
     try {
-      let url = new URL("http://localhost:8080/api/movies/search/search");
+      let url = new URL(`${BASEURL}/${type}/search/search`);
       for (let item in data) {
         if (item !== "sortType") {
           url.searchParams.set(item, data[item]);
@@ -175,10 +175,9 @@ export const fetchSearchMovies = (data, itemsPerPage, currentPage) => {
       if (data.sortType) {
         url.href = url.href + `,${data.sortType}`;
       }
-      console.log(url);
       const getData = await getDataRequest(url.href);
       dispatch(
-        movieActions.setData({
+        action.setData({
           fetchedData: getData.content,
           pageCount: getData.page.totalPages,
         })
@@ -188,31 +187,3 @@ export const fetchSearchMovies = (data, itemsPerPage, currentPage) => {
     }
   };
 };
-
-export const fetchSearchCrews = (data, itemsPerPage, currentPage) => {
-  return async (dispatch) => {
-    try {
-      let url = new URL("http://localhost:8080/api/crews/search/search");
-      for (let item in data) {
-        if (item !== "sortType") {
-          url.searchParams.set(item, data[item]);
-        }
-      }
-      url.searchParams.set("size", itemsPerPage);
-      url.searchParams.set("page", currentPage);
-      if (data.sortType) {
-        url.href = url.href + `,${data.sortType}`;
-      }
-      const getData = await getDataRequest(url);
-      dispatch(
-        artistActions.setData({
-          fetchedData: getData.content,
-          pageCount: getData.page.totalPages,
-        })
-      );
-    } catch (err) {
-      console.log(err);
-    }
-  };
-};
-

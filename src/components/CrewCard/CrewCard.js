@@ -8,7 +8,7 @@ import "../../assets/commonStyle.scss";
 import "../../assets/CardStyle.scss";
 import { artistActions } from "../../store/data-slice";
 
-const ArtistCard = (props) => {
+const CrewCard = (props) => {
   const { artist } = props;
   const dispatch = useDispatch();
   const itemsPerPage = useSelector((state) => state.crews.data.itemsPerPage);
@@ -59,4 +59,4 @@ const ArtistCard = (props) => {
   );
 };
 
-export default ArtistCard;
+export default CrewCard;
