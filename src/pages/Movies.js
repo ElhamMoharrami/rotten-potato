@@ -7,6 +7,8 @@ import "../assets/commonStyle.scss";
 import MovieCard from "../components/MovieCard/MovieCard";
 import { movieActions } from "../store/data-slice";
 import SearchMovie from "../components/Search/MoviesSearch/SearchMovie";
+import SearchDrawer from "../components/SearchDrawer/SearchDrawer";
+import Grid2 from "@mui/material/Unstable_Grid2"; // Grid version 2
 
 const Movies = () => {
   const data = useSelector((state) => state.movies.data);
@@ -15,23 +17,30 @@ const Movies = () => {
   const card = (item) => {
     return <MovieCard movie={item} />;
   };
+
   return (
-    <div className={classes["container"]}>
-      <SearchMovie
-        className={classes["search-container"]}
-        itemsPerPage={data.itemsPerPage}
-        currentPage={data.currentPage}
-        isSearching={isSearching}
-      />
-      <ListData
-        type="movies"
-        data={data}
-        card={card}
-        action={movieActions}
-        isLoading={isLoading}
-        isSearching={isSearching}
-      />
-    </div>
+    <SearchDrawer
+      itemsPerPage={data.itemsPerPage}
+      currentPage={data.currentPage}
+      isSearching={isSearching}
+      search={
+        <SearchMovie
+          itemsPerPage={data.itemsPerPage}
+          currentPage={data.currentPage}
+          isSearching={isSearching}
+        />
+      }
+      data={
+        <ListData
+          type="movies"
+          data={data}
+          card={card}
+          action={movieActions}
+          isLoading={isLoading}
+          isSearching={isSearching}
+        />
+      }
+    />
   );
 };
 

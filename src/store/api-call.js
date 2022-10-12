@@ -161,21 +161,22 @@ export const fetchSearchedProfession = (
   };
 };
 
-export const fetchSearchMovies = (
-  title = "",
-  minRate = "",
-  startYear = "",
-  endYear = "",
-  genre = "",
-  sortType = "",
-  type = "",
-  itemsPerPage,
-  currentPage
-) => {
+export const fetchSearchMovies = (data, itemsPerPage, currentPage) => {
   return async (dispatch) => {
     try {
-      const url = `http://localhost:8080/api/movies/search/search?title=${title}&minRate=${minRate}&yearFrom=${startYear}&yearTo=${endYear}&genre=${genre}&size=${itemsPerPage}&page=${currentPage}&sort=${sortType},${type}`;
-      const getData = await getDataRequest(url);
+      let url = new URL("http://localhost:8080/api/movies/search/search");
+      for (let item in data) {
+        if (item !== "sortType") {
+          url.searchParams.set(item, data[item]);
+        }
+      }
+      url.searchParams.set("size", itemsPerPage);
+      url.searchParams.set("page", currentPage);
+      if (data.sortType) {
+        url.href = url.href + `,${data.sortType}`;
+      }
+      console.log(url);
+      const getData = await getDataRequest(url.href);
       dispatch(
         movieActions.setData({
           fetchedData: getData.content,
@@ -188,19 +189,20 @@ export const fetchSearchMovies = (
   };
 };
 
-export const fetchSearchCrews = (
-  name = "",
-  sortBy = "",
-  type = "",
-  birth = "",
-  death = "",
-  profession = "",
-  itemsPerPage,
-  currentPage
-) => {
+export const fetchSearchCrews = (data, itemsPerPage, currentPage) => {
   return async (dispatch) => {
     try {
-      const url = `http://localhost:8080/api/crews/search/search?name=${name}&birthFrom=${birth}&birthTo=${death}&profession=${profession}&page=${currentPage}&size=${itemsPerPage}&sort=${sortBy},${type}`;
+      let url = new URL("http://localhost:8080/api/crews/search/search");
+      for (let item in data) {
+        if (item !== "sortType") {
+          url.searchParams.set(item, data[item]);
+        }
+      }
+      url.searchParams.set("size", itemsPerPage);
+      url.searchParams.set("page", currentPage);
+      if (data.sortType) {
+        url.href = url.href + `,${data.sortType}`;
+      }
       const getData = await getDataRequest(url);
       dispatch(
         artistActions.setData({
@@ -213,3 +215,4 @@ export const fetchSearchCrews = (
     }
   };
 };
+

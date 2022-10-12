@@ -7,6 +7,7 @@ body {
 }
 
 .nav {
+  background-color: #7699D4;
   overflow: hidden;
   position: fixed;
   top: 0;

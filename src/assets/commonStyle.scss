@@ -78,3 +78,17 @@ input {
 ::placeholder {
   color: #cbd0d5;
 }
+
+// do not delete these
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 50px;
+  margin-left: 20px;
+ }
+
+ .search-space{
+  margin-left: 10px;
+ }

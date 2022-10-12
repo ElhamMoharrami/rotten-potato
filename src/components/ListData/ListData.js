@@ -70,7 +70,7 @@ const ListData = (props) => {
             <PacmanLoader color="gray" cssOverride={override} size={150} />
           )}
         </div>
-        <div>
+        <div className={classes["list-data"]}>
           {data.content.length > 1 ? (
             <ShowList data={data.content} card={card} />
           ) : (

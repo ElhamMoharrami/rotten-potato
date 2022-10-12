@@ -11,6 +11,11 @@ import { useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { artistActions } from "../../../store/data-slice";
 import { professions } from "../../../assets/apis/config";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormLabel from "@mui/material/FormLabel";
+import "../../../assets/commonStyle.scss";
 
 const CrewSearch = (props) => {
   const { currentPage, itemsPerPage, isSearching } = props;
@@ -35,59 +40,23 @@ const CrewSearch = (props) => {
     }));
   };
 
-  const upArrowClickHandler = () => {
-    setData((prevState) => ({
-      ...prevState,
-      type: "asc",
-    }));
-  };
-
-  const downArrowClickHandler = () => {
-    setData((prevState) => ({
-      ...prevState,
-      type: "desc",
-    }));
-  };
-
   const submitHandler = (e) => {
     e.preventDefault();
     localStorage.clear();
     dispatch(artistActions.setIsSearching({ isSearching: "crews" }));
-    dispatch(
-      fetchSearchCrews(
-        data.name,
-        data.sortBy,
-        data.type,
-        data.birthYear,
-        data.deathYear,
-        data.profession,
-        itemsPerPage,
-        currentPage
-      )
-    );
+    dispatch(fetchSearchCrews(data, itemsPerPage, currentPage));
     localStorage.setItem("data", JSON.stringify(data));
   };
 
   useEffect(() => {
     if (isSearching === "crews") {
-      dispatch(
-        fetchSearchCrews(
-          data.name,
-          data.sortBy,
-          data.type,
-          data.birthYear,
-          data.deathYear,
-          data.profession,
-          itemsPerPage,
-          currentPage - 1
-        )
-      );
+      dispatch(fetchSearchCrews(data, itemsPerPage, currentPage - 1));
     }
   }, [itemsPerPage, currentPage, dispatch]);
 
   return (
     <form onSubmit={submitHandler}>
-      <div className={classes["crew-search-container"]}>
+      <div className={classes["search-container"]}>
         <div className={classes["crew-name"]}>
           <FormControl>
             <InputLabel htmlFor="name-input">Artist Name</InputLabel>
@@ -124,14 +93,14 @@ const CrewSearch = (props) => {
         </div>
         <div className={classes["crew-search-birthYear"]}>
           <FormControl>
-            <InputLabel htmlFor="birthYear-input">birthYear</InputLabel>
+            <InputLabel htmlFor="birthFrom-input">birthYear</InputLabel>
             <Input
               type="number"
-              {...register("birthYear")}
+              {...register("birthFrom")}
               onChange={onchangeHandler}
-              value={data.birthYear || ""}
-              id="birthYear-input"
-              aria-describedby="birthYear-input"
+              value={data.birthFrom || ""}
+              id="birthFrom-input"
+              aria-describedby="birthFrom-input"
             />
             <FormHelperText>example:1900</FormHelperText>
           </FormControl>
@@ -141,38 +110,55 @@ const CrewSearch = (props) => {
             <InputLabel htmlFor="deathYear-input">deathYear</InputLabel>
             <Input
               type="number"
-              {...register("deathYear")}
+              {...register("birthTo")}
               onChange={onchangeHandler}
-              value={data.deathYear || ""}
-              id="deathYear-input"
-              aria-describedby="deathYear-input"
+              value={data.birthTo || ""}
+              id="birthTo-input"
+              aria-describedby="birthTo-input"
             />
             <FormHelperText>example:1900</FormHelperText>
           </FormControl>
         </div>
-        <div className={classes["sort-crew-select"]}>
+        <div>
           <FormControl sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="sort-movie">Sort</InputLabel>
+            <InputLabel id="sort-select">Sort</InputLabel>
             <Select
-              labelId="sort-movie"
-              id="sort-movie"
-              {...register("sortBy")}
+              labelId="sort-select"
+              id="sort-select"
+              {...register("sort")}
               onChange={onchangeHandler}
-              value={data.sortBy || ""}
-              label="sortBy"
+              value={data.sort || ""}
+              label="sort"
             >
-              <MenuItem value={"name"}>Name</MenuItem>
-              <MenuItem value={"profession"}>Profession</MenuItem>
+              <MenuItem value="name">Name</MenuItem>
+              <MenuItem value="profession">Profession</MenuItem>
             </Select>
           </FormControl>
-          <div className={classes["sort-crew-upe-down"]}>
-            <div className="button" onClick={upArrowClickHandler}>
-              <img src="https://img.icons8.com/ios-glyphs/30/000000/long-arrow-up.png" />
-            </div>
-            <div className="button" onClick={downArrowClickHandler}>
-              <img src="https://img.icons8.com/ios-glyphs/30/000000/long-arrow-down.png" />
-            </div>
-          </div>
+        </div>
+        <div>
+          <FormControl>
+            <FormLabel id="demo-radio-buttons-group-label">
+              Sort order
+            </FormLabel>
+            <RadioGroup
+              aria-labelledby="radio-buttons-group-label"
+              name="radio-buttons-group"
+              {...register("sortType")}
+              onChange={onchangeHandler}
+              value={data.sortType || ""}
+            >
+              <FormControlLabel
+                value="asc"
+                control={<Radio />}
+                label="Ascending"
+              />
+              <FormControlLabel
+                value="desc"
+                control={<Radio />}
+                label="Descending"
+              />
+            </RadioGroup>
+          </FormControl>
         </div>
       </div>
       <div className={classes["crew-search-button"]}>

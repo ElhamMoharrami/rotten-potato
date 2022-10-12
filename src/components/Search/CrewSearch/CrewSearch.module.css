@@ -14,21 +14,9 @@
   margin-top: 80px;
 }
 
-.sort-crew-upe-down {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .crew-search-button button {
   color: rgb(0, 0, 0);
   border: 1px solid rgb(0, 0, 0);
 
   width: 100%;
-}
-
-.sort-crew-select {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }

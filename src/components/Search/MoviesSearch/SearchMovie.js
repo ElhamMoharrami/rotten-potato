@@ -10,7 +10,11 @@ import { fetchSearchMovies } from "../../../store/api-call";
 import { useDispatch } from "react-redux";
 import classes from "./SearchMovie.module.scss";
 import { movieActions } from "../../../store/data-slice";
-import Card from "../../UI/Card/Card";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormLabel from "@mui/material/FormLabel";
+import "../../../assets/commonStyle.scss";
 
 const SearchMovie = (props) => {
   const { itemsPerPage, currentPage, isSearching } = props;
@@ -38,62 +42,23 @@ const SearchMovie = (props) => {
     }));
   };
 
-  const upArrowClickHandler = () => {
-    setData((prevState) => ({
-      ...prevState,
-      type: "asc",
-    }));
-  };
-
-  const downArrowClickHandler = () => {
-    setData((prevState) => ({
-      ...prevState,
-      type: "desc",
-    }));
-  };
-
   const submitHandler = (e) => {
     e.preventDefault();
     localStorage.clear();
     dispatch(movieActions.setIsSearching({ isSearching: "movies" }));
-    dispatch(
-      fetchSearchMovies(
-        data.title,
-        data.minRate,
-        data.startYear,
-        data.endYear,
-        data.genre,
-        data.sortType,
-        data.type,
-        itemsPerPage,
-        currentPage
-      )
-    );
+    dispatch(fetchSearchMovies(data, itemsPerPage, currentPage));
     localStorage.setItem("data", JSON.stringify(data));
-    console.log(data);
   };
 
   useEffect(() => {
     if (isSearching === "movies") {
-      dispatch(
-        fetchSearchMovies(
-          data.title,
-          data.minRate,
-          data.startYear,
-          data.endYear,
-          data.genre,
-          data.sortType,
-          data.type,
-          itemsPerPage,
-          currentPage - 1
-        )
-      );
+      dispatch(fetchSearchMovies(data, itemsPerPage, currentPage - 1));
     }
   }, [itemsPerPage, currentPage, dispatch]);
 
   return (
     <form onSubmit={submitHandler}>
-      <div className={classes["movie-search-container"]}>
+      <div className={classes["search-container"]}>
         <div className={classes["movie-search-title"]}>
           <FormControl>
             <InputLabel htmlFor="title-input">Movie Title</InputLabel>
@@ -108,7 +73,7 @@ const SearchMovie = (props) => {
         </div>
         <div className={classes["movie-search-rate"]}>
           <FormControl sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="rate-select">Rate</InputLabel>
+            <InputLabel id="rate-select">Movie Rate</InputLabel>
             <Select
               labelId="rate-select"
               id="rate-select"
@@ -129,30 +94,30 @@ const SearchMovie = (props) => {
             </Select>
           </FormControl>
         </div>
-        <div className={classes["movie-search-startYear"]}>
+        <div className={classes["movie-search-yearFrom"]}>
           <FormControl>
-            <InputLabel htmlFor="title-input">from</InputLabel>
+            <InputLabel htmlFor="title-input">From Year</InputLabel>
             <Input
               type="number"
-              {...register("startYear")}
+              {...register("yearFrom")}
               onChange={onchangeHandler}
-              value={data.startYear || ""}
-              id="startYear-input"
-              aria-describedby="startYear-input"
+              value={data.yearFrom || ""}
+              id="yearFrom-input"
+              aria-describedby="yearFrom-input"
             />
             <FormHelperText>example:1900</FormHelperText>
           </FormControl>
         </div>
-        <div className={classes["movie-search-endYear"]}>
+        <div className={classes["movie-search-yearTo"]}>
           <FormControl>
-            <InputLabel htmlFor="title-input">to</InputLabel>
+            <InputLabel htmlFor="title-input">To Year</InputLabel>
             <Input
               type="number"
-              {...register("endYear")}
+              {...register("yearTo")}
               onChange={onchangeHandler}
-              value={data.endYear || ""}
-              id="endYear-input"
-              aria-describedby="endYear-input"
+              value={data.yearTo || ""}
+              id="yearTo-input"
+              aria-describedby="yearTo-input"
             />
             <FormHelperText>example: 2022</FormHelperText>
           </FormControl>
@@ -179,30 +144,46 @@ const SearchMovie = (props) => {
             </Select>
           </FormControl>
         </div>
-
-        <div className={classes["sort-movie-select"]}>
+        <div>
           <FormControl sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="sort-movie">Sort</InputLabel>
+            <InputLabel id="sort-select">Sort</InputLabel>
             <Select
-              labelId="sort-movie"
-              id="sort-movie"
+              labelId="sort-select"
+              id="sort-select"
+              {...register("sort")}
+              onChange={onchangeHandler}
+              value={data.sort || ""}
+              label="sort"
+            >
+              <MenuItem value="title">Title</MenuItem>
+              <MenuItem value="year">Year</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
+        <div>
+          <FormControl>
+            <FormLabel id="demo-radio-buttons-group-label">
+              Sort order
+            </FormLabel>
+            <RadioGroup
+              aria-labelledby="radio-buttons-group-label"
+              name="radio-buttons-group"
               {...register("sortType")}
               onChange={onchangeHandler}
               value={data.sortType || ""}
-              label="sortType"
             >
-              <MenuItem value={"title"}>Title</MenuItem>
-              <MenuItem value={"year"}>Year</MenuItem>
-            </Select>
+              <FormControlLabel
+                value="asc"
+                control={<Radio />}
+                label="Ascending"
+              />
+              <FormControlLabel
+                value="desc"
+                control={<Radio />}
+                label="Descending"
+              />
+            </RadioGroup>
           </FormControl>
-          <div className={classes["sort-movie-upe-down"]}>
-            <div className="button" onClick={upArrowClickHandler}>
-              <img src="https://img.icons8.com/ios-glyphs/30/000000/long-arrow-up.png" />
-            </div>
-            <div className="button" onClick={downArrowClickHandler}>
-              <img src="https://img.icons8.com/ios-glyphs/30/000000/long-arrow-down.png" />
-            </div>
-          </div>
         </div>
       </div>
       <div className={classes["movie-search-button"]}>
