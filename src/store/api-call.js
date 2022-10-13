@@ -119,47 +119,7 @@ export const updateData = (
   };
 };
 
-export const fetchSearchedName = (title, currentPage, itemsPerPage) => {
-  return async (dispatch) => {
-    try {
-      const url = `${BASEURL}/crews/search/byName?name=${title}&page=${
-        currentPage - 1
-      }&size=${itemsPerPage}`;
-      const getData = await getDataRequest(url);
-      dispatch(
-        artistActions.setData({
-          fetchedData: getData.content,
-          pageCount: getData.page.totalPages,
-        })
-      );
-    } catch (err) {
-      console.log(err);
-    }
-  };
-};
 
-export const fetchSearchedProfession = (
-  profession,
-  currentPage,
-  itemsPerPage
-) => {
-  return async (dispatch) => {
-    try {
-      const url = `${BASEURL}/crews/search/byProfession?profession=${profession}&page=${
-        currentPage - 1
-      }&size=${itemsPerPage}&sort=profession`;
-      const getData = await getDataRequest(url);
-      dispatch(
-        artistActions.setData({
-          fetchedData: getData.content,
-          pageCount: getData.page.totalPages,
-        })
-      );
-    } catch (err) {
-      console.log(err);
-    }
-  };
-};
 
 export const fetchSearch = (data, type, action, itemsPerPage, currentPage) => {
   return async (dispatch) => {

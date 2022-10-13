@@ -1,61 +1,61 @@
-import React from "react";
+import * as React from "react";
 import { Link } from "react-router-dom";
-import blankProfilePicture from "../../assets/images/blankProfilePicture.png";
-import {  deleteSelectedItem } from "../../store/api-call";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import "../../assets/commonStyle.scss";
-import "../../assets/CardStyle.scss";
+import { useSelector, useDispatch } from "react-redux";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import { artistActions } from "../../store/data-slice";
+import { deleteSelectedItem } from "../../store/api-call";
+import blankProfilePicture from "../../assets/images/blankProfilePicture.png";
 
 const CrewCard = (props) => {
   const { artist } = props;
   const dispatch = useDispatch();
-  const itemsPerPage = useSelector((state) => state.crews.data.itemsPerPage);
-  const currentPage = useSelector((state) => state.crews.data.currentPage);
+  const itemsPerPage = useSelector(
+    (state) => state.crews.data.page.itemsPerPage
+  );
+  const currentPage = useSelector((state) => state.crews.data.page.currentPage);
   const content = useSelector((state) => state.crews.data.content);
 
   const deleteHandler = () => {
-  dispatch(deleteSelectedItem(artist.id,"crews", itemsPerPage, currentPage, artistActions, content.length )) 
+    dispatch(
+      deleteSelectedItem(
+        artist.id,
+        "crews",
+        itemsPerPage,
+        currentPage,
+        artistActions,
+        content.length
+      )
+    );
   };
 
   return (
-    <div className="card-item">
+    <Card sx={{ height: 450, borderRadius: "30px", position: "relative" }}>
       <Link to={`/Artists/${artist.id}`}>
-        <div className="card-inner">
-          <div className="card-top">
-            {artist.poster !== null && (
-              <img src={artist.poster} alt={artist.name} />
-            )}
-            {artist.poster === null && (
-              <img src={blankProfilePicture} alt={artist.name} />
-            )}
-          </div>
-        </div>
-        <div className="card-bottom">
-          <div className="card-info">
-            <h4>{artist.name}</h4>
-          </div>
-        </div>
+        <CardMedia
+          component="img"
+          alt={artist.name}
+          height="320"
+          image={artist.poster !== null ? artist.poster : blankProfilePicture}
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {artist.name}
+          </Typography>
+        </CardContent>
       </Link>
-      {!props.movieDetail && (
-        <div className="card-icons">
-          <img
-          alt="trash icon"
-            className="button"
-            onClick={deleteHandler}
-            src="https://img.icons8.com/material-sharp/24/000000/filled-trash.png"
-          />
-          <Link to={`/crew/edit/${artist.id}`}>
-            <img
-            alt="edit icon"
-              className="button"
-              src="https://img.icons8.com/ios-glyphs/30/000000/edit--v1.png"
-            />
-          </Link>
-        </div>
-      )}
-    </div>
+      <CardActions sx={{ position: "absolute", bottom: 0 }}>
+        <DeleteIcon onClick={deleteHandler} />
+        <Link to={`/crews/edit/${artist.id}`}>
+          <EditIcon sx={{ color: "black", marginLeft: 20 }} />
+        </Link>
+      </CardActions>
+    </Card>
   );
 };
 
