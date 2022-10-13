@@ -1,6 +1,6 @@
 import React from "react";
 
-import ArtistCard from "../../components/ArtistCard/ArtistCard";
+import ArtistCard from "../../components/CrewCard/CrewCard";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -13,7 +13,7 @@ import { movieActions } from "../../store/data-slice";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { responsive } from "../../assets/apis/config";
-import '../../assets/commonStyle.css'
+import '../../assets/commonStyle.scss'
 
 const MovieDetail = () => {
   const { id } = useParams();

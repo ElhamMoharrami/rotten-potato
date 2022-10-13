@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Button from "../UI/CustomButton";
 import { useDispatch, useSelector } from "react-redux";
-import { saveCrew, updateCrew } from "../../store/api-call";
+import { saveData, updateData } from "../../store/api-call";
 import { fetchDetail } from "../../store/api-call";
 import { artistActions } from "../../store/data-slice";
 import { useParams } from "react-router-dom";
 import Card from "../UI/Card/Card";
 import { useForm } from "react-hook-form";
 import classes from "./CrewForm.module.css";
-import { fetchData } from "../../store/api-call";
 import { useNavigate } from "react-router-dom";
+import { FormControl } from "@mui/material";
+import { InputLabel, Input, FormHelperText } from "@mui/material";
 
 const CrewForm = () => {
   const { id } = useParams();
@@ -24,6 +25,46 @@ const CrewForm = () => {
   const itemsPerPage = useSelector((state) => state.crews.data.itemsPerPage);
 
   const [crewData, setCreweData] = useState({});
+
+  const [nameisValid, setNameIsValid] = useState(true);
+  const [birthIsValid, setBirthIsValid] = useState(true);
+  const [deathIsValid, setDeathIsValid] = useState(true);
+  const [professionIsValid, setProfessionIsValid] = useState(true);
+  const [urlIsValid, setUrlIsValid] = useState(true);
+
+  const nameValidation = (name) => {
+    if (name.length > 100) {
+      setNameIsValid(false);
+    }
+  };
+
+  const birthValidation = (birth) => {
+    if (birth.length > 4) {
+      setBirthIsValid(false);
+    }
+  };
+
+  const deathValidation = (death) => {
+    if (death.length > 4) {
+      setDeathIsValid(false);
+    }
+  };
+
+  const professionValidation = (profession) => {
+    if (profession.length > 200) {
+      setProfessionIsValid(false);
+    }
+  };
+
+  const urlPatternValidation = (url) => {
+    const regex = new RegExp(
+      "(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?"
+    );
+    const result = regex.test(url);
+    if (!result) {
+      setUrlIsValid(false);
+    }
+  };
 
   useEffect(() => {
     dispatch(artistActions.setDetail({ selectedItem: {} }));
@@ -46,22 +87,51 @@ const CrewForm = () => {
       ...prevState,
       [name]: value,
     }));
+
+    if (name === "name") {
+      nameValidation(value);
+    }
+
+    if (name === "birth") {
+      birthValidation(value);
+    }
+
+    if (name === "death") {
+      deathValidation(value);
+    }
+
+    if (name === "profession") {
+      professionValidation(value);
+    }
+
+    if (name === "poster") {
+      urlPatternValidation(value);
+    }
   };
 
   const submitHandler = async (event) => {
     event.preventDefault();
-
     if (isAddMode) {
-      dispatch(saveCrew(crewData));
+      dispatch(
+        saveData(crewData, "crews", itemsPerPage, currentPage, artistActions)
+      );
+    } else {
+      dispatch(
+        updateData(
+          "crews",
+          id,
+          crewData,
+          itemsPerPage,
+          currentPage,
+          artistActions
+        )
+      );
     }
+    navigate("/artists");
+  };
 
-    if (!isAddMode) {
-      dispatch(updateCrew(id, crewData));
-
-      dispatch(fetchData("crews", itemsPerPage, currentPage, artistActions));
-    }
-
-    navigate(-1);
+  const cancelHandler = () => {
+    navigate("/artists");
   };
 
   React.useEffect(() => {
@@ -76,57 +146,115 @@ const CrewForm = () => {
     }
   }, [formState, crewData, reset]);
 
+  const formIsValid =
+    nameisValid &&
+    birthIsValid &&
+    deathIsValid &&
+    professionIsValid &&
+    urlIsValid;
+
   return (
     <div>
       <form onSubmit={submitHandler}>
         <Card className={classes["wrapper"]}>
-          <div className={classes["data-form-input"]}>
-            <label>artist name</label>
-            <input
-              type="text"
-              {...register("name")}
-              onChange={onchangeHandler}
-              value={crewData.name || ""}
-            />
+          <div className={classes["title"]}>
+            {" "}
+            {isAddMode ? <p>add</p> : <p>edit</p>}{" "}
           </div>
           <div className={classes["data-form-input"]}>
-            <label>birth</label>
-            <input
-              type="text"
-              {...register("birth")}
-              onChange={onchangeHandler}
-              value={crewData.birth || ""}
-            />
+            <FormControl>
+              <InputLabel htmlFor="name-input"> *Artist Name</InputLabel>
+              <Input
+                error={nameisValid ? false : true}
+                {...register("name")}
+                onChange={onchangeHandler}
+                value={crewData.name || ""}
+                id="name-input"
+                aria-describedby="name-input"
+                required
+              />
+              {!nameisValid && (
+                <FormHelperText>
+                  should not be longer than 100 characters
+                </FormHelperText>
+              )}
+            </FormControl>
           </div>
           <div className={classes["data-form-input"]}>
-            <label>death</label>
-            <input
-              type="text"
-              {...register("death")}
-              onChange={onchangeHandler}
-              value={crewData.death || ""}
-            />
+            <FormControl>
+              <InputLabel htmlFor="birth-input"> *Artist Birth</InputLabel>
+              <Input
+                error={birthIsValid ? false : true}
+                {...register("birth")}
+                onChange={onchangeHandler}
+                value={crewData.birth || ""}
+                id="birth-input"
+                aria-describedby="birth-input"
+                required
+              />
+              {!birthIsValid && (
+                <FormHelperText>
+                  should not be longer than 4 digits.
+                </FormHelperText>
+              )}
+            </FormControl>
           </div>
           <div className={classes["data-form-input"]}>
-            <label>profession</label>
-            <input
-              type="text"
-              {...register("profession")}
-              onChange={onchangeHandler}
-              value={crewData.profession || ""}
-            />
+            <FormControl>
+              <InputLabel htmlFor="death-input"> Artist Death</InputLabel>
+              <Input
+                error={deathIsValid ? false : true}
+                {...register("death")}
+                onChange={onchangeHandler}
+                value={crewData.death || ""}
+                id="death-input"
+                aria-describedby="death-input"
+              />
+              {!deathIsValid && (
+                <FormHelperText>
+                  should not be longer than 4 digits.
+                </FormHelperText>
+              )}
+            </FormControl>
           </div>
           <div className={classes["data-form-input"]}>
-            <label>poster</label>
-            <input
-              type="text"
-              {...register("poster")}
-              onChange={onchangeHandler}
-              value={crewData.poster || ""}
-            />
+            <FormControl>
+              <InputLabel htmlFor="death-input"> *Artist Profession</InputLabel>
+              <Input
+                error={professionIsValid ? false : true}
+                {...register("profession")}
+                onChange={onchangeHandler}
+                value={crewData.profession || ""}
+                id="profession-input"
+                aria-describedby="profession-input"
+                required
+              />
+              {!professionIsValid && (
+                <FormHelperText>
+                  should not be longer than 200 characters.
+                </FormHelperText>
+              )}
+            </FormControl>
+          </div>
+          <div className={classes["data-form-input"]}>
+            <FormControl>
+              <InputLabel htmlFor="poster-input">Poster Url</InputLabel>
+              <Input
+                type="text"
+                {...register("poster")}
+                onChange={onchangeHandler}
+                value={crewData.poster || ""}
+                id="poster-input"
+                aria-describedby="poster-input"
+              />
+              {!urlIsValid && <FormHelperText>invalid url.</FormHelperText>}
+            </FormControl>
           </div>
 
-          <Button type="submit">Submit</Button>
+          <Button disabled={formIsValid ? false : true} type="submit">
+            Submit
+          </Button>
+          <Button onClick={cancelHandler}>Cancel</Button>
         </Card>
       </form>
     </div>

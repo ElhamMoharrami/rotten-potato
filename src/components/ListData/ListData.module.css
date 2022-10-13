@@ -1,4 +1,19 @@
-a{
+.container {
+  display: grid;
+  grid-template-columns: 0.5fr 1.2fr;
+  grid-template-rows: 1fr;
+  grid-auto-columns: 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas: ". .";
+  position: relative;
+}
+
+.search-container {
+  position: relative;
+}
+
+a {
   text-decoration: none;
 }
 
@@ -24,30 +39,51 @@ a{
 }
 
 .pagination .page-num:hover {
-  background-color:#641220;
+  background-color: #00b4d8;
   color: rgb(17, 16, 16);
 }
 
 .pagination .active {
-  background-color: #85182a;
+  background-color: #48cae4;
 }
 
 .pag-select {
   display: flex;
   justify-content: center;
   align-items: baseline;
-  gap:50px
+  gap: 50px;
 }
 
 .spinner {
   position: relative;
 }
 
-
-.css-wmy1p7-ReactDropdownSelect{
-  color: red;
+.search-wrapper {
+  width: 100%;
+  height: 100px;
+  margin-top: 50px;
+  position: relative;
 }
 
-.css-wmy1p7-ReactDropdownSelect:hover{
-  color: red !important;
+.search-box {
+  position: absolute;
+  top: 50%;
+  margin-top: -25px;
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+}
+
+.no-result {
+  font-size: 36px;
+  text-align: center;
+}
+
+.search-message {
+  background-color: rgb(138, 45, 45);
+  color: white;
+  width: 50%;
+  margin: 80px;
 }

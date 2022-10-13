@@ -1,4 +1,4 @@
-import { movieActions } from "./data-slice";
+import { artistActions, movieActions } from "./data-slice";
 
 const BASEURL = `http://localhost:8080/api`;
 
@@ -13,9 +13,7 @@ export const fetchData = (type, size, currentPage, action) => {
     try {
       dispatch(action.setIsLoading({ isLoading: true }));
       const url = `${BASEURL}/${type}?page=${currentPage - 1}&size=${size}`;
-
       const getData = await getDataRequest(url);
-
       dispatch(
         action.setData({
           fetchedData: getData.content,
@@ -57,28 +55,16 @@ export const fetchDetailList = (id, type, detail, action) => {
   };
 };
 
-export const saveMovie = (dataObj) => {
+export const saveData = (dataObj, type, itemsPerPage, currentPage, action) => {
   return async (dispatch) => {
     try {
-      const url = `${BASEURL}/movies`;
+      const url = `${BASEURL}/${type}`;
       await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: dataObj.title,
-          imdbRating: dataObj.imdbRating,
-          imdbVotes: dataObj.imdbVotes,
-          runtime: dataObj.runtime,
-          year: dataObj.year,
-          plot: dataObj.plot,
-          director: dataObj.director,
-          actors: dataObj.actors,
-          genre: dataObj.genre,
-          language: dataObj.language,
-          awards: dataObj.awards,
-          poster: dataObj.poster,
-        }),
+        body: JSON.stringify(dataObj),
       });
+      dispatch(fetchData(type, itemsPerPage, currentPage, action));
     } catch (err) {
       console.log(err);
     }
@@ -96,11 +82,9 @@ export const deleteSelectedItem = (
   return async (dispatch) => {
     try {
       const url = `${BASEURL}/${type}/${id}`;
-
       await fetch(url, {
         method: "DELETE",
       });
-
       if (contentLength <= 1) {
         dispatch(fetchData(type, itemsPerPage, currentPage - 1, action));
       } else {
@@ -112,74 +96,92 @@ export const deleteSelectedItem = (
   };
 };
 
-export const updateMovie = (id, dataObj) => {
+export const updateData = (
+  type,
+  id,
+  dataObj,
+  itemsPerPage,
+  currentPage,
+  action
+) => {
   return async (dispatch) => {
     try {
-      const url = `${BASEURL}/movies/${id}`;
-      const response = await fetch(url, {
+      const url = `${BASEURL}/${type}/${id}`;
+      await fetch(url, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          id: dataObj.id,
-          title: dataObj.title,
-          imdbRating: dataObj.imdbRating,
-          imdbVotes: dataObj.imdbVotes,
-          runtime: dataObj.runtime,
-          year: dataObj.year,
-          plot: dataObj.plot,
-          director: dataObj.director,
-          actors: dataObj.actors,
-          genre: dataObj.genre,
-          language: dataObj.language,
-          awards: dataObj.awards,
-          poster: dataObj.poster,
-        }),
+        body: JSON.stringify(dataObj),
       });
-      const data = response.json();
-      console.log(data);
+      dispatch(fetchData(type, itemsPerPage, currentPage, action));
     } catch (err) {
       console.log(err);
     }
   };
 };
 
-export const saveCrew = (dataObj) => {
+export const fetchSearchedName = (title, currentPage, itemsPerPage) => {
   return async (dispatch) => {
     try {
-      const url = `${BASEURL}/crews`;
-      await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: dataObj.name,
-          birth: dataObj.birth,
-          death: dataObj.death,
-          profession: dataObj.profession,
-          poster: dataObj.poster,
-        }),
-      });
+      const url = `${BASEURL}/crews/search/byName?name=${title}&page=${
+        currentPage - 1
+      }&size=${itemsPerPage}`;
+      const getData = await getDataRequest(url);
+      dispatch(
+        artistActions.setData({
+          fetchedData: getData.content,
+          pageCount: getData.page.totalPages,
+        })
+      );
     } catch (err) {
       console.log(err);
     }
   };
 };
 
-export const updateCrew = (id, dataObj) => {
+export const fetchSearchedProfession = (
+  profession,
+  currentPage,
+  itemsPerPage
+) => {
   return async (dispatch) => {
     try {
-      const url = `${BASEURL}/movies/${id}`;
-      await fetch(url, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          id: dataObj.id,
-          name: dataObj.name,
-          birth: dataObj.birth,
-          death: dataObj.death,
-          profession: dataObj.profession,
-          poster: dataObj.poster,
-        }),
-      });
+      const url = `${BASEURL}/crews/search/byProfession?profession=${profession}&page=${
+        currentPage - 1
+      }&size=${itemsPerPage}&sort=profession`;
+      const getData = await getDataRequest(url);
+      dispatch(
+        artistActions.setData({
+          fetchedData: getData.content,
+          pageCount: getData.page.totalPages,
+        })
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const fetchSearch = (data, type, action, itemsPerPage, currentPage) => {
+  return async (dispatch) => {
+    try {
+      let url = new URL(`${BASEURL}/${type}/search/search`);
+      for (let item in data) {
+        if (item !== "sortType") {
+          url.searchParams.set(item, data[item]);
+        }
+      }
+      url.searchParams.set("size", itemsPerPage);
+      url.searchParams.set("page", currentPage);
+      if (data.sortType) {
+        url.href = url.href + `,${data.sortType}`;
+      }
+      const getData = await getDataRequest(url.href);
+      dispatch(
+        action.setData({
+          fetchedData: getData.content,
+          pageCount: getData.page.totalPages,
+        })
+      );
     } catch (err) {
       console.log(err);
     }

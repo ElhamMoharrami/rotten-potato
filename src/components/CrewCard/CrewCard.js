@@ -4,11 +4,11 @@ import blankProfilePicture from "../../assets/images/blankProfilePicture.png";
 import {  deleteSelectedItem } from "../../store/api-call";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import "../../assets/commonStyle.css";
+import "../../assets/commonStyle.scss";
 import "../../assets/CardStyle.scss";
 import { artistActions } from "../../store/data-slice";
 
-const ArtistCard = (props) => {
+const CrewCard = (props) => {
   const { artist } = props;
   const dispatch = useDispatch();
   const itemsPerPage = useSelector((state) => state.crews.data.itemsPerPage);
@@ -41,12 +41,14 @@ const ArtistCard = (props) => {
       {!props.movieDetail && (
         <div className="card-icons">
           <img
+          alt="trash icon"
             className="button"
             onClick={deleteHandler}
             src="https://img.icons8.com/material-sharp/24/000000/filled-trash.png"
           />
-          <Link to={`/crewform/edit/${artist.id}`}>
+          <Link to={`/crew/edit/${artist.id}`}>
             <img
+            alt="edit icon"
               className="button"
               src="https://img.icons8.com/ios-glyphs/30/000000/edit--v1.png"
             />
@@ -57,4 +59,4 @@ const ArtistCard = (props) => {
   );
 };
 
-export default ArtistCard;
+export default CrewCard;

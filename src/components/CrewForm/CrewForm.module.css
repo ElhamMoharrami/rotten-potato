@@ -1,4 +1,6 @@
 .wrapper {
+   margin-top: 450px;
+   background-color: #8fe1ef;
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 2rem;
@@ -17,7 +19,7 @@
   
   .wrapper button{
       grid-column-end: span 2;
-      margin-top: 3rem;
+      margin-top: 1rem;
   }
   
   .data-form-input{
@@ -25,3 +27,17 @@
       flex-direction: column;
       gap: 1rem;
   }
+
+  label{
+    color: #03045E;
+  }
+
+  .title{
+    grid-column-end: span 2;
+    margin-top: 3rem;
+    text-align: center;
+    font-size: 25px;
+    color: #03045E;
+  }
+
+  

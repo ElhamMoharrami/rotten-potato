@@ -9,13 +9,12 @@ import { fetchDetail, fetchDetailList } from "../../store/api-call";
 import Carousel from "react-multi-carousel";
 import { responsive } from "../../assets/apis/config";
 
-import classes from "./ArtistDetail.module.css";
-import '../../assets/commonStyle.css'
+import classes from "./CrewsDetail.module.css";
+import "../../assets/commonStyle.scss";
 import blankProfile from "../../assets/images/blankProfilePicture.png";
 import { artistActions } from "../../store/data-slice";
 
-
-const ArtistDetail = () => {
+const CrewsDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -84,4 +83,4 @@ const ArtistDetail = () => {
   );
 };
 
-export default ArtistDetail;
+export default CrewsDetail;
