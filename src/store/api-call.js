@@ -1,5 +1,3 @@
-import { artistActions, movieActions } from "./data-slice";
-
 const BASEURL = `http://localhost:8080/api`;
 
 const getDataRequest = async (url) => {
@@ -55,7 +53,14 @@ export const fetchDetailList = (id, type, detail, action) => {
   };
 };
 
-export const saveData = (dataObj, type, itemsPerPage, currentPage, action) => {
+export const saveData = (
+  dataObj,
+  title,
+  type,
+  itemsPerPage,
+  currentPage,
+  action
+) => {
   return async (dispatch) => {
     try {
       const url = `${BASEURL}/${type}`;
@@ -65,14 +70,24 @@ export const saveData = (dataObj, type, itemsPerPage, currentPage, action) => {
         body: JSON.stringify(dataObj),
       });
       dispatch(fetchData(type, itemsPerPage, currentPage, action));
+      dispatch(
+        action.setActionState({
+          actionState: { status: "success", action: "add", title: title },
+        })
+      );
     } catch (err) {
-      console.log(err);
+      dispatch(
+        action.setActionState({
+          actionState: { status: "error", action: "add", title: title },
+        })
+      );
     }
   };
 };
 
 export const deleteSelectedItem = (
   id,
+  title,
   type,
   itemsPerPage,
   currentPage,
@@ -90,14 +105,32 @@ export const deleteSelectedItem = (
       } else {
         dispatch(fetchData(type, itemsPerPage, currentPage, action));
       }
+      dispatch(
+        action.setActionState({
+          actionState: {
+            status: "success",
+            action: "delete",
+            title: title
+          },
+        })
+      );
     } catch (err) {
-      console.log(err);
+      dispatch(
+        action.setActionState({
+          actionState: {
+            status: "error",
+            action: "delete",
+            title: title
+          },
+        })
+      );
     }
   };
 };
 
 export const updateData = (
   type,
+  title,
   id,
   dataObj,
   itemsPerPage,
@@ -113,26 +146,44 @@ export const updateData = (
         body: JSON.stringify(dataObj),
       });
       dispatch(fetchData(type, itemsPerPage, currentPage, action));
+      dispatch(
+        action.setActionState({
+          actionState: {
+            status: "success",
+            action: "edit",
+            title: title
+          },
+        })
+      );
     } catch (err) {
-      console.log(err);
+      dispatch(
+        action.setActionState({
+          actionState: {
+            status: "error",
+            action: "edit",
+            title: title
+          },
+        })
+      );
     }
   };
 };
-
-
 
 export const fetchSearch = (data, type, action, itemsPerPage, currentPage) => {
   return async (dispatch) => {
     try {
       let url = new URL(`${BASEURL}/${type}/search/search`);
       for (let item in data) {
-        if (item !== "sortType") {
+        if (item !== "sortType" && item !== "sort") {
           url.searchParams.set(item, data[item]);
         }
       }
       url.searchParams.set("size", itemsPerPage);
-      url.searchParams.set("page", currentPage);
-      if (data.sortType) {
+      url.searchParams.set("page", currentPage - 1);
+      if (data.sort) {
+        url.searchParams.set("sort", data.sort);
+      }
+      if (data.sort && data.sortType) {
         url.href = url.href + `,${data.sortType}`;
       }
       const getData = await getDataRequest(url.href);

@@ -1,110 +1,138 @@
-import React from "react";
-
-import ArtistCard from "../../components/CrewCard/CrewCard";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-
 import { fetchDetail, fetchDetailList } from "../../store/api-call";
-
-import classes from "./MovieDetail.module.css";
-
 import { movieActions } from "../../store/data-slice";
+import CrewCard from "../../components/CrewCard/CrewCard";
+import { Card, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { responsive } from "../../assets/apis/config";
-import '../../assets/commonStyle.scss'
+import { responsive } from "../../assets/config";
 
 const MovieDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-
   const movie = useSelector((state) => state.movies.selectedItem);
-  const artists = useSelector((state) => state.movies.detailList);
+  const crews = useSelector((state) => state.movies.detailList);
 
   useEffect(() => {
     dispatch(fetchDetail(id, "movies", movieActions));
     dispatch(fetchDetailList(id, "movies", "crews", movieActions));
-
   }, [dispatch, id]);
 
   return (
-    <>
-      <div className={classes.container}>
-        <div className={classes.details}>
-          <p className={classes["movie-title"]}>{movie.title}</p>
-          <div className={classes["movie-rating"]}>
-            <span>
-            <img src="https://img.icons8.com/tiny-color/16/000000/star.png"/>   IMDB Rating <i></i> : {movie.imdbRating}
+    <Box>
+      <Card
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          gap: "80px",
+          margin: "80px 10px 10px 10px",
+        }}
+      >
+        <Box sx={{ margin: "10px" }}>
+          <Typography sx={{ color:'black', fontSize: "25px" }}>
+            {movie.title}
+          </Typography>
+          <Box
+            sx={{
+              paddingLeft: "3px",
+              marginTop: "20px",
+              fontSize: "24px",
+              display: "flex",
+              color:'black',
+              display: "flex",
+              justifyContent: "space-between",
+
+            }}
+          >
+            <span >
+              <img src="https://img.icons8.com/tiny-color/16/000000/star.png" />
+              IMDB Rating <i></i> : {movie.imdbRating}
             </span>
-            <span>
+            <span >
               IMDB Votes <i></i> : {movie.imdbVotes}
             </span>
             <span>
               Runtime <i></i> : {movie.runtime}
             </span>
-            <span>
+            <span >
               Year <i></i> : {movie.year}
             </span>
-          </div>
-          <p className={classes["movie-plot"]}>{movie.plot}</p>
-          <div className={classes["movie-info"]}>
-            <div>
+          </Box>
+          <Typography sx={{ color: "black", margin: "20px" }}>
+            {movie.plot}
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "30px",
+              color: "black",
+            }}
+          >
+            <Box sx={{ display: "flex", gap: "20px" }}>
               <span>Director</span>
               <span>{movie.director}</span>
-            </div>
-            <div>
+            </Box>
+            <Box sx={{ display: "flex", gap: "20px" }}>
               <span>Stars</span>
               <span>{movie.actors}</span>
-            </div>
-            <div>
+            </Box>
+            <Box sx={{ display: "flex", gap: "20px" }}>
               <span>Generes</span>
               <span>{movie.genre}</span>
-            </div>
-            <div>
+            </Box>
+            <Box sx={{ display: "flex", gap: "20px" }}>
               <span>Languages</span>
               <span>{movie.language}</span>
-            </div>
-            <div>
+            </Box>
+            <Box sx={{ display: "flex", gap: "20px" }}>
               <span>Awards</span>
               <span>{movie.awards}</span>
-            </div>
-          </div>
-        </div>
-        <div>
-          <img
-            src={movie.poster}
-            alt={movie.title}
-            className={classes["movie-poster"]}
-          />
-        </div>
-      </div>
-      <div className={classes.crew}>
-        <p className={classes["crew-title"]}>Movie Crew</p>
-        <div className="carousel-container">
+            </Box>
+          </Box>
+        </Box>
+        <Box>
+          <img src={movie.poster} alt={movie.title} />
+        </Box>
+      </Card>
+      <Box>
+        <Typography
+          sx={{
+            fontSize: "28px",
+            marginLeft: "20px",
+            marginRight: "20px",
+            alignContent: "center",
+            paddingLeft: "20px",
+            color: "black",
+            boxShadow:
+              "rgba(114, 100, 165, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
+          }}
+        >
+          Movie Crew
+        </Typography>
+        <Box sx={{ margin: "10px", overflow: "hidden" }}>
           <Carousel
             swipeable={false}
-            draggable={false}
-            showDots={true}
             responsive={responsive}
             ssr={true}
-            infinite={false}
+            infinite={true}
             autoPlaySpeed={1000}
             keyBoardControl={true}
             customTransition="all .5"
             transitionDuration={500}
-            containerClass="carousel-container"
             removeArrowOnDeviceType={["tablet", "mobile"]}
-            dotListClass="custom-dot-list-style"
             itemClass="carousel-item-padding-40-px"
           >
-            {artists.map((item) => (
-              <ArtistCard movieDetail={true} artist={item} key={item.id} />
+            {crews.map((item) => (
+              <CrewCard movieDetail={true} crew={item} key={item.id} />
             ))}
           </Carousel>
-        </div>
-      </div>
-    </>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

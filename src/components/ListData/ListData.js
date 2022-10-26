@@ -1,123 +1,126 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-
-import Select from "react-dropdown-select";
-import ReactPaginate from "react-paginate";
-
 import { fetchData } from "../../store/api-call";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 import ShowList from "../ShowList/ShowList";
-
-import classes from "./ListData.module.css";
-import { override } from "../../assets/apis/config";
-
-import { PacmanLoader } from "react-spinners";
-import Button from "../UI/CustomButton";
-import { Link } from "react-router-dom";
-import Card from "../UI/Card/Card";
+import Pagination from "@mui/material/Pagination";
+import LinearProgress from "@mui/material/LinearProgress";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
 
 const ListData = (props) => {
-  const { type, isLoading, data, action, card, isSearching } = props;
-
+  const {
+    type,
+    isLoading,
+    data,
+    action,
+    card,
+    isSearching,
+    form,
+    itemsPerPage,
+    currentPage,
+  } = props;
+  const dispatch = useDispatch();
   const pageRangeDisplayed = 3;
   const options = [
-    { value: 5, label: "5" },
     { value: 10, label: "10" },
     { value: 15, label: "15" },
     { value: 20, label: "20" },
+    { value: 30, label: "30" },
   ];
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isSearching === "") {
-      dispatch(
-        fetchData(type, data.page.itemsPerPage, data.page.currentPage, action)
-      );
+      dispatch(fetchData(type, itemsPerPage, currentPage, action));
       window.scrollTo(0, 0);
     }
-  }, [
-    data.page.itemsPerPage,
-    dispatch,
-    data.page.currentPage,
-    action,
-    type,
-    isSearching,
-  ]);
+  }, [itemsPerPage, dispatch, currentPage, action, type, isSearching]);
 
-  const handlePageClick = async (event) => {
-    dispatch(action.setCurrentPage({ currentPage: event.selected + 1 }));
+  const List = () => {
+    if (data.content.length >= 1) {
+      return (
+        <Box>
+          <ShowList form={form} type={type} data={data.content} card={card} />
+        </Box>
+      );
+    } else {
+      return (
+        <Card sx={{ minWidth: 275 }}>
+          <CardContent>
+            <Typography
+              sx={{
+                fontSize: 14,
+                textAlign: " center",
+                verticalAlign: "middle",
+                lineHeight: "90px",
+              }}
+              color="text.secondary"
+              gutterBottom
+            >
+              The Search Term Did Not Bring Any Results.
+            </Typography>
+          </CardContent>
+        </Card>
+      );
+    }
   };
 
-  const itemsPerPageHandler = (selectedOption) => {
-    const selectedOpt = selectedOption[0].value;
-    dispatch(action.setItemsPerPage({ itemsPerPage: selectedOpt }));
+  const handlePageClick = async (event, page) => {
+    dispatch(action.setCurrentPage({ currentPage: page }));
   };
 
-  const dropdownOpenHandler = () => {
-    window.scrollTo({
-      left: 0,
-      top: document.body.scrollHeight,
-      behavior: "smooth",
-    });
-  };
-
-  const dropdownCloseHandler = () => {
-    window.scrollTo(0, 0);
+  const itemsPerPageHandler = (event) => {
+    dispatch(action.setItemsPerPage({ itemsPerPage: event.target.value }));
   };
 
   return (
-    <div>
-      <div className={classes["spinner"]}>
-        {isLoading && (
-          <PacmanLoader color="gray" cssOverride={override} size={150} />
-        )}
-      </div>
-      <div className={classes["list-data"]}>
-        {data.content.length > 1 ? (
-          <ShowList data={data.content} card={card} />
-        ) : (
-          <Card className={classes["search-message"]}>
-            <p className={classes["no-result"]}>
-              The term you entered did not bring any results.
-            </p>
-          </Card>
-        )}
-        <div className={classes["pag-select"]}>
-          <ReactPaginate
-            breakLabel="..."
-            nextLabel="next >"
-            onPageChange={handlePageClick}
-            pageRangeDisplayed={pageRangeDisplayed}
-            pageCount={data.page.pageCount}
-            previousLabel="< previous"
-            initialPage={data.page.currentPage - 1}
-            renderOnZeroPageCount={null}
-            containerClassName={classes["pagination"]}
-            pageLinkClassName={classes["page-num"]}
-            previousLinkClassName={classes["page-num"]}
-            nextLinkClassName={classes["page-num"]}
-            activeLinkClassName={classes["active"]}
-          />
-
-          {!isLoading && data.content.length > 1 && (
+    <Box>
+      {isLoading && <LinearProgress />}
+      {!isLoading && <List />}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 15,
+          marginBottom: 10,
+          marginTop: 10,
+        }}
+      >
+        <Pagination
+          boundaryCount={pageRangeDisplayed}
+          count={data.page.pageCount}
+          onChange={handlePageClick}
+          page={currentPage}
+          size="medium"
+        />
+        {!isLoading && data.content.length > 1 && (
+          <FormControl>
+            <InputLabel id="select-label">Size</InputLabel>
             <Select
-              placeholder="select..."
-              className={classes["select"]}
-              options={options}
+              sx={{
+                paddingRight: 2,
+                paddingLeft: 2,
+              }}
+              value={itemsPerPage}
+              labelId="select-label"
               onChange={itemsPerPageHandler}
-              searchable={false}
-              closeOnSelect={true}
-              onDropdownOpen={dropdownOpenHandler}
-              onDropdownClose={dropdownCloseHandler}
-            />
-          )}
-          {!isLoading && data.content.length > 1 && (
-            <Link to={`/${type}/add`}>
-              <Button>Add </Button>
-            </Link>
-          )}
-        </div>
-      </div>
-    </div>
+            >
+              {options.map((option, index) => (
+                <MenuItem value={option.value} key={index}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        )}
+      </Box>
+    </Box>
   );
 };
 

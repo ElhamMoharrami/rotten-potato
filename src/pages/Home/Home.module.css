@@ -2,11 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=DynaPuff&family=Open+Sans:wght@300&family=Roboto:ital,wght@1,300;1,400&display=swap");
 .background-image {
   background-image: url("../../assets/images/cinema.jpg");
-
-  /* Full height */
   height: 100vh;
-
-  /* Center and scale the image nicely */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

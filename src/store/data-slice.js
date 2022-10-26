@@ -3,12 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   data: {
     content: [],
-    page: { itemsPerPage: 5, pageCount: 0, currentPage: 1 },
+    page: { itemsPerPage: 10, pageCount: 0, currentPage: 1 },
   },
   selectedItem: [],
   detailList: [],
   isLoading: false,
   isSearching: "",
+  actionState: { status: "", action: "", title: "" },
 };
 
 const createDataSlice = (name) => {
@@ -39,15 +40,10 @@ const createDataSlice = (name) => {
         state.isSearching = action.payload.isSearching;
       },
       clearData(state) {
-        state.data = {
-          content: [],
-          page: { itemsPerPage: 5, pageCount: 0, currentPage: 1 },
-        };
-        state.selectedItem = [];
-        state.detailList = [];
-        state.isLoading = false;
-        state.isSearching = "";
-        localStorage.clear();
+        state = initialState;
+      },
+      setActionState(state, action) {
+        state.actionState = action.payload.actionState;
       },
     },
   });
