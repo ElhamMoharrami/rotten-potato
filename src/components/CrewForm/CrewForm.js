@@ -1,29 +1,31 @@
 import React, { useEffect, useState } from "react";
-import Button from "../UI/CustomButton";
 import { useDispatch, useSelector } from "react-redux";
-import { saveData, updateData } from "../../store/api-call";
-import { fetchDetail } from "../../store/api-call";
-import { artistActions } from "../../store/data-slice";
-import { useParams } from "react-router-dom";
-import Card from "../UI/Card/Card";
 import { useForm } from "react-hook-form";
-import classes from "./CrewForm.module.css";
+import { saveData, updateData, fetchDetail } from "../../store/api-call";
 import { useNavigate } from "react-router-dom";
-import { FormControl } from "@mui/material";
+import { artistActions } from "../../store/data-slice";
 import { InputLabel, Input, FormHelperText } from "@mui/material";
+import { FormControl } from "@mui/material";
+import Box from "@mui/material/Box";
+import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Unstable_Grid2";
+import Modal from "@mui/material/Modal";
+import {style} from '../../assets/config'
 
-const CrewForm = () => {
-  const { id } = useParams();
+const CrewForm = (props) => {
+  const { actionType, open, close, id } = props;
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
   const { register, reset, formState } = useForm();
   const isAddMode = !id;
 
   const crew = useSelector((state) => state.crews.selectedItem);
-  const currentPage = useSelector((state) => state.crews.data.currentPage);
-  const itemsPerPage = useSelector((state) => state.crews.data.itemsPerPage);
-
+  const currentPage = useSelector((state) => state.crews.data.page.currentPage);
+  const itemsPerPage = useSelector(
+    (state) => state.crews.data.page.itemsPerPage
+  );
   const [crewData, setCreweData] = useState({});
 
   const [nameisValid, setNameIsValid] = useState(true);
@@ -31,30 +33,6 @@ const CrewForm = () => {
   const [deathIsValid, setDeathIsValid] = useState(true);
   const [professionIsValid, setProfessionIsValid] = useState(true);
   const [urlIsValid, setUrlIsValid] = useState(true);
-
-  const nameValidation = (name) => {
-    if (name.length > 100) {
-      setNameIsValid(false);
-    }
-  };
-
-  const birthValidation = (birth) => {
-    if (birth.length > 4) {
-      setBirthIsValid(false);
-    }
-  };
-
-  const deathValidation = (death) => {
-    if (death.length > 4) {
-      setDeathIsValid(false);
-    }
-  };
-
-  const professionValidation = (profession) => {
-    if (profession.length > 200) {
-      setProfessionIsValid(false);
-    }
-  };
 
   const urlPatternValidation = (url) => {
     const regex = new RegExp(
@@ -68,16 +46,16 @@ const CrewForm = () => {
 
   useEffect(() => {
     dispatch(artistActions.setDetail({ selectedItem: {} }));
-    if (!isAddMode) {
+    if (!isAddMode && actionType === "edit") {
       dispatch(fetchDetail(id, "crews", artistActions));
     }
-  }, [isAddMode, dispatch, id]);
+  }, [isAddMode, dispatch, id, actionType]);
 
   useEffect(() => {
-    if (!isAddMode) {
+    if (!isAddMode && actionType === "edit") {
       setCreweData(crew);
     }
-  }, [crew, isAddMode]);
+  }, [crew, isAddMode, actionType]);
 
   const onchangeHandler = (e) => {
     const name = e.target.name;
@@ -89,23 +67,37 @@ const CrewForm = () => {
     }));
 
     if (name === "name") {
-      nameValidation(value);
+      if (value.length > 100) {
+        setNameIsValid(false);
+      } else {
+        setNameIsValid(true);
+      }
     }
-
     if (name === "birth") {
-      birthValidation(value);
+      if (value.length > 4) {
+        setBirthIsValid(false);
+      } else {
+        setBirthIsValid(true);
+      }
     }
-
     if (name === "death") {
-      deathValidation(value);
+      if (value.length > 4) {
+        setDeathIsValid(false);
+      } else {
+        setDeathIsValid(true);
+      }
     }
-
     if (name === "profession") {
-      professionValidation(value);
+      if (value.length > 200) {
+        setProfessionIsValid(false);
+      } else {
+        setProfessionIsValid(true);
+      }
     }
-
     if (name === "poster") {
       urlPatternValidation(value);
+    } else {
+      setUrlIsValid(true);
     }
   };
 
@@ -113,12 +105,20 @@ const CrewForm = () => {
     event.preventDefault();
     if (isAddMode) {
       dispatch(
-        saveData(crewData, "crews", itemsPerPage, currentPage, artistActions)
+        saveData(
+          crewData,
+          crewData.name,
+          "crews",
+          itemsPerPage,
+          currentPage,
+          artistActions
+        )
       );
     } else {
       dispatch(
         updateData(
           "crews",
+          crewData.name,
           id,
           crewData,
           itemsPerPage,
@@ -127,22 +127,12 @@ const CrewForm = () => {
         )
       );
     }
-    navigate("/artists");
+    navigate("/crews");
   };
 
-  const cancelHandler = () => {
-    navigate("/artists");
-  };
-
-  React.useEffect(() => {
+  useEffect(() => {
     if (formState.isSubmitSuccessful) {
-      reset({
-        name: "",
-        birth: "",
-        death: "",
-        profession: "",
-        poster: "",
-      });
+      setCreweData({});
     }
   }, [formState, crewData, reset]);
 
@@ -154,110 +144,125 @@ const CrewForm = () => {
     urlIsValid;
 
   return (
-    <div>
-      <form onSubmit={submitHandler}>
-        <Card className={classes["wrapper"]}>
-          <div className={classes["title"]}>
-            {" "}
-            {isAddMode ? <p>add</p> : <p>edit</p>}{" "}
-          </div>
-          <div className={classes["data-form-input"]}>
-            <FormControl>
-              <InputLabel htmlFor="name-input"> *Artist Name</InputLabel>
-              <Input
-                error={nameisValid ? false : true}
-                {...register("name")}
-                onChange={onchangeHandler}
-                value={crewData.name || ""}
-                id="name-input"
-                aria-describedby="name-input"
-                required
-              />
-              {!nameisValid && (
-                <FormHelperText>
-                  should not be longer than 100 characters
-                </FormHelperText>
-              )}
-            </FormControl>
-          </div>
-          <div className={classes["data-form-input"]}>
-            <FormControl>
-              <InputLabel htmlFor="birth-input"> *Artist Birth</InputLabel>
-              <Input
-                error={birthIsValid ? false : true}
-                {...register("birth")}
-                onChange={onchangeHandler}
-                value={crewData.birth || ""}
-                id="birth-input"
-                aria-describedby="birth-input"
-                required
-              />
-              {!birthIsValid && (
-                <FormHelperText>
-                  should not be longer than 4 digits.
-                </FormHelperText>
-              )}
-            </FormControl>
-          </div>
-          <div className={classes["data-form-input"]}>
-            <FormControl>
-              <InputLabel htmlFor="death-input"> Artist Death</InputLabel>
-              <Input
-                error={deathIsValid ? false : true}
-                {...register("death")}
-                onChange={onchangeHandler}
-                value={crewData.death || ""}
-                id="death-input"
-                aria-describedby="death-input"
-              />
-              {!deathIsValid && (
-                <FormHelperText>
-                  should not be longer than 4 digits.
-                </FormHelperText>
-              )}
-            </FormControl>
-          </div>
-          <div className={classes["data-form-input"]}>
-            <FormControl>
-              <InputLabel htmlFor="death-input"> *Artist Profession</InputLabel>
-              <Input
-                error={professionIsValid ? false : true}
-                {...register("profession")}
-                onChange={onchangeHandler}
-                value={crewData.profession || ""}
-                id="profession-input"
-                aria-describedby="profession-input"
-                required
-              />
-              {!professionIsValid && (
-                <FormHelperText>
-                  should not be longer than 200 characters.
-                </FormHelperText>
-              )}
-            </FormControl>
-          </div>
-          <div className={classes["data-form-input"]}>
-            <FormControl>
-              <InputLabel htmlFor="poster-input">Poster Url</InputLabel>
-              <Input
-                type="text"
-                {...register("poster")}
-                onChange={onchangeHandler}
-                value={crewData.poster || ""}
-                id="poster-input"
-                aria-describedby="poster-input"
-              />
-              {!urlIsValid && <FormHelperText>invalid url.</FormHelperText>}
-            </FormControl>
-          </div>
-
-          <Button disabled={formIsValid ? false : true} type="submit">
-            Submit
-          </Button>
-          <Button onClick={cancelHandler}>Cancel</Button>
-        </Card>
-      </form>
-    </div>
+    <Modal open={open} onClose={close}>
+      <Box sx={style}>
+        <CardContent>
+          <Typography>
+            {isAddMode ? "Add" : "Edit"} {crew.id}
+          </Typography>
+        </CardContent>
+        <form onSubmit={submitHandler}>
+          <Grid container spacing={2}>
+            <Grid xs={6}>
+              <FormControl>
+                <InputLabel htmlFor="name-input"> *Artist Name</InputLabel>
+                <Input
+                  error={nameisValid ? false : true}
+                  {...register("name")}
+                  onChange={onchangeHandler}
+                  value={crewData.name || ""}
+                  id="name-input"
+                  aria-describedby="name-input"
+                  required
+                />
+                {!nameisValid && (
+                  <FormHelperText>
+                    should not be longer than 100 characters
+                  </FormHelperText>
+                )}
+              </FormControl>
+            </Grid>
+            <Grid xs={6}>
+              <FormControl>
+                <InputLabel htmlFor="birth-input"> *Artist Birth</InputLabel>
+                <Input
+                  error={birthIsValid ? false : true}
+                  {...register("birth")}
+                  onChange={onchangeHandler}
+                  value={crewData.birth || ""}
+                  id="birth-input"
+                  aria-describedby="birth-input"
+                  required
+                />
+                {!birthIsValid && (
+                  <FormHelperText>
+                    should not be longer than 4 digits.
+                  </FormHelperText>
+                )}
+              </FormControl>
+            </Grid>
+            <Grid xs={6}>
+              <FormControl>
+                <InputLabel htmlFor="death-input"> Artist Death</InputLabel>
+                <Input
+                  error={deathIsValid ? false : true}
+                  {...register("death")}
+                  onChange={onchangeHandler}
+                  value={crewData.death || ""}
+                  id="death-input"
+                  aria-describedby="death-input"
+                />
+                {!deathIsValid && (
+                  <FormHelperText>
+                    should not be longer than 4 digits.
+                  </FormHelperText>
+                )}
+              </FormControl>
+            </Grid>
+            <Grid xs={6}>
+              <FormControl>
+                <InputLabel htmlFor="death-input">
+                  {" "}
+                  *Artist Profession
+                </InputLabel>
+                <Input
+                  error={professionIsValid ? false : true}
+                  {...register("profession")}
+                  onChange={onchangeHandler}
+                  value={crewData.profession || ""}
+                  id="profession-input"
+                  aria-describedby="profession-input"
+                  required
+                />
+                {!professionIsValid && (
+                  <FormHelperText>
+                    should not be longer than 200 characters.
+                  </FormHelperText>
+                )}
+              </FormControl>
+            </Grid>
+            <Grid xs={6}>
+              <FormControl>
+                <InputLabel htmlFor="poster-input">Poster Url</InputLabel>
+                <Input
+                  type="text"
+                  {...register("poster")}
+                  onChange={onchangeHandler}
+                  value={crewData.poster || ""}
+                  id="poster-input"
+                  aria-describedby="poster-input"
+                />
+                {!urlIsValid && <FormHelperText>invalid url.</FormHelperText>}
+              </FormControl>
+            </Grid>
+            <Grid xs={6}></Grid>
+            <Grid xs={12}>
+              <Button
+                sx={{
+                  width: "100%",
+                  color: "black",
+                  border: "1px solid rgb(0, 0, 0)",
+                }}
+                disabled={formIsValid ? false : true}
+                type="submit"
+              >
+                Submit
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
+      </Box>
+    </Modal>
   );
 };
 

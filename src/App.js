@@ -20,12 +20,8 @@ export default function App() {
         <Route path="/" element={<Home />} component={Home} />
         <Route path="/movies" element={<Movies />} />
         <Route path="/movies/:id" element={<MovieDetail />} />
-        <Route path="/artists" element={<Crews />} />
-        <Route path="/artists/:id" element={<CrewsDetail />} />
-        <Route path="/movies/add" element={<MovieForm />} />
-        <Route path="/movies/edit/:id" element={<MovieForm />} />
-        <Route path="/crews/add" element={<CrewForm />} />
-        <Route path="/crews/edit/:id" element={<CrewForm />} />
+        <Route path="/crews" element={<Crews />} />
+        <Route path="/crews/:id" element={<CrewsDetail />} />
       </Routes>
     </>
   );

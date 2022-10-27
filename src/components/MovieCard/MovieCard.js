@@ -1,59 +1,107 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { deleteSelectedItem } from "../../store/api-call";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { deleteSelectedItem } from "../../store/api-call";
 import { movieActions } from "../../store/data-slice";
-
-import "../../assets/CardStyle.scss";
-import "../../assets/commonStyle.scss";
+import MovieForm from "../MovieForm/MovieForm";
+import { Link } from "@mui/material";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import Confirmation from "../Confirmation/Confirmation";
 
 const MovieCard = (props) => {
+ const {artistDetail}=props
   const { movie } = props;
   const dispatch = useDispatch();
-
-  const currentPage = useSelector((state) => state.movies.data.currentPage);
-  const itemsPerPage = useSelector((state) => state.movies.data.itemsPerPage);
+  const currentPage = useSelector(
+    (state) => state.movies.data.page.currentPage
+  );
+  const itemsPerPage = useSelector(
+    (state) => state.movies.data.page.itemsPerPage
+  );
   const content = useSelector((state) => state.movies.data.content);
+  const [open, setOpen] = useState(false);
+  const [openConfirm, setOpenConfirm] = useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleOpenConfirm = () => setOpenConfirm(true);
+  const handleCloseConfirm = () => setOpenConfirm(false);
 
   const deleteHandler = () => {
     dispatch(
-      deleteSelectedItem( movie.id, "movies",itemsPerPage, currentPage,movieActions, content.length )
+      deleteSelectedItem(
+        movie.id,
+        movie.title,
+        "movies",
+        itemsPerPage,
+        currentPage,
+        movieActions,
+        content.length
+      )
     );
-    console.log(content.length);
   };
 
   return (
-    <div className="card-item">
-      <Link to={`/movies/${movie.id}`}>
-        <div className="card-inner">
-          <div className="card-top">
-            <img src={movie.poster} alt={movie.title} />
-          </div>
-        </div>
-        <div className="card-bottom">
-          <div className="card-info">
-            <h4>{movie.title}</h4>
-          </div>
-        </div>
+    <Card
+      sx={{
+        height: 510,
+        borderRadius: "20px",
+        position: "relative",
+        width: "240px",
+      }}
+    >
+      <Link href={`/movies/${movie.id}`} sx={{ textDecoration: "none" }}>
+        <CardMedia
+          component="img"
+          alt={movie.title}
+          height="340"
+          image={movie.poster}
+        />
+        <CardContent>
+          <Typography
+            sx={{ fontSize: 18, color: "black" }}
+            gutterBottom
+            variant="h5"
+            component="div"
+          >
+            {movie.title}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {movie.year}
+          </Typography>
+        </CardContent>
       </Link>
-      {!props.artistDetail && (
-        <div className="card-icons">
-          <img
-          alt='trash icon'
-            className="button"
-            onClick={deleteHandler}
-            src="https://img.icons8.com/material-sharp/24/000000/filled-trash.png"
+     {!artistDetail && <CardActions
+        sx={{ position: "absolute", bottom: 0, display: "flex", gap: "150px" }}
+      >
+        <DeleteIcon onClick={handleOpenConfirm} sx={{ cursor: "pointer" }} />
+        {openConfirm && (
+          <Confirmation
+            openConfirm={openConfirm}
+            handleCloseConfirm={handleCloseConfirm}
+            deleteHandler={deleteHandler}
           />
-          <Link to={`/movie/edit/${movie.id}`}>
-            <img
-            alt="edit icon"
-              className="button"
-              src="https://img.icons8.com/ios-glyphs/30/000000/edit--v1.png"
-            />
-          </Link>
-        </div>
-      )}
-    </div>
+        )}
+        <EditIcon
+          onClick={handleOpen}
+          sx={{ color: "black", marginLeft: 20, cursor: "pointer" }}
+        />
+        {open && (
+          <MovieForm
+            open={open}
+            close={handleClose}
+            actionType="edit"
+            id={movie.id}
+          />
+        )}
+      </CardActions>}
+    </Card>
   );
 };
 

@@ -1,8 +1,12 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { artistActions, movieActions } from "../../store/data-slice";
-import CustomLink from "../UI/CustomLink";
-import "./Navbar.css";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import List from "@mui/material/List";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Link from "@mui/material/Link";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -20,20 +24,42 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="nav">
-      <h1 className="site-title">Rotten Potato</h1>
-      <ul>
-        <CustomLink onClick={homeClickHandler} to="/">
-          Home
-        </CustomLink>
-        <CustomLink onClick={moviesClickHandler} to="/Movies">
-          Movies
-        </CustomLink>
-        <CustomLink onClick={crewsClickHandler} to="/Artists">
-          Artists
-        </CustomLink>
-      </ul>
-    </nav>
+    <Box sx={{ display: "flex" }}>
+      <AppBar component="nav">
+        <Toolbar>
+          <Box
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+          >
+            <Typography>Rotton Potato</Typography>
+          </Box>
+          <List sx={{ display: { xs: "none", sm: "block" } }}>
+            <Link
+              sx={{ color: "white", margin: 2, textDecoration: "none" }}
+              onClick={homeClickHandler}
+              href="/"
+            >
+              Home
+            </Link>
+            <Link
+              sx={{ color: "white", margin: 2, textDecoration: "none" }}
+              onClick={moviesClickHandler}
+              href="/Movies"
+            >
+              Movies
+            </Link>
+            <Link
+              sx={{ color: "white", margin: 2, textDecoration: "none" }}
+              onClick={crewsClickHandler}
+              href="/crews"
+            >
+              Crews
+            </Link>
+          </List>
+        </Toolbar>
+      </AppBar>
+    </Box>
   );
 };
 

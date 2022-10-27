@@ -1,7 +1,7 @@
 export const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
-    items: 7,
+    items: 5,
     slidesToSlide: 5,
   },
   tablet: {
@@ -88,3 +88,15 @@ export const professions = [
   "visual_effects",
   "writer",
 ];
+
+ export const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
