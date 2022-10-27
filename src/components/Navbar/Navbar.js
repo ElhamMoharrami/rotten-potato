@@ -8,6 +8,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 
+const style = { color: "white", margin: 2, textDecoration: "none" };
+
 const Navbar = () => {
   const dispatch = useDispatch();
 
@@ -35,26 +37,17 @@ const Navbar = () => {
             <Typography>Rotton Potato</Typography>
           </Box>
           <List sx={{ display: { xs: "none", sm: "block" } }}>
-            <Link
-              sx={{ color: "white", margin: 2, textDecoration: "none" }}
-              onClick={homeClickHandler}
-              href="/"
-            >
+            <Link sx={style} onClick={homeClickHandler} href="/">
               Home
             </Link>
-            <Link
-              sx={{ color: "white", margin: 2, textDecoration: "none" }}
-              onClick={moviesClickHandler}
-              href="/Movies"
-            >
+            <Link sx={style} onClick={moviesClickHandler} href="/Movies">
               Movies
             </Link>
-            <Link
-              sx={{ color: "white", margin: 2, textDecoration: "none" }}
-              onClick={crewsClickHandler}
-              href="/crews"
-            >
+            <Link sx={style} onClick={crewsClickHandler} href="/crews">
               Crews
+            </Link>
+            <Link sx={style} href="/signin">
+              Sign In
             </Link>
           </List>
         </Toolbar>
