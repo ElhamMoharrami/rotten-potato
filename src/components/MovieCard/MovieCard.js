@@ -65,7 +65,7 @@ const MovieCard = (props) => {
         />
         <CardContent>
           <Typography
-            sx={{ fontSize: 18, color: "black" }}
+            sx={{ fontSize: 18}}
             gutterBottom
             variant="h5"
             component="div"
@@ -90,7 +90,7 @@ const MovieCard = (props) => {
         )}
         <EditIcon
           onClick={handleOpen}
-          sx={{ color: "black", marginLeft: 20, cursor: "pointer" }}
+          sx={{ marginLeft: 20, cursor: "pointer" }}
         />
         {open && (
           <MovieForm

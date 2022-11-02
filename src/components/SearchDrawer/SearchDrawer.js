@@ -45,7 +45,7 @@ const SearchDrawer = ({ search }) => {
           edge="start"
           sx={{ mr: 2, ...(open && { display: "none" }) }}
         >
-          <ManageSearchIcon sx={{ color: "blue", marginLeft: 3 }} />
+          <ManageSearchIcon sx={{ marginLeft: 3 }} />
         </IconButton>
       </Box>
       <Drawer

@@ -32,44 +32,38 @@ const MovieDetail = () => {
         }}
       >
         <Box sx={{ margin: "10px" }}>
-          <Typography sx={{ color:'black', fontSize: "25px" }}>
-            {movie.title}
-          </Typography>
+          <Typography sx={{ fontSize: "25px" }}>{movie.title}</Typography>
           <Box
             sx={{
               paddingLeft: "3px",
               marginTop: "20px",
               fontSize: "24px",
               display: "flex",
-              color:'black',
+
               display: "flex",
               justifyContent: "space-between",
-
             }}
           >
-            <span >
+            <span>
               <img src="https://img.icons8.com/tiny-color/16/000000/star.png" />
               IMDB Rating <i></i>: {movie.imdbRating}
             </span>
-            <span >
+            <span>
               IMDB Votes <i></i>: {movie.imdbVotes}
             </span>
             <span>
               Runtime <i></i> : {movie.runtime}
             </span>
-            <span >
+            <span>
               Year <i></i> : {movie.year}
             </span>
           </Box>
-          <Typography sx={{ color: "black", margin: "20px" }}>
-            {movie.plot}
-          </Typography>
+          <Typography sx={{ margin: "20px" }}>{movie.plot}</Typography>
           <Box
             sx={{
               display: "flex",
               flexDirection: "column",
               gap: "30px",
-              color: "black",
             }}
           >
             <Box sx={{ display: "flex", gap: "20px" }}>
@@ -106,7 +100,7 @@ const MovieDetail = () => {
             marginRight: "20px",
             alignContent: "center",
             paddingLeft: "20px",
-            color: "black",
+
             boxShadow:
               "rgba(114, 100, 165, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
           }}

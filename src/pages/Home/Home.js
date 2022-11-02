@@ -1,15 +1,12 @@
 import React from "react";
-import classes from "./Home.module.css";
+import { Box } from "@mui/material";
+
 
 const Home = () => {
   return (
-    <div className={classes["background-image"]}>
-      <h1> Welcome to Rotten Potato ! </h1>
-      <p>
-        A movie rating website. you can also get to know some of the best
-        artists in film industry!
-      </p>
-    </div>
+    <Box>
+     Temporary Welcome Page
+    </Box>
   );
 };
 
