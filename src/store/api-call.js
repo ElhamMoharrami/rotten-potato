@@ -1,3 +1,4 @@
+import { loginActions } from "./login-slice";
 const BASEURL = `http://localhost:8080/api`;
 
 const getDataRequest = async (url) => {
@@ -100,7 +101,7 @@ export const deleteSelectedItem = (
       await fetch(url, {
         method: "DELETE",
       });
-      if (contentLength <= 1) {
+      if (contentLength < 1) {
         dispatch(fetchData(type, itemsPerPage, currentPage - 1, action));
       } else {
         dispatch(fetchData(type, itemsPerPage, currentPage, action));
@@ -110,7 +111,7 @@ export const deleteSelectedItem = (
           actionState: {
             status: "success",
             action: "delete",
-            title: title
+            title: title,
           },
         })
       );
@@ -120,7 +121,7 @@ export const deleteSelectedItem = (
           actionState: {
             status: "error",
             action: "delete",
-            title: title
+            title: title,
           },
         })
       );
@@ -151,7 +152,7 @@ export const updateData = (
           actionState: {
             status: "success",
             action: "edit",
-            title: title
+            title: title,
           },
         })
       );
@@ -161,7 +162,7 @@ export const updateData = (
           actionState: {
             status: "error",
             action: "edit",
-            title: title
+            title: title,
           },
         })
       );
@@ -191,6 +192,44 @@ export const fetchSearch = (data, type, action, itemsPerPage, currentPage) => {
         action.setData({
           fetchedData: getData.content,
           pageCount: getData.page.totalPages,
+        })
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const createAccount = (dataObj) => {
+  return async (dispatch) => {
+    try {
+      const url = `http://localhost:8080/api/users`;
+      await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dataObj),
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const login = (dataObj) => {
+  return async (dispatch) => {
+    try {
+      const url = `${BASEURL}/login?username=${dataObj.username}&password=${dataObj.password}`;
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await response.json();
+      dispatch(
+        loginActions.setData({
+          role: data.role,
+          username: data.username,
+          password: data.password,
+          isLoggedIn:true
         })
       );
     } catch (err) {
