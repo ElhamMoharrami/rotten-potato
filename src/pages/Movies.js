@@ -29,15 +29,16 @@ const Movies = () => {
 
   return (
     <Box sx={{ marginTop: 10 }}>
-      {actionState.status !=='' && (
+      {actionState.status !== "" && (
         <AlertMessage
           openAlert={openAlert}
           handleCloseAlert={handleCloseAlert}
           actionState={actionState}
           title={actionState.title}
-          type='movies'
+          type="movies"
         />
-      ) }
+      )}
+
       <SearchDrawer
         itemsPerPage={data.page.itemsPerPage}
         currentPage={data.page.currentPage}
@@ -50,6 +51,7 @@ const Movies = () => {
           />
         }
       />
+
       <ListData
         type="movies"
         data={data}

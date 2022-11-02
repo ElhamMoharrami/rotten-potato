@@ -49,10 +49,10 @@ const MovieDetail = () => {
           >
             <span >
               <img src="https://img.icons8.com/tiny-color/16/000000/star.png" />
-              IMDB Rating <i></i> : {movie.imdbRating}
+              IMDB Rating <i></i>: {movie.imdbRating}
             </span>
             <span >
-              IMDB Votes <i></i> : {movie.imdbVotes}
+              IMDB Votes <i></i>: {movie.imdbVotes}
             </span>
             <span>
               Runtime <i></i> : {movie.runtime}

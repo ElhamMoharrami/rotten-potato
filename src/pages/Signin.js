@@ -1,4 +1,7 @@
 import * as React from "react";
+import { login } from "../store/api-call";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -11,13 +14,18 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
 const Signin = () => {
+  const dispatch=useDispatch()
+  const navigate=useNavigate()
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
+    const dataObj = {
+      username: data.get("username"),
       password: data.get("password"),
-    });
+    };
+   dispatch(login(dataObj))
+   navigate("/movies");
   };
 
   return (
@@ -54,16 +62,6 @@ const Signin = () => {
               <TextField
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
                 name="password"
                 label="Password"
                 type="password"
@@ -78,7 +76,7 @@ const Signin = () => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign Up
+            Sign In
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
