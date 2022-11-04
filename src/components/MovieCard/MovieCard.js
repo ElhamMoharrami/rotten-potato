@@ -14,7 +14,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import Confirmation from "../Confirmation/Confirmation";
 
 const MovieCard = (props) => {
- const {artistDetail}=props
+  const { artistDetail } = props;
   const { movie } = props;
   const dispatch = useDispatch();
   const currentPage = useSelector(
@@ -24,6 +24,7 @@ const MovieCard = (props) => {
     (state) => state.movies.data.page.itemsPerPage
   );
   const content = useSelector((state) => state.movies.data.content);
+  const account = useSelector((state) => state.login.account);
   const [open, setOpen] = useState(false);
   const [openConfirm, setOpenConfirm] = useState(false);
 
@@ -65,7 +66,7 @@ const MovieCard = (props) => {
         />
         <CardContent>
           <Typography
-            sx={{ fontSize: 18}}
+            sx={{ fontSize: 18 }}
             gutterBottom
             variant="h5"
             component="div"
@@ -77,30 +78,37 @@ const MovieCard = (props) => {
           </Typography>
         </CardContent>
       </Link>
-     {!artistDetail && <CardActions
-        sx={{ position: "absolute", bottom: 0, display: "flex", gap: "150px" }}
-      >
-        <DeleteIcon onClick={handleOpenConfirm} sx={{ cursor: "pointer" }} />
-        {openConfirm && (
-          <Confirmation
-            openConfirm={openConfirm}
-            handleCloseConfirm={handleCloseConfirm}
-            deleteHandler={deleteHandler}
+      {!artistDetail && account.role === "ADMIN" && (
+        <CardActions
+          sx={{
+            position: "absolute",
+            bottom: 0,
+            display: "flex",
+            gap: "150px",
+          }}
+        >
+          <DeleteIcon onClick={handleOpenConfirm} sx={{ cursor: "pointer" }} />
+          {openConfirm && (
+            <Confirmation
+              openConfirm={openConfirm}
+              handleCloseConfirm={handleCloseConfirm}
+              deleteHandler={deleteHandler}
+            />
+          )}
+          <EditIcon
+            onClick={handleOpen}
+            sx={{ marginLeft: 20, cursor: "pointer" }}
           />
-        )}
-        <EditIcon
-          onClick={handleOpen}
-          sx={{ marginLeft: 20, cursor: "pointer" }}
-        />
-        {open && (
-          <MovieForm
-            open={open}
-            close={handleClose}
-            actionType="edit"
-            id={movie.id}
-          />
-        )}
-      </CardActions>}
+          {open && (
+            <MovieForm
+              open={open}
+              close={handleClose}
+              actionType="edit"
+              id={movie.id}
+            />
+          )}
+        </CardActions>
+      )}
     </Card>
   );
 };
