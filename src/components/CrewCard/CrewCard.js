@@ -22,6 +22,7 @@ const CrewCard = (props) => {
   );
   const currentPage = useSelector((state) => state.crews.data.page.currentPage);
   const content = useSelector((state) => state.crews.data.content);
+  const account = useSelector((state) => state.login.account);
   const [open, setOpen] = useState(false);
   const [openConfirm, setOpenConfirm] = useState(false);
 
@@ -67,7 +68,7 @@ const CrewCard = (props) => {
           </Typography>
         </CardContent>
       </Link>
-      {!movieDetail && (
+      {account.role === "ADMIN" && !movieDetail && (
         <CardActions
           sx={{
             position: "absolute",
