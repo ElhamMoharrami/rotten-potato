@@ -229,9 +229,26 @@ export const login = (dataObj) => {
           role: data.role,
           username: data.username,
           password: data.password,
+          fullname:data.fullname,
+          id:data.id,
           isLoggedIn:true
         })
       );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const updateAccount = (dataObj) => {
+  return async (dispatch) => {
+    try {
+      const url = `http://localhost:8080/api/users/${dataObj.id}`;
+      await fetch(url, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dataObj),
+      });
     } catch (err) {
       console.log(err);
     }

@@ -1,34 +1,35 @@
-import * as React from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { createAccount } from "../store/api-call";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import Avatar from "@mui/material/Avatar";
+import { Box } from "@mui/material";
+import { InputLabel } from "@mui/material";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { updateAccount } from "../store/api-call";
 
-const Signup = () => {
+const Profile = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const account = useSelector((state) => state.login.account);
   const [showMsg, setShowMsg] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    if (data.get("password") === data.get("confirmPassword")) {
+    if (
+      data.get("new-password") === data.get("confirmPassword") &&
+      data.get("password") !== account.password
+    ) {
       const dataObj = {
-        username: data.get("username"),
-        password: data.get("password"),
+        username: account.username,
+        fullname: data.get("fullname"),
+        password: data.get("new-password"),
+        id: account.id,
       };
-      dispatch(createAccount(dataObj));
-      navigate("/signin");
+      dispatch(updateAccount(dataObj));
     } else {
       setShowMsg(true);
     }
@@ -45,43 +46,48 @@ const Signup = () => {
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "#1976d2" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
-
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
+            <Typography>Profile</Typography>
             <Grid item xs={12}>
               <TextField
-                autoComplete="username"
-                name="username"
-                required
+                autoComplete="fullname"
+                name="fullname"
                 fullWidth
-                id="username"
-                label="username"
+                id="fullname"
+                label="fullname"
                 autoFocus
+                defaultValue={account.fullname}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <InputLabel>Change password</InputLabel>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                name="password"
+                label="password"
+                type="password"
+                id="password"
+                autoComplete="password"
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                required
                 fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
+                name="new-password"
+                label="new password"
+                type="new-password"
+                id="new-password"
                 autoComplete="new-password"
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                required
                 fullWidth
                 name="confirmPassword"
-                label="confirmPassword"
+                label="confirm Password"
                 type="confirmPassword"
                 id="confirmPassword"
                 autoComplete="confirm-password"
@@ -94,20 +100,15 @@ const Signup = () => {
                 </Typography>
               )}
             </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Sign Up
-          </Button>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link href="/signin" variant="body2">
-                already have an account? sign in!
-              </Link>
+            <Grid item xs={12}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                submit
+              </Button>
             </Grid>
           </Grid>
         </Box>
@@ -116,4 +117,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Profile;

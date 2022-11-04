@@ -1,7 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  account: { isLoggedIn: false, username: "", password: "", role: "" },
+  account: {
+    isLoggedIn: false,
+    username: "",
+    password: "",
+    role: "",
+    fullname: "",
+    id:''
+  },
 };
 
 const createLoginSlice = (name) => {
@@ -13,13 +20,14 @@ const createLoginSlice = (name) => {
         state.account.username = action.payload.username;
         state.account.password = action.payload.password;
         state.account.role = action.payload.role;
-        state.account.isLoggedIn=action.payload.isLoggedIn
+        state.account.isLoggedIn = action.payload.isLoggedIn;
+        state.account.fullname=action.payload.fullname
+        state.account.id=action.payload.id
       },
-      clearData(state,action){
+      clearData(state, action) {
         state.account = initialState.account;
         console.log(state);
       },
-    
     },
   });
 };
