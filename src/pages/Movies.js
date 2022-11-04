@@ -28,7 +28,7 @@ const Movies = () => {
   };
 
   return (
-    <Box sx={{ marginTop: 10 }}>
+    <Box >
       {actionState.status !== "" && (
         <AlertMessage
           openAlert={openAlert}

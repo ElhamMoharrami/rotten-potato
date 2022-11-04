@@ -62,7 +62,7 @@ const CrewCard = (props) => {
           image={crew.poster !== null ? crew.poster : blankProfilePicture}
         />
         <CardContent>
-          <Typography sx={{ fontSize: 18, color: "black" }} variant="h5">
+          <Typography sx={{ fontSize: 18 }} variant="h5">
             {crew.name}
           </Typography>
         </CardContent>
@@ -86,10 +86,7 @@ const CrewCard = (props) => {
               deleteHandler={deleteHandler}
             />
           )}
-          <EditIcon
-            onClick={handleOpen}
-            sx={{ color: "black", marginLeft: 20 }}
-          />
+          <EditIcon onClick={handleOpen} sx={{ marginLeft: 20 }} />
           {open && (
             <CrewForm
               open={open}

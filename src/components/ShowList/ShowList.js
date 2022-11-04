@@ -37,7 +37,7 @@ const ShowList = (props) => {
             />
             <CardContent>
               <Typography
-                sx={{ fontSize: 18, color: "black", cursor: "pointer" }}
+                sx={{ fontSize: 18, cursor: "pointer" }}
                 gutterBottom
                 variant="h5"
                 component="div"
