@@ -35,15 +35,15 @@ const MovieCard = (props) => {
   const handleCloseConfirm = () => setOpenConfirm(false);
 
   const deleteHandler = () => {
+    const setCurrentPage = content.length < 1 ? currentPage - 1 : currentPage;
     dispatch(
       deleteSelectedItem(
         movie.id,
         movie.title,
         "movies",
         itemsPerPage,
-        currentPage,
-        movieActions,
-        content.length
+        setCurrentPage,
+        movieActions
       )
     );
   };

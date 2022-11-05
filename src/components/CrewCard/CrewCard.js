@@ -33,15 +33,15 @@ const CrewCard = (props) => {
   const handleCloseConfirm = () => setOpenConfirm(false);
 
   const deleteHandler = () => {
+    const setCurrentPage = content.length < 1 ? currentPage - 1 : currentPage;
     dispatch(
       deleteSelectedItem(
         crew.id,
         crew.name,
         "crews",
         itemsPerPage,
-        currentPage,
-        artistActions,
-        content.length
+        setCurrentPage,
+        artistActions
       )
     );
   };

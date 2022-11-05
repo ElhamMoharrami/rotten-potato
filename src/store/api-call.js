@@ -93,7 +93,7 @@ export const deleteSelectedItem = (
   itemsPerPage,
   currentPage,
   action,
-  contentLength
+  
 ) => {
   return async (dispatch) => {
     try {
@@ -101,11 +101,9 @@ export const deleteSelectedItem = (
       await fetch(url, {
         method: "DELETE",
       });
-      if (contentLength < 1) {
-        dispatch(fetchData(type, itemsPerPage, currentPage - 1, action));
-      } else {
-        dispatch(fetchData(type, itemsPerPage, currentPage, action));
-      }
+
+      dispatch(fetchData(type, itemsPerPage, currentPage, action));
+
       dispatch(
         action.setActionState({
           actionState: {
@@ -229,9 +227,9 @@ export const login = (dataObj) => {
           role: data.role,
           username: data.username,
           password: data.password,
-          fullname:data.fullname,
-          id:data.id,
-          isLoggedIn:true
+          fullname: data.fullname,
+          id: data.id,
+          isLoggedIn: true,
         })
       );
     } catch (err) {
@@ -240,7 +238,7 @@ export const login = (dataObj) => {
   };
 };
 
-export const updateAccount = (dataObj) => {
+export const updateAccount = (dataObj, action) => {
   return async (dispatch) => {
     try {
       const url = `http://localhost:8080/api/users/${dataObj.id}`;
@@ -248,6 +246,36 @@ export const updateAccount = (dataObj) => {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dataObj),
+      });
+      dispatch(
+        action.setActionState({
+          actionState: {
+            status: "success",
+            action: "update",
+            title: "account",
+          },
+        })
+      );
+    } catch (err) {
+      dispatch(
+        action.setActionState({
+          actionState: {
+            status: "error",
+            action: "update",
+            title: "account",
+          },
+        })
+      );
+    }
+  };
+};
+
+export const deleteAccount = (id) => {
+  return async (dispatch) => {
+    try {
+      const url = `http://localhost:8080/api/users/${id}`;
+      await fetch(url, {
+        method: "DELETE",
       });
     } catch (err) {
       console.log(err);
