@@ -29,6 +29,9 @@ const createLoginSlice = (name) => {
         state.account = initialState.account;
         console.log(state);
       },
+      setActionState(state, action) {
+        state.actionState = action.payload.actionState;
+      },
     },
   });
 };
