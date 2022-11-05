@@ -7,8 +7,9 @@ const initialState = {
     password: "",
     role: "",
     fullname: "",
-    id:''
+    id: "",
   },
+  actionState: { status: "", action: "", title: "" },
 };
 
 const createLoginSlice = (name) => {
@@ -21,8 +22,8 @@ const createLoginSlice = (name) => {
         state.account.password = action.payload.password;
         state.account.role = action.payload.role;
         state.account.isLoggedIn = action.payload.isLoggedIn;
-        state.account.fullname=action.payload.fullname
-        state.account.id=action.payload.id
+        state.account.fullname = action.payload.fullname;
+        state.account.id = action.payload.id;
       },
       clearData(state, action) {
         state.account = initialState.account;

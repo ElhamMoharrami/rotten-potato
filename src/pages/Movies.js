@@ -28,14 +28,13 @@ const Movies = () => {
   };
 
   return (
-    <Box >
+    <Box>
       {actionState.status !== "" && (
         <AlertMessage
           openAlert={openAlert}
           handleCloseAlert={handleCloseAlert}
           actionState={actionState}
           title={actionState.title}
-          type="movies"
         />
       )}
 

@@ -14,25 +14,32 @@ import { updateAccount } from "../store/api-call";
 const Profile = () => {
   const dispatch = useDispatch();
   const account = useSelector((state) => state.login.account);
-  const [showMsg, setShowMsg] = useState(false);
+  const actionState = useSelector((state) => state.login.actionState);
+  const [confirmMsg, setConfirmMsg] = useState(false);
+  const [successMsg, setSuccessMsg] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
     if (
       data.get("new-password") === data.get("confirmPassword") &&
-      data.get("password") !== account.password
+      data.get("new-password") !== account.password &&
+      data.get("new-password") !== ""
     ) {
       const dataObj = {
         username: account.username,
         fullname: data.get("fullname"),
         password: data.get("new-password"),
         id: account.id,
+        role: data.get("role"),
       };
-      dispatch(updateAccount(dataObj));
-    } else {
-      setShowMsg(true);
+      dispatch(updateAccount(dataObj, "login"));
+    } else if (data.get("new-password") !== data.get("confirmPassword")) {
+      setConfirmMsg(true);
     }
+
+    setSuccessMsg(true)
   };
 
   return (
@@ -60,19 +67,34 @@ const Profile = () => {
                 defaultValue={account.fullname}
               />
             </Grid>
-            <Grid item xs={6}>
-              <InputLabel>Change password</InputLabel>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                name="username"
+                label="username"
+                type="username"
+                id="username"
+                InputProps={{ readOnly: true }}
+                autoComplete="username"
+                defaultValue={account.username}
+              />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                name="password"
-                label="password"
-                type="password"
-                id="password"
-                autoComplete="password"
+                name="role"
+                label="role"
+                type="role"
+                id="role"
+                InputProps={{ readOnly: true }}
+                autoComplete="role"
+                defaultValue={account.role}
               />
             </Grid>
+            <Grid item xs={6}>
+              <InputLabel>Change password</InputLabel>
+            </Grid>
+
             <Grid item xs={12}>
               <TextField
                 fullWidth
@@ -87,16 +109,21 @@ const Profile = () => {
               <TextField
                 fullWidth
                 name="confirmPassword"
-                label="confirm Password"
+                label="confirm new Password"
                 type="confirmPassword"
                 id="confirmPassword"
                 autoComplete="confirm-password"
               />
             </Grid>
             <Grid item xs={12}>
-              {showMsg && (
+              {confirmMsg && (
                 <Typography>
                   password and confirm password do not match.
+                </Typography>
+              )}
+              {successMsg && (
+                <Typography>
+                 Password Changed Successfully!
                 </Typography>
               )}
             </Grid>
