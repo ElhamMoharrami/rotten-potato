@@ -7,6 +7,8 @@ import { useDispatch } from "react-redux";
 import { loginActions } from "../../store/login-slice";
 import { useSelector } from "react-redux";
 import Box from "@mui/material/Box";
+import { Link } from "@mui/material";
+import Typography from "@mui/material/Typography";
 
 const UserDrawer = () => {
   const navigate = useNavigate();
@@ -64,22 +66,17 @@ const UserDrawer = () => {
       >
         <Box
           sx={{
-            width: "200px",
+            width: "100px",
             margin: "10px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "10px",
           }}
         >
-          <span>
-            username <i></i>
-            {account.username}
-          </span>
-          <span>
-            role <i></i>
-            {account.role}
-          </span>
+        <Typography>{account.username}</Typography>
         </Box>
+        <MenuItem>
+          <Link href="/profile" color="text.primary" underline="none">
+            Profile
+          </Link>
+        </MenuItem>
         <MenuItem onClick={logoutHandler}>Logout</MenuItem>
       </Menu>
     </div>

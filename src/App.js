@@ -2,14 +2,15 @@ import { Routes, Route } from "react-router-dom";
 import React from "react";
 import Navbar from "./components/Navbar/Navbar";
 import Movies from "./pages/Movies";
-import MovieDetail from "./pages/MovieDetail/MovieDetail";
-import CrewsDetail from "./pages/CrewsDetail/CrewsDetail";
+import MovieDetail from "./pages/MovieDetail";
+import CrewsDetail from "./pages/CrewsDetail";
 import Crews from "./pages/Crews";
-import Home from "./pages/Home/Home";
+import Home from "./pages/Home";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
-import Box from "@mui/material/Box";
+import Profile from "./pages/Profile";
 
+import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import { useTheme, ThemeProvider, createTheme } from "@mui/material/styles";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
@@ -29,7 +30,7 @@ export function App() {
           width: "100%",
           alignItems: "center",
           justifyContent: "center",
-         marginTop:'80px'
+          marginTop: "80px",
         }}
       >
         {theme.palette.mode} mode
@@ -54,20 +55,21 @@ export function App() {
         <Route path="/crews/:id" element={<CrewsDetail />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Box>
   );
 }
 
 export default function ToggleColorMode() {
-  const [mode, setMode] = React.useState('light');
+  const [mode, setMode] = React.useState("light");
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
       },
     }),
-    [],
+    []
   );
 
   const theme = React.useMemo(
@@ -77,13 +79,13 @@ export default function ToggleColorMode() {
           mode,
         },
       }),
-    [mode],
+    [mode]
   );
 
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
-      <App/>
+        <App />
       </ThemeProvider>
     </ColorModeContext.Provider>
   );

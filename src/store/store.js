@@ -19,7 +19,7 @@ const persistConfig = {
 };
 
 const reducers = combineReducers({
-  login:  persistReducer(persistConfig, loginSlice.reducer),
+  login: persistReducer(persistConfig, loginSlice.reducer),
   movies: movieSlice.reducer,
   crews: artistsSlice.reducer,
 });

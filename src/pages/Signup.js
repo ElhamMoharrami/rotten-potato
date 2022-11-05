@@ -17,13 +17,12 @@ import Container from "@mui/material/Container";
 const Signup = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [passwordMatch, setPasswordMatch] = useState(true);
+  const [showMsg, setShowMsg] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     if (data.get("password") === data.get("confirmPassword")) {
-      setPasswordMatch(false);
       const dataObj = {
         username: data.get("username"),
         password: data.get("password"),
@@ -31,7 +30,7 @@ const Signup = () => {
       dispatch(createAccount(dataObj));
       navigate("/signin");
     } else {
-      setPasswordMatch(false);
+      setShowMsg(true);
     }
   };
 
@@ -52,9 +51,7 @@ const Signup = () => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        {!passwordMatch && (
-          <Typography>password and confirm password do not match.</Typography>
-        )}
+
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -89,6 +86,13 @@ const Signup = () => {
                 id="confirmPassword"
                 autoComplete="confirm-password"
               />
+            </Grid>
+            <Grid item xs={12}>
+              {showMsg && (
+                <Typography>
+                  password and confirm password do not match.
+                </Typography>
+              )}
             </Grid>
           </Grid>
           <Button

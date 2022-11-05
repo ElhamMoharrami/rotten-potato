@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchDetail, fetchDetailList } from "../../store/api-call";
-import { movieActions } from "../../store/data-slice";
-import CrewCard from "../../components/CrewCard/CrewCard";
+import { fetchDetail, fetchDetailList } from "../store/api-call";
+import { movieActions } from "../store/data-slice";
+import CrewCard from "../components/CrewCard/CrewCard";
 import { Card, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { responsive } from "../../assets/config";
+import { responsive } from "../assets/config";
 
 const MovieDetail = () => {
   const { id } = useParams();
