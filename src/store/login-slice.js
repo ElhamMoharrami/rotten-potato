@@ -10,6 +10,7 @@ const initialState = {
     id: "",
   },
   actionState: { status: "", action: "", title: "" },
+  username: [],
 };
 
 const createLoginSlice = (name) => {
@@ -27,10 +28,12 @@ const createLoginSlice = (name) => {
       },
       clearData(state, action) {
         state.account = initialState.account;
-        console.log(state);
       },
       setActionState(state, action) {
         state.actionState = action.payload.actionState;
+      },
+      setUserName(state, action) {
+        state.username = action.payload.username;
       },
     },
   });

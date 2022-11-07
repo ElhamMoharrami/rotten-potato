@@ -9,7 +9,6 @@ import Home from "./pages/Home";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
-
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import { useTheme, ThemeProvider, createTheme } from "@mui/material/styles";
@@ -48,7 +47,7 @@ export function App() {
       </Box>
 
       <Routes>
-        <Route path="/" element={<Home />} component={Home} />
+        <Route path="/home" element={<Home />} />
         <Route path="/movies" element={<Movies />} />
         <Route path="/movies/:id" element={<MovieDetail />} />
         <Route path="/crews" element={<Crews />} />

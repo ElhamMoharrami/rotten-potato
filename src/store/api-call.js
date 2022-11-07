@@ -92,8 +92,7 @@ export const deleteSelectedItem = (
   type,
   itemsPerPage,
   currentPage,
-  action,
-  
+  action
 ) => {
   return async (dispatch) => {
     try {
@@ -193,7 +192,15 @@ export const fetchSearch = (data, type, action, itemsPerPage, currentPage) => {
         })
       );
     } catch (err) {
-      console.log(err);
+      dispatch(
+        action.setActionState({
+          actionState: {
+            status: "error",
+            action: "create",
+            title: 'account',
+          },
+        })
+      );
     }
   };
 };
@@ -277,6 +284,27 @@ export const deleteAccount = (id) => {
       await fetch(url, {
         method: "DELETE",
       });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const usernameCheck = (dataObj) => {
+  return async (dispatch) => {
+    try {
+      const url = `${BASEURL}/users?username=${dataObj.username}`;
+      const response = await fetch(url, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await response.json();
+      console.log(data);
+      dispatch(
+        loginActions.setUserName({
+          username: data.username,
+        })
+      );
     } catch (err) {
       console.log(err);
     }

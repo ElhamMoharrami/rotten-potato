@@ -57,18 +57,19 @@ const Profile = () => {
   };
 
   const deleteHandler = () => {
-    dispatch(deleteAccount(account.id));
-    dispatch(
-      loginActions.setData({
-        role: "",
-        username: "",
-        password: "",
-        isLoggedIn: false,
-      })
-    );
-    localStorage.clear();
+    // dispatch(deleteAccount(account.id));
+    // dispatch(
+    //   loginActions.setData({
+    //     role: "",
+    //     username: "",
+    //     password: "",
+    //     isLoggedIn: false,
+    //   })
+    // );
+    // localStorage.clear();
 
-    navigate("/signin");
+    // navigate("/signin");
+    console.log(account.id);
   };
 
   return (
@@ -179,7 +180,7 @@ const Profile = () => {
               variant="outlined"
               startIcon={<DeleteIcon />}
               onClick={handleOpenConfirm}
-              color='error'
+              color="error"
             >
               Delete account
             </Button>

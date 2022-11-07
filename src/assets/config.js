@@ -24,28 +24,26 @@ export const override = {
   margin: "5rem auto",
 };
 
-
 export const customStyles = {
   menu: (provided, state) => ({
     ...provided,
     width: state.selectProps.width,
-    borderBottom: '1px dotted pink',
+    borderBottom: "1px dotted pink",
     color: state.selectProps.menuColor,
     padding: 20,
   }),
 
-  control: (_, { selectProps: { width }}) => ({
-    width: width
+  control: (_, { selectProps: { width } }) => ({
+    width: width,
   }),
 
   singleValue: (provided, state) => {
     const opacity = state.isDisabled ? 0.5 : 1;
-    const transition = 'opacity 300ms';
+    const transition = "opacity 300ms";
 
     return { ...provided, opacity, transition };
-  }
-}
-
+  },
+};
 
 export const professions = [
   "actor",
@@ -89,7 +87,7 @@ export const professions = [
   "writer",
 ];
 
- export const style = {
+export const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
@@ -100,3 +98,6 @@ export const professions = [
   boxShadow: 24,
   p: 4,
 };
+
+
+export const drawerWidth = 250;

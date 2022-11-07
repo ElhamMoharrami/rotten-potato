@@ -13,7 +13,7 @@ const ShowList = (props) => {
   const handleClose = () => setOpen(false);
 
   return (
-    <Box sx={{ margin: 5 }}>
+    <Box>
       <Grid container spacing={2}>
         {props.data.map((item, index) => (
           <Box key={index}>

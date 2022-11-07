@@ -12,10 +12,17 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import AlertMessage from "../components/Alert/Alert";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const Signin = () => {
   const dispatch=useDispatch()
   const navigate=useNavigate()
+  const actionState=useSelector(state=>state.login.actionState)
+  const [openAlert, setOpenAlert] = useState(true);
+
+  const handleCloseAlert = () => setOpenAlert(false);
   
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -39,6 +46,14 @@ const Signin = () => {
           alignItems: "center",
         }}
       >
+         {actionState.status !== "" && (
+        <AlertMessage
+          openAlert={openAlert}
+          handleCloseAlert={handleCloseAlert}
+          actionState={actionState}
+          title={actionState.title}
+        />
+      )}
         <Avatar sx={{ m: 1, bgcolor: "#1976d2" }}>
           <LockOutlinedIcon />
         </Avatar>
