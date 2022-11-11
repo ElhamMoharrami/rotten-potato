@@ -25,15 +25,33 @@ const Profile = () => {
   const actionState = useSelector((state) => state.login.actionState);
   const [successMsg, setSuccessMsg] = useState(false);
   const [openConfirm, setOpenConfirm] = useState(false);
-  const [openAlert, setOpenAlert] = useState(true);
+  const [openAlert, setOpenAlert] = useState(false);
 
-  const handleCloseAlert = () => setOpenAlert(false);
+  const handleCloseAlert = () => {
+    setOpenAlert(false);
+    dispatch(
+      loginActions.setActionState({
+        actionState: { status: "", action: "", title: "" },
+      })
+    );
+  };
   const handleOpenConfirm = () => setOpenConfirm(true);
   const handleCloseConfirm = () => setOpenConfirm(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
+    if (data.get("fullname") !== account.fullname) {
+      const dataObj = {
+        username: account.username,
+        fullname: data.get("fullname"),
+        password: account.password,
+        id: account.id,
+        role: data.get("role"),
+      };
+      dispatch(updateAccount(dataObj, loginActions));
+    }
 
     if (
       data.get("new-password") === data.get("confirmPassword") &&
@@ -48,27 +66,24 @@ const Profile = () => {
         role: data.get("role"),
       };
       dispatch(updateAccount(dataObj, loginActions));
-      setSuccessMsg(true);
-    } else if (data.get("new-password") !== data.get("confirmPassword")) {
-      setConfirmMsg(true);
     }
-
-    setSuccessMsg(true);
+    console.log(data);
+   setOpenAlert(true)
   };
 
   const deleteHandler = () => {
-    // dispatch(deleteAccount(account.id));
-    // dispatch(
-    //   loginActions.setData({
-    //     role: "",
-    //     username: "",
-    //     password: "",
-    //     isLoggedIn: false,
-    //   })
-    // );
-    // localStorage.clear();
+    dispatch(deleteAccount(account.id));
+    dispatch(
+      loginActions.setData({
+        role: "",
+        username: "",
+        password: "",
+        isLoggedIn: false,
+      })
+    );
+    localStorage.clear();
 
-    // navigate("/signin");
+    navigate("/signin");
     console.log(account.id);
   };
 
@@ -151,7 +166,7 @@ const Profile = () => {
                   password and confirm password do not match.
                 </Typography>
               )}
-              {actionState.status !== "" && successMsg && (
+              {actionState.action === "update" && (
                 <AlertMessage
                   openAlert={openAlert}
                   handleCloseAlert={handleCloseAlert}

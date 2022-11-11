@@ -16,6 +16,7 @@ import {
 
 const persistConfig = {
   key: "login",
+  blacklist: ["actionState"],
   storage,
 };
 

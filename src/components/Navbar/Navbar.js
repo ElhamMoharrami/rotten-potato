@@ -59,7 +59,7 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}>
             <Typography>Rotton Potato</Typography>
           </Box>
-          <List>
+          <List sx={{ marginRight: "70px" }}>
             <Link sx={style} onClick={homeClickHandler} href="/home">
               Home
             </Link>

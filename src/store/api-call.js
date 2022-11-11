@@ -192,15 +192,7 @@ export const fetchSearch = (data, type, action, itemsPerPage, currentPage) => {
         })
       );
     } catch (err) {
-      dispatch(
-        action.setActionState({
-          actionState: {
-            status: "error",
-            action: "create",
-            title: 'account',
-          },
-        })
-      );
+      console.log(err);
     }
   };
 };
@@ -263,6 +255,16 @@ export const updateAccount = (dataObj, action) => {
           },
         })
       );
+      dispatch(
+        loginActions.setData({
+          role: dataObj.role,
+          username: dataObj.username,
+          password: dataObj.password,
+          fullname: dataObj.fullname,
+          id: dataObj.id,
+          isLoggedIn: true,
+        })
+      );
     } catch (err) {
       dispatch(
         action.setActionState({
@@ -284,27 +286,6 @@ export const deleteAccount = (id) => {
       await fetch(url, {
         method: "DELETE",
       });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-};
-
-export const usernameCheck = (dataObj) => {
-  return async (dispatch) => {
-    try {
-      const url = `${BASEURL}/users?username=${dataObj.username}`;
-      const response = await fetch(url, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-      const data = await response.json();
-      console.log(data);
-      dispatch(
-        loginActions.setUserName({
-          username: data.username,
-        })
-      );
     } catch (err) {
       console.log(err);
     }

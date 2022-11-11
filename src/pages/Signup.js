@@ -26,6 +26,8 @@ const Signup = () => {
       const dataObj = {
         username: data.get("username"),
         password: data.get("password"),
+        fullname:data.get('fullname'),
+        role:'USER'
       };
       dispatch(createAccount(dataObj));
       navigate("/signin");
@@ -67,6 +69,17 @@ const Signup = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                autoComplete="fullname"
+                name="fullname"
+                required
+                fullWidth
+                id="fullname"
+                label="full name"
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
                 required
                 fullWidth
                 name="password"
@@ -89,7 +102,7 @@ const Signup = () => {
             </Grid>
             <Grid item xs={12}>
               {showMsg && (
-                <Typography>
+                <Typography color="error">
                   password and confirm password do not match.
                 </Typography>
               )}

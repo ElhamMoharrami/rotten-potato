@@ -5,25 +5,26 @@ import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import AlertMessage from "../components/Alert/Alert";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const Signin = () => {
-  const dispatch=useDispatch()
-  const navigate=useNavigate()
-  const actionState=useSelector(state=>state.login.actionState)
-  const [openAlert, setOpenAlert] = useState(true);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [showPass, setShowPass] = useState(false);
 
-  const handleCloseAlert = () => setOpenAlert(false);
-  
+  const showPasswordHandler = () => setShowPass(!showPass);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -31,8 +32,8 @@ const Signin = () => {
       username: data.get("username"),
       password: data.get("password"),
     };
-   dispatch(login(dataObj))
-   navigate("/movies");
+    dispatch(login(dataObj));
+    navigate("/movies");
   };
 
   return (
@@ -46,14 +47,6 @@ const Signin = () => {
           alignItems: "center",
         }}
       >
-         {actionState.status !== "" && (
-        <AlertMessage
-          openAlert={openAlert}
-          handleCloseAlert={handleCloseAlert}
-          actionState={actionState}
-          title={actionState.title}
-        />
-      )}
         <Avatar sx={{ m: 1, bgcolor: "#1976d2" }}>
           <LockOutlinedIcon />
         </Avatar>
@@ -79,9 +72,20 @@ const Signin = () => {
                 fullWidth
                 name="password"
                 label="Password"
-                type="password"
+                type={showPass ? "text" : "password"}
                 id="password"
-                autoComplete="new-password"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={showPasswordHandler}
+                      >
+                        {showPass ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
             </Grid>
           </Grid>

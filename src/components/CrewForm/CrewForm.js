@@ -152,7 +152,7 @@ const CrewForm = (props) => {
           </Typography>
         </CardContent>
         <form onSubmit={submitHandler}>
-          <Grid container spacing={2}>
+          <Grid container spacing={4}>
             <Grid xs={6}>
               <FormControl>
                 <InputLabel htmlFor="name-input"> *Artist Name</InputLabel>
