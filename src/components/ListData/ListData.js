@@ -12,6 +12,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import { style } from "../../assets/config";
 
 const ListData = (props) => {
   const {
@@ -48,24 +49,22 @@ const ListData = (props) => {
           <ShowList form={form} type={type} data={data.content} card={card} />
         </Box>
       );
-    } else {
+    } else if (data.content.length < 1 && isSearching) {
       return (
-        <Card sx={{ minWidth: 275 }}>
-          <CardContent>
-            <Typography
-              sx={{
-                fontSize: 14,
-                textAlign: " center",
-                verticalAlign: "middle",
-                lineHeight: "90px",
-              }}
-              color="text.secondary"
-              gutterBottom
-            >
-              The Search Term Did Not Bring Any Results.
-            </Typography>
-          </CardContent>
-        </Card>
+        <Box sx={style}>
+          <Typography
+            sx={{
+              fontSize: 14,
+              textAlign: " center",
+              verticalAlign: "middle",
+              lineHeight: "90px",
+            }}
+            color="text.secondary"
+            gutterBottom
+          >
+            The Search Term Did Not Bring Any Results.
+          </Typography>
+        </Box>
       );
     }
   };
@@ -82,6 +81,7 @@ const ListData = (props) => {
     <Box>
       {isLoading && <LinearProgress />}
       {!isLoading && <List />}
+
       <Box
         sx={{
           display: "flex",

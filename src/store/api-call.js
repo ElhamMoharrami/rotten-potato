@@ -231,8 +231,25 @@ export const login = (dataObj) => {
           isLoggedIn: true,
         })
       );
+      dispatch(
+       loginActions.setActionState({
+          actionState: {
+            status: "success",
+            action: "login",
+            title: "account",
+          },
+        })
+      );
     } catch (err) {
-      console.log(err);
+      dispatch(
+        loginActions.setActionState({
+          actionState: {
+            status: "error",
+            action: "login",
+            title: "account",
+          },
+        })
+      );
     }
   };
 };

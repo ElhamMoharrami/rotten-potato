@@ -50,7 +50,7 @@ const Movies = () => {
   };
 
   return (
-    <Box>
+    <Box >
       {actionState.status !== "" && (
         <AlertMessage
           openAlert={openAlert}

@@ -34,7 +34,6 @@ const MovieForm = (props) => {
   ];
   const languageOptions = ["English", "French", "Korean", "Farsi", "Turkish"];
   const movie = useSelector((state) => state.movies.selectedItem);
-  const actionState = useSelector((state) => state.movies.actionState);
   const itemsPerPage = useSelector(
     (state) => state.movies.data.page.itemsPerPage
   );

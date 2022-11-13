@@ -35,9 +35,10 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const account = useSelector((state) => state.login.account);
   const open = useSelector((state) => state.style.drawer.open);
-  const homeClickHandler = () => {
-    localStorage.clear();
-  };
+
+  // const homeClickHandler = () => {
+  //   localStorage.clear();
+  // };
 
   const moviesClickHandler = () => {
     dispatch(movieActions.clearData());
@@ -52,6 +53,7 @@ const Navbar = () => {
       sx={{
         display: "flex",
         fontFamily: '"Roboto","Helvetica","Arial",sans-serif ',
+        marginBottom: "60px",
       }}
     >
       <AppBar position="fixed" open={open}>
@@ -60,7 +62,7 @@ const Navbar = () => {
             <Typography>Rotton Potato</Typography>
           </Box>
           <List sx={{ marginRight: "70px" }}>
-            <Link sx={style} onClick={homeClickHandler} href="/home">
+            <Link sx={style} href="/home">
               Home
             </Link>
             <Link sx={style} onClick={moviesClickHandler} href="/Movies">

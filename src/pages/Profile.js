@@ -11,21 +11,59 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { updateAccount } from "../store/api-call";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import IconButton from "@mui/material/IconButton";
 import { deleteAccount } from "../store/api-call";
 import Confirmation from "../components/Confirmation/Confirmation";
 import { useNavigate } from "react-router-dom";
 import { loginActions } from "../store/login-slice";
 import AlertMessage from "../components/Alert/Alert";
+import { ThemeSelector } from "../components/Theme/Theme";
+import { Input, FormHelperText } from "@mui/material";
+import { FormControl } from "@mui/material";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const account = useSelector((state) => state.login.account);
+
   const [confirmMsg, setConfirmMsg] = useState(false);
   const actionState = useSelector((state) => state.login.actionState);
-  const [successMsg, setSuccessMsg] = useState(false);
   const [openConfirm, setOpenConfirm] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
+  const [profileForm, setProfileForm] = useState({});
+  const [usernameIsValid, setUsernameIsValid] = useState(true);
+  const [passwordIsValid, setPasswordIsValid] = useState(true);
+  const [showPass, setShowPass] = useState(false);
+
+  const showPasswordHandler = () => setShowPass(!showPass);
+
+  const onchangeHandler = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    setProfileForm((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+
+    if (name === "fullname") {
+      if (value.length > 50) {
+        setUsernameIsValid(false);
+      } else {
+        setUsernameIsValid(true);
+      }
+    }
+    if (name === "newPassword") {
+      if (value.length > 6) {
+        setPasswordIsValid(false);
+      } else {
+        setPasswordIsValid(true);
+      }
+    }
+  };
 
   const handleCloseAlert = () => {
     setOpenAlert(false);
@@ -40,6 +78,7 @@ const Profile = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+  
     const data = new FormData(event.currentTarget);
 
     if (data.get("fullname") !== account.fullname) {
@@ -54,21 +93,23 @@ const Profile = () => {
     }
 
     if (
-      data.get("new-password") === data.get("confirmPassword") &&
-      data.get("new-password") !== account.password &&
-      data.get("new-password") !== ""
+      data.get("newPassword") === data.get("confirmPassword") &&
+      data.get("newPassword") !== account.password &&
+      data.get("newPassword") !== ""
     ) {
       const dataObj = {
         username: account.username,
         fullname: data.get("fullname"),
-        password: data.get("new-password"),
+        password: data.get("newPassword"),
         id: account.id,
         role: data.get("role"),
       };
       dispatch(updateAccount(dataObj, loginActions));
     }
-    console.log(data);
-   setOpenAlert(true)
+    if (data.get("newPassword") !== data.get("confirmPassword")) {
+      setConfirmMsg(true);
+    }
+    setOpenAlert(true);
   };
 
   const deleteHandler = () => {
@@ -102,25 +143,31 @@ const Profile = () => {
           <Grid container spacing={2}>
             <Typography>Profile</Typography>
             <Grid item xs={12}>
-              <TextField
-                autoComplete="fullname"
-                name="fullname"
-                fullWidth
-                id="fullname"
-                label="fullname"
-                autoFocus
-                defaultValue={account.fullname}
-              />
+              <FormControl fullWidth>
+                <Input
+                  name="fullname"
+                  required
+                  fullWidth
+                  placeholder="fullname*"
+                  autoFocus
+                  defaultValue={account.fullname}
+                  onChange={onchangeHandler}
+                />
+                {!usernameIsValid && (
+                  <FormHelperText>
+                    fullname should not be more than 50 characters.
+                  </FormHelperText>
+                )}
+              </FormControl>
             </Grid>
             <Grid item xs={12}>
               <TextField
-                fullWidth
-                name="username"
-                label="username"
-                type="username"
-                id="username"
-                InputProps={{ readOnly: true }}
                 autoComplete="username"
+                name="username"
+                fullWidth
+                id="username"
+                label="username"
+                autoFocus
                 defaultValue={account.username}
               />
             </Grid>
@@ -141,24 +188,55 @@ const Profile = () => {
             </Grid>
 
             <Grid item xs={12}>
-              <TextField
-                fullWidth
-                name="new-password"
-                label="new password"
-                type="new-password"
-                id="new-password"
-                autoComplete="new-password"
-              />
+              <FormControl fullWidth>
+                <Input
+                  required
+                  fullWidth
+                  onChange={onchangeHandler}
+                  name="newPassword"
+                  placeholder="newPassword"
+                  type={showPass ? "text" : "password"}
+                  id="newPassword"
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={showPasswordHandler}
+                      >
+                        {showPass ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+                {!passwordIsValid && (
+                  <FormHelperText>
+                    password should not be more than 6 characters.
+                  </FormHelperText>
+                )}
+              </FormControl>
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                fullWidth
-                name="confirmPassword"
-                label="confirm new Password"
-                type="confirmPassword"
-                id="confirmPassword"
-                autoComplete="confirm-password"
-              />
+              <FormControl fullWidth>
+                <Input
+                  required
+                  fullWidth
+                  onChange={onchangeHandler}
+                  name="confirmPassword"
+                  placeholder="confirmPassword*"
+                  type={showPass ? "text" : "password"}
+                  id="confirmPassword"
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle confirmPassword visibility"
+                        onClick={showPasswordHandler}
+                      >
+                        {showPass ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
             </Grid>
             <Grid item xs={12}>
               {confirmMsg && (
@@ -187,7 +265,6 @@ const Profile = () => {
             </Grid>
           </Grid>
         </Box>
-
         <Grid container spacing={2} sx={{ margin: 5 }}>
           <Typography>Setting</Typography>
           <Grid item xs={12}>
@@ -206,6 +283,9 @@ const Profile = () => {
                 deleteHandler={deleteHandler}
               />
             )}
+          </Grid>
+          <Grid item xs={12}>
+            <ThemeSelector />
           </Grid>
         </Grid>
       </Box>
