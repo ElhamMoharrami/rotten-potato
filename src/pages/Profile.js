@@ -1,8 +1,10 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import { Box } from "@mui/material";
-import { InputLabel } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import { deleteAccount, updateAccount } from "../store/api-call";
+import { useNavigate } from "react-router-dom";
+import { loginActions } from "../store/login-slice";
+import AlertMessage from "../components/Alert/Alert";
+import { ThemeSelector } from "../components/Theme/Theme";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -10,33 +12,45 @@ import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { updateAccount } from "../store/api-call";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
-import { deleteAccount } from "../store/api-call";
 import Confirmation from "../components/Confirmation/Confirmation";
-import { useNavigate } from "react-router-dom";
-import { loginActions } from "../store/login-slice";
-import AlertMessage from "../components/Alert/Alert";
-import { ThemeSelector } from "../components/Theme/Theme";
-import { Input, FormHelperText } from "@mui/material";
-import { FormControl } from "@mui/material";
+import {
+  Input,
+  FormHelperText,
+  FormControl,
+  Box,
+  InputLabel,
+} from "@mui/material";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const account = useSelector((state) => state.login.account);
+  const options = [
+    { value: 10, label: "10" },
+    { value: 15, label: "15" },
+    { value: 20, label: "20" },
+    { value: 30, label: "30" },
+  ];
 
-  const [confirmMsg, setConfirmMsg] = useState(false);
+  const [confirmPassMsg, setConfirmPassMsg] = useState(false);
   const actionState = useSelector((state) => state.login.actionState);
   const [openConfirm, setOpenConfirm] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
-  const [profileForm, setProfileForm] = useState({});
+  const [profileForm, setProfileForm] = useState({
+    fullname: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
   const [usernameIsValid, setUsernameIsValid] = useState(true);
   const [passwordIsValid, setPasswordIsValid] = useState(true);
   const [showPass, setShowPass] = useState(false);
+  const [defaultItemsPerPage, setDefaultItemsPerPage] = useState("");
 
   const showPasswordHandler = () => setShowPass(!showPass);
 
@@ -76,39 +90,48 @@ const Profile = () => {
   const handleOpenConfirm = () => setOpenConfirm(true);
   const handleCloseConfirm = () => setOpenConfirm(false);
 
+  const itemsPerPageHandler = (event) => {
+    setDefaultItemsPerPage(event.target.value);
+    localStorage.setItem("itemsPerPage", event.target.value);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-  
-    const data = new FormData(event.currentTarget);
-
-    if (data.get("fullname") !== account.fullname) {
-      const dataObj = {
-        username: account.username,
-        fullname: data.get("fullname"),
-        password: account.password,
-        id: account.id,
-        role: data.get("role"),
-      };
-      dispatch(updateAccount(dataObj, loginActions));
-    }
-
     if (
-      data.get("newPassword") === data.get("confirmPassword") &&
-      data.get("newPassword") !== account.password &&
-      data.get("newPassword") !== ""
+      profileForm.fullname.trim().length !== 0 &&
+      profileForm.fullname !== account.fullname
     ) {
       const dataObj = {
         username: account.username,
-        fullname: data.get("fullname"),
-        password: data.get("newPassword"),
+        fullname: profileForm.fullname,
+        password: account.password,
         id: account.id,
-        role: data.get("role"),
+        role: account.role,
       };
       dispatch(updateAccount(dataObj, loginActions));
     }
-    if (data.get("newPassword") !== data.get("confirmPassword")) {
-      setConfirmMsg(true);
+    if (
+      profileForm.newPassword === profileForm.confirmPassword &&
+      profileForm.newPassword !== account.password &&
+      profileForm.newPassword.trim().length !== 0
+    ) {
+      const dataObj = {
+        username: account.username,
+        fullname: account.fullname,
+        password: profileForm.newPassword,
+        id: account.id,
+        role: account.role,
+      };
+      dispatch(updateAccount(dataObj, loginActions));
     }
+    if (profileForm.newPassword !== profileForm.confirmPassword) {
+      setConfirmPassMsg(true);
+    }
+    if (profileForm.newPassword === profileForm.confirmPassword) {
+      setConfirmPassMsg(false);
+    }
+
+    setProfileForm({ fullname: "", newPassword: "", confirmPassword: "" });
     setOpenAlert(true);
   };
 
@@ -123,9 +146,7 @@ const Profile = () => {
       })
     );
     localStorage.clear();
-
     navigate("/signin");
-    console.log(account.id);
   };
 
   return (
@@ -169,6 +190,7 @@ const Profile = () => {
                 label="username"
                 autoFocus
                 defaultValue={account.username}
+                InputProps={{ readOnly: true }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -192,6 +214,7 @@ const Profile = () => {
                 <Input
                   required
                   fullWidth
+                  value={profileForm.newPassword}
                   onChange={onchangeHandler}
                   name="newPassword"
                   placeholder="newPassword"
@@ -220,6 +243,7 @@ const Profile = () => {
                 <Input
                   required
                   fullWidth
+                  value={profileForm.confirmPassword}
                   onChange={onchangeHandler}
                   name="confirmPassword"
                   placeholder="confirmPassword*"
@@ -239,8 +263,8 @@ const Profile = () => {
               </FormControl>
             </Grid>
             <Grid item xs={12}>
-              {confirmMsg && (
-                <Typography>
+              {confirmPassMsg && (
+                <Typography color="error">
                   password and confirm password do not match.
                 </Typography>
               )}
@@ -283,6 +307,26 @@ const Profile = () => {
                 deleteHandler={deleteHandler}
               />
             )}
+          </Grid>
+          <Grid item xs={12}>
+            <FormControl>
+              <InputLabel id="select-label">Size</InputLabel>
+              <Select
+                sx={{
+                  paddingRight: 2,
+                  paddingLeft: 2,
+                }}
+                value={defaultItemsPerPage}
+                labelId="select-label"
+                onChange={itemsPerPageHandler}
+              >
+                {options.map((option, index) => (
+                  <MenuItem value={option.value} key={index}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Grid>
           <Grid item xs={12}>
             <ThemeSelector />

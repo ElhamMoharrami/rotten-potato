@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { styleActions } from "../../store/style-slice";
 import { useSelector } from "react-redux";
 import { drawerWidth } from "../../assets/config";
+import Toolbar from "@mui/material/Toolbar";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -60,17 +61,20 @@ const SearchDrawer = ({ search }) => {
             boxSizing: "border-box",
           },
         }}
-        variant="persistent"
         anchor="left"
+        variant="temporary"
         open={open}
       >
+        <Toolbar />
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             <CloseIcon />
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <Box sx={{ marginLeft: 2, marginRight: 2 }}>{search}</Box>
+        <Box sx={{ marginLeft: 2, marginRight: 2, marginBottom: 2 }}>
+          {search}
+        </Box>
         <Divider />
       </Drawer>
     </Box>

@@ -1,23 +1,20 @@
-import * as React from "react";
-import { login } from "../store/api-call";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { login } from "../store/api-call";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import AlertMessage from "../components/Alert/Alert";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { useState } from "react";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Input, FormHelperText } from "@mui/material";
-import { FormControl } from "@mui/material";
+import { Input, FormHelperText,FormControl } from "@mui/material";
 
 const Signin = () => {
   const dispatch = useDispatch();
@@ -25,12 +22,7 @@ const Signin = () => {
   const [showPass, setShowPass] = useState(false);
   const [usernameIsValid, setUsernameIsValid] = useState(true);
   const [passwordIsValid, setPasswordIsValid] = useState(true);
-  const [openAlert, setOpenAlert] = useState(false);
   const actionState = useSelector((state) => state.login.actionState);
-
-  const handleCloseAlert = () => {
-    setOpenAlert(false);
-  };
 
   const showPasswordHandler = () => setShowPass(!showPass);
 
@@ -69,8 +61,6 @@ const Signin = () => {
       };
       dispatch(login(dataObj));
     }
-
-    setOpenAlert(true);
   };
 
   return (
@@ -137,16 +127,6 @@ const Signin = () => {
                 )}
               </FormControl>
             </Grid>
-            <Grid>
-              {actionState.action === "login" && (
-                <AlertMessage
-                  openAlert={openAlert}
-                  handleCloseAlert={handleCloseAlert}
-                  actionState={actionState}
-                  title={actionState.title}
-                />
-              )}
-            </Grid>
           </Grid>
           <Button
             type="submit"
@@ -156,6 +136,15 @@ const Signin = () => {
           >
             Sign In
           </Button>
+          <Grid container>
+            {actionState.action === "login" && (
+              <Typography
+                color={actionState.status === "success" ? "success.main": "error"}
+              >
+                login {actionState.status}
+              </Typography>
+            )}
+          </Grid>
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link href="/signup" variant="body2">

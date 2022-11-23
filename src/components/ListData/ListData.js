@@ -13,6 +13,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { style } from "../../assets/config";
+import { styleActions } from "../../store/style-slice";
 
 const ListData = (props) => {
   const {
@@ -74,7 +75,9 @@ const ListData = (props) => {
   };
 
   const itemsPerPageHandler = (event) => {
-    dispatch(action.setItemsPerPage({ itemsPerPage: event.target.value }));
+    dispatch(
+      styleActions.setItemsPerPage({ itemsPerPage: event.target.value })
+    );
   };
 
   return (

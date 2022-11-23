@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar/Navbar";
+import NavBar from "./components/Navbar/Navbar";
 import Movies from "./pages/Movies";
 import MovieDetail from "./pages/MovieDetail";
 import CrewsDetail from "./pages/CrewsDetail";
@@ -14,20 +14,20 @@ import ToggleColorMode from "./components/Theme/Theme";
 export default function App() {
   return (
     <ToggleColorMode>
-        <Box sx={{ bgcolor: "background.default", color: "text.primary" }}>
-          <Navbar />
+      <Box sx={{ bgcolor: "background.default", color: "text.primary" }}>
+        <NavBar />
 
-          <Routes>
-            <Route path="/home" element={<Home />} />
-            <Route path="/movies" element={<Movies />} />
-            <Route path="/movies/:id" element={<MovieDetail />} />
-            <Route path="/crews" element={<Crews />} />
-            <Route path="/crews/:id" element={<CrewsDetail />} />
-            <Route path="/signin" element={<Signin />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/profile" element={<Profile />} />
-          </Routes>
-        </Box>
-        </ToggleColorMode>
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="/movies" element={<Movies />} />
+          <Route path="/movies/:id" element={<MovieDetail />} />
+          <Route path="/crews" element={<Crews />} />
+          <Route path="/crews/:id" element={<CrewsDetail />} />
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
+      </Box>
+    </ToggleColorMode>
   );
 }

@@ -200,7 +200,7 @@ export const fetchSearch = (data, type, action, itemsPerPage, currentPage) => {
 export const createAccount = (dataObj) => {
   return async (dispatch) => {
     try {
-      const url = `http://localhost:8080/api/users`;
+      const url = `${BASEURL}/users`;
       await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -257,7 +257,7 @@ export const login = (dataObj) => {
 export const updateAccount = (dataObj, action) => {
   return async (dispatch) => {
     try {
-      const url = `http://localhost:8080/api/users/${dataObj.id}`;
+      const url = `${BASEURL}/users/${dataObj.id}`;
       await fetch(url, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -299,7 +299,7 @@ export const updateAccount = (dataObj, action) => {
 export const deleteAccount = (id) => {
   return async (dispatch) => {
     try {
-      const url = `http://localhost:8080/api/users/${id}`;
+      const url = `${BASEURL}/users/${id}`;
       await fetch(url, {
         method: "DELETE",
       });

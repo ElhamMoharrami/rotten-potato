@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   data: {
     content: [],
-    page: { itemsPerPage: 10, pageCount: 0, currentPage: 1 },
+    page: { pageCount: 0, currentPage: 1 },
   },
   selectedItem: [],
   detailList: [],
@@ -33,9 +33,7 @@ const createDataSlice = (name) => {
       setCurrentPage(state, action) {
         state.data.page.currentPage = action.payload.currentPage;
       },
-      setItemsPerPage(state, action) {
-        state.data.page.itemsPerPage = action.payload.itemsPerPage;
-      },
+
       setIsSearching(state, action) {
         state.isSearching = action.payload.isSearching;
       },

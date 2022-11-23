@@ -22,6 +22,7 @@ const MovieForm = (props) => {
   const navigate = useNavigate();
   const { register, formState } = useForm();
   const isAddMode = !id;
+
   const genreOptions = [
     "Action",
     "Thriller",
@@ -33,6 +34,8 @@ const MovieForm = (props) => {
     "Comedy",
   ];
   const languageOptions = ["English", "French", "Korean", "Farsi", "Turkish"];
+
+
   const movie = useSelector((state) => state.movies.selectedItem);
   const itemsPerPage = useSelector(
     (state) => state.movies.data.page.itemsPerPage
