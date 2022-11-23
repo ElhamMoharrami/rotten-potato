@@ -1,13 +1,8 @@
 import React from "react";
-import { Box } from "@mui/material";
-
+import Typography from "@mui/material/Typography";
 
 const Home = () => {
-  return (
-    <Box>
-     Temporary Welcome Page
-    </Box>
-  );
+  return <Typography>this is temp</Typography>;
 };
 
 export default Home;

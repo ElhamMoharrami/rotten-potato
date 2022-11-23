@@ -22,6 +22,7 @@ const MovieForm = (props) => {
   const navigate = useNavigate();
   const { register, formState } = useForm();
   const isAddMode = !id;
+
   const genreOptions = [
     "Action",
     "Thriller",
@@ -33,8 +34,9 @@ const MovieForm = (props) => {
     "Comedy",
   ];
   const languageOptions = ["English", "French", "Korean", "Farsi", "Turkish"];
+
+
   const movie = useSelector((state) => state.movies.selectedItem);
-  const actionState = useSelector((state) => state.movies.actionState);
   const itemsPerPage = useSelector(
     (state) => state.movies.data.page.itemsPerPage
   );
@@ -203,7 +205,7 @@ const MovieForm = (props) => {
             </Typography>
           </CardContent>
           <form onSubmit={submitHandler}>
-            <Grid container spacing={2}>
+            <Grid container spacing={4}>
               <Grid xs={6}>
                 <FormControl>
                   <InputLabel htmlFor="title-input">*Movie Title</InputLabel>

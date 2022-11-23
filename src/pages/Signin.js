@@ -1,31 +1,66 @@
-import * as React from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../store/api-call";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { Input, FormHelperText,FormControl } from "@mui/material";
 
 const Signin = () => {
-  const dispatch=useDispatch()
-  const navigate=useNavigate()
-  
+  const dispatch = useDispatch();
+  const [signinForm, setSigninForm] = useState({});
+  const [showPass, setShowPass] = useState(false);
+  const [usernameIsValid, setUsernameIsValid] = useState(true);
+  const [passwordIsValid, setPasswordIsValid] = useState(true);
+  const actionState = useSelector((state) => state.login.actionState);
+
+  const showPasswordHandler = () => setShowPass(!showPass);
+
+  const onchangeHandler = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    setSigninForm((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+
+    if (name === "username") {
+      if (value.length > 20) {
+        setUsernameIsValid(false);
+      } else {
+        setUsernameIsValid(true);
+      }
+    }
+    if (name === "password") {
+      if (value.length > 6) {
+        setPasswordIsValid(false);
+      } else {
+        setPasswordIsValid(true);
+      }
+    }
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const dataObj = {
-      username: data.get("username"),
-      password: data.get("password"),
-    };
-   dispatch(login(dataObj))
-   navigate("/movies");
+    console.log(signinForm);
+    if (passwordIsValid && usernameIsValid) {
+      const dataObj = {
+        username: signinForm.username,
+        password: signinForm.password,
+      };
+      dispatch(login(dataObj));
+    }
   };
 
   return (
@@ -48,26 +83,49 @@ const Signin = () => {
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextField
-                autoComplete="username"
-                name="username"
-                required
-                fullWidth
-                id="username"
-                label="username"
-                autoFocus
-              />
+              <FormControl fullWidth>
+                <Input
+                  name="username"
+                  required
+                  fullWidth
+                  placeholder="username*"
+                  autoFocus
+                  onChange={onchangeHandler}
+                />
+                {!usernameIsValid && (
+                  <FormHelperText>
+                    username should not be more than 20 characters.
+                  </FormHelperText>
+                )}
+              </FormControl>
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="new-password"
-              />
+              <FormControl fullWidth>
+                <Input
+                  required
+                  fullWidth
+                  onChange={onchangeHandler}
+                  name="password"
+                  placeholder="password*"
+                  type={showPass ? "text" : "password"}
+                  id="password"
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={showPasswordHandler}
+                      >
+                        {showPass ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+                {!passwordIsValid && (
+                  <FormHelperText>
+                    password should not be more than 6 characters.
+                  </FormHelperText>
+                )}
+              </FormControl>
             </Grid>
           </Grid>
           <Button
@@ -78,6 +136,15 @@ const Signin = () => {
           >
             Sign In
           </Button>
+          <Grid container>
+            {actionState.action === "login" && (
+              <Typography
+                color={actionState.status === "success" ? "success.main": "error"}
+              >
+                login {actionState.status}
+              </Typography>
+            )}
+          </Grid>
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link href="/signup" variant="body2">

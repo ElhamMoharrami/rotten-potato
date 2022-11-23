@@ -7,8 +7,11 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import CloseIcon from "@mui/icons-material/Close";
-
-const drawerWidth = 350;
+import { useDispatch } from "react-redux";
+import { styleActions } from "../../store/style-slice";
+import { useSelector } from "react-redux";
+import { drawerWidth } from "../../assets/config";
+import Toolbar from "@mui/material/Toolbar";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -19,14 +22,15 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 const SearchDrawer = ({ search }) => {
-  const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch();
+  const open = useSelector((state) => state.style.drawer.open);
 
   const handleDrawerOpen = () => {
-    setOpen(true);
+    dispatch(styleActions.setData({ open: true }));
   };
 
   const handleDrawerClose = () => {
-    setOpen(false);
+    dispatch(styleActions.setData({ open: false }));
   };
 
   return (
@@ -57,17 +61,20 @@ const SearchDrawer = ({ search }) => {
             boxSizing: "border-box",
           },
         }}
-        variant="persistent"
         anchor="left"
+        variant="temporary"
         open={open}
       >
+        <Toolbar />
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             <CloseIcon />
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <Box sx={{ marginLeft: 2, marginRight: 2 }}>{search}</Box>
+        <Box sx={{ marginLeft: 2, marginRight: 2, marginBottom: 2 }}>
+          {search}
+        </Box>
         <Divider />
       </Drawer>
     </Box>

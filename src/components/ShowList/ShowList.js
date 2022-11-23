@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
 import Card from "@mui/material/Card";
@@ -8,47 +9,50 @@ import Typography from "@mui/material/Typography";
 import add from "../../assets/images/add.png";
 
 const ShowList = (props) => {
+  const account = useSelector((state) => state.login.account);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
-    <Box sx={{ margin: 5 }}>
+    <Box>
       <Grid container spacing={2}>
         {props.data.map((item, index) => (
           <Box key={index}>
             <Grid item>{props.card(item)}</Grid>
           </Box>
         ))}
-        <Grid item>
-          <Card
-            sx={{
-              height: 510,
-              borderRadius: "20px",
-              position: "relative",
-              width: "240px",
-            }}
-          >
-            <CardMedia
-              component="img"
-              alt="add sign"
-              height="340"
-              image={add}
-            />
-            <CardContent>
-              <Typography
-                sx={{ fontSize: 18, cursor: "pointer" }}
-                gutterBottom
-                variant="h5"
-                component="div"
-                onClick={handleOpen}
-              >
-                Add new Item (click me!)
-              </Typography>
-            </CardContent>
+        {account.role === "ADMIN" && (
+          <Grid item>
+            <Card
+              onClick={handleOpen}
+              sx={{
+                height: 510,
+                borderRadius: "20px",
+                position: "relative",
+                width: "240px",
+              }}
+            >
+              <CardMedia
+                component="img"
+                alt="add sign"
+                height="340"
+                image={add}
+              />
+              <CardContent>
+                <Typography
+                  sx={{ fontSize: 18, cursor: "pointer" }}
+                  gutterBottom
+                  variant="h5"
+                  component="div"
+                >
+                  Add new Item 
+                </Typography>
+              </CardContent>
+            </Card>
             {props.form(handleClose, open, "add")}
-          </Card>
-        </Grid>
+          </Grid>
+        )}
       </Grid>
     </Box>
   );

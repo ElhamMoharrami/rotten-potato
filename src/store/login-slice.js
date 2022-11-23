@@ -12,7 +12,7 @@ const initialState = {
   actionState: { status: "", action: "", title: "" },
 };
 
-const createLoginSlice = (name) => {
+const createLoginSlice = () => {
   return createSlice({
     name: "login",
     initialState,
@@ -25,9 +25,8 @@ const createLoginSlice = (name) => {
         state.account.fullname = action.payload.fullname;
         state.account.id = action.payload.id;
       },
-      clearData(state, action) {
+      clearData(state) {
         state.account = initialState.account;
-        console.log(state);
       },
       setActionState(state, action) {
         state.actionState = action.payload.actionState;

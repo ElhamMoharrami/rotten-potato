@@ -92,8 +92,7 @@ export const deleteSelectedItem = (
   type,
   itemsPerPage,
   currentPage,
-  action,
-  
+  action
 ) => {
   return async (dispatch) => {
     try {
@@ -201,7 +200,7 @@ export const fetchSearch = (data, type, action, itemsPerPage, currentPage) => {
 export const createAccount = (dataObj) => {
   return async (dispatch) => {
     try {
-      const url = `http://localhost:8080/api/users`;
+      const url = `${BASEURL}/users`;
       await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -232,8 +231,25 @@ export const login = (dataObj) => {
           isLoggedIn: true,
         })
       );
+      dispatch(
+       loginActions.setActionState({
+          actionState: {
+            status: "success",
+            action: "login",
+            title: "account",
+          },
+        })
+      );
     } catch (err) {
-      console.log(err);
+      dispatch(
+        loginActions.setActionState({
+          actionState: {
+            status: "error",
+            action: "login",
+            title: "account",
+          },
+        })
+      );
     }
   };
 };
@@ -241,7 +257,7 @@ export const login = (dataObj) => {
 export const updateAccount = (dataObj, action) => {
   return async (dispatch) => {
     try {
-      const url = `http://localhost:8080/api/users/${dataObj.id}`;
+      const url = `${BASEURL}/users/${dataObj.id}`;
       await fetch(url, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -254,6 +270,16 @@ export const updateAccount = (dataObj, action) => {
             action: "update",
             title: "account",
           },
+        })
+      );
+      dispatch(
+        loginActions.setData({
+          role: dataObj.role,
+          username: dataObj.username,
+          password: dataObj.password,
+          fullname: dataObj.fullname,
+          id: dataObj.id,
+          isLoggedIn: true,
         })
       );
     } catch (err) {
@@ -273,7 +299,7 @@ export const updateAccount = (dataObj, action) => {
 export const deleteAccount = (id) => {
   return async (dispatch) => {
     try {
-      const url = `http://localhost:8080/api/users/${id}`;
+      const url = `${BASEURL}/users/${id}`;
       await fetch(url, {
         method: "DELETE",
       });

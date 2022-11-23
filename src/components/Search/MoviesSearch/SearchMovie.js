@@ -63,7 +63,7 @@ const SearchMovie = (props) => {
   return (
     <Box>
       <form onSubmit={submitHandler}>
-        <Box>
+        <Box sx={{marginTop:2}}>
           <Box>
             <FormControl>
               <InputLabel htmlFor="title-input">Movie Title</InputLabel>
