@@ -20,9 +20,7 @@ const MovieCard = (props) => {
   const currentPage = useSelector(
     (state) => state.movies.data.page.currentPage
   );
-  const itemsPerPage = useSelector(
-    (state) => state.movies.data.page.itemsPerPage
-  );
+  const itemsPerPage=useSelector((state)=>state.style.itemsPerPage)
   const content = useSelector((state) => state.movies.data.content);
   const account = useSelector((state) => state.login.account);
   const [open, setOpen] = useState(false);

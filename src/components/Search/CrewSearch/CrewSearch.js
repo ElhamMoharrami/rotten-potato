@@ -165,13 +165,10 @@ const CrewSearch = (props) => {
         </Box>
         <Box>
           <Button
-            style={{
-              width: "100%",
-              color: "black",
-              border: "1px solid rgb(0, 0, 0)",
-            }}
             type="submit"
-            variant="outlined"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
           >
             submit
           </Button>

@@ -14,6 +14,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Unstable_Grid2";
 import Modal from "@mui/material/Modal";
+import CrewTable from "../CrewTable/CrewTable";
 import { style } from "../../assets/config";
 
 const MovieForm = (props) => {
@@ -34,7 +35,6 @@ const MovieForm = (props) => {
     "Comedy",
   ];
   const languageOptions = ["English", "French", "Korean", "Farsi", "Turkish"];
-
 
   const movie = useSelector((state) => state.movies.selectedItem);
   const itemsPerPage = useSelector(
@@ -158,7 +158,14 @@ const MovieForm = (props) => {
     event.preventDefault();
     if (isAddMode) {
       dispatch(
-        saveData(movieData,movieData.title, "movies", itemsPerPage, currentPage, movieActions)
+        saveData(
+          movieData,
+          movieData.title,
+          "movies",
+          itemsPerPage,
+          currentPage,
+          movieActions
+        )
       );
     } else {
       dispatch(
@@ -173,7 +180,6 @@ const MovieForm = (props) => {
         )
       );
     }
-    
     navigate("/movies");
   };
 
@@ -449,17 +455,17 @@ const MovieForm = (props) => {
                   {!urlIsValid && <FormHelperText>invalid url.</FormHelperText>}
                 </FormControl>
               </Grid>
+              <Grid item xs={12}>
+                <CrewTable />
+              </Grid>
               <Grid xs={12}>
                 <Button
-                  sx={{
-                    width: "100%",
-                    color: "black",
-                    border: "1px solid rgb(0, 0, 0)",
-                  }}
-                  disabled={formIsValid ? false : true}
                   type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
                 >
-                  Submit
+                  submit
                 </Button>
               </Grid>
             </Grid>

@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { artistsSlice, movieSlice } from "./data-slice";
 import { loginSlice } from "./login-slice";
 import { styleSlice } from "./style-slice";
+import { crewTableSlice } from "./crewtable-Slice";
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
 import {
@@ -25,6 +26,7 @@ const reducers = combineReducers({
   movies: movieSlice.reducer,
   crews: artistsSlice.reducer,
   style: styleSlice.reducer,
+  crewTable: crewTableSlice.reducer,
 });
 
 export default configureStore({

@@ -50,10 +50,6 @@ const Movies = () => {
     return <MovieForm open={open} close={close} />;
   };
 
-  useEffect(()=>{
-    console.log(itemsPerPage);
-  },[itemsPerPage])
-
   return (
     <Box >
       {actionState.status !== "" && (
