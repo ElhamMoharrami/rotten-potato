@@ -46,8 +46,8 @@ const Movies = () => {
     return <MovieCard movie={item} />;
   };
 
-  const form = (close, open) => {
-    return <MovieForm open={open} close={close} />;
+  const form = (close, open,actionType) => {
+    return <MovieForm open={open} close={close} actionType={actionType}  />;
   };
 
   return (

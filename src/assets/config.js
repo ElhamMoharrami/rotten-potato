@@ -1,3 +1,5 @@
+export const BASEURL = `http://localhost:8080/api`;
+
 export const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
@@ -98,6 +100,5 @@ export const style = {
   boxShadow: 24,
   p: 4,
 };
-
 
 export const drawerWidth = 350;

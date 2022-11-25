@@ -1,6 +1,5 @@
-import { CrewTableActions } from "./crewtable-Slice";
 import { loginActions } from "./login-slice";
-const BASEURL = `http://localhost:8080/api`;
+import { BASEURL } from "../assets/config";
 
 const getDataRequest = async (url) => {
   const response = await fetch(url);
@@ -321,7 +320,6 @@ export const fetchCrewTable = (action) => {
           pageCount: getData.page.totalPages,
         })
       );
-      console.log( getData.content);
     } catch (err) {
       console.log(err);
     }
