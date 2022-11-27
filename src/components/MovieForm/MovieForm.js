@@ -2,19 +2,26 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { saveData, updateData, fetchDetail } from "../../store/api-call";
+import { saveData, updateData, fetchDetail,fetchCrewTable } from "../../store/api-call";
 import { movieActions } from "../../store/data-slice";
+import { style, BASEURL } from "../../assets/config";
+import { crewTableActions } from "../../store/crewtable-Slice";
 import { FormControl } from "@mui/material";
 import { InputLabel, Input, FormHelperText } from "@mui/material";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
 import Box from "@mui/material/Box";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Unstable_Grid2";
 import Modal from "@mui/material/Modal";
-import { style } from "../../assets/config";
+import { DataGrid } from "@mui/x-data-grid";
+
+
+const columns = [
+  { field: "name", headerName: "Name", width: 130 },
+  { field: "id", headerName: "ID", width: 70 },
+  { field: "profession", headerName: "Profession", width: 130 },
+];
 
 const MovieForm = (props) => {
   const { actionType, open, close, id } = props;
@@ -23,28 +30,20 @@ const MovieForm = (props) => {
   const { register, formState } = useForm();
   const isAddMode = !id;
 
-  const genreOptions = [
-    "Action",
-    "Thriller",
-    "Drama",
-    "Animation",
-    "Romance",
-    "Western",
-    "Adventure",
-    "Comedy",
-  ];
-  const languageOptions = ["English", "French", "Korean", "Farsi", "Turkish"];
-
-
   const movie = useSelector((state) => state.movies.selectedItem);
+  const crewData = useSelector((state) => state.crewTable.crew);
   const itemsPerPage = useSelector(
     (state) => state.movies.data.page.itemsPerPage
   );
   const currentPage = useSelector(
     (state) => state.movies.data.page.currentPage
   );
+
   const currentYear = new Date().getFullYear();
+
   const [movieData, setMovieData] = useState({});
+  const [openSecond, setOpenSecond] = React.useState(false);
+  const [selecteTabledData, setSelectedTableData] = React.useState([]);
 
   const [urlIsValid, setUrlIsValid] = useState(true);
   const [titleLengthIsValid, setTitleLengthIsValid] = useState(true);
@@ -56,15 +55,16 @@ const MovieForm = (props) => {
   const [directorIsValid, setDirectorIsValid] = useState(true);
   const [starsIsValid, setStarsIsValid] = useState(true);
   const [awardsIsValid, setAwardsIsValid] = useState(true);
+  const [languageIsValid, setLanguageIsValid] = useState(true);
+  const [genreIsValid, setGenreIsValid] = useState(true);
 
-  const urlPatternValidation = (url) => {
-    const regex = new RegExp(
-      "(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?"
-    );
-    const result = regex.test(url);
-    if (!result) {
-      setUrlIsValid(false);
-    }
+  const handleOpenSecond = () => {
+    dispatch(fetchCrewTable(crewTableActions));
+    setOpenSecond(true);
+  };
+
+  const handleCloseSecond = () => {
+    setOpenSecond(false);
   };
 
   useEffect(() => {
@@ -132,6 +132,20 @@ const MovieForm = (props) => {
         setDescriptionIsValid(true);
       }
     }
+    if (name === "language") {
+      if (value.length > 200) {
+        setLanguageIsValid(false);
+      } else {
+        setLanguageIsValid(true);
+      }
+    }
+    if (name === "genre") {
+      if (value.length > 200) {
+        setGenreIsValid(false);
+      } else {
+        setGenreIsValid(true);
+      }
+    }
     if (name === "director") {
       if (value.length > 100) {
         setDirectorIsValid(false);
@@ -154,11 +168,39 @@ const MovieForm = (props) => {
     }
   };
 
+  const urlPatternValidation = (url) => {
+    const regex = new RegExp(
+      "(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?"
+    );
+    const result = regex.test(url);
+    if (!result) {
+      setUrlIsValid(false);
+    }
+  };
+
+  const handleSubmitTableData = () => {
+    const crews = selecteTabledData.map((item) => {
+      return `${BASEURL}/crews/${item}`;
+    });
+    setMovieData((prevState) => ({
+      ...prevState,
+      crews: crews,
+    }));
+    setOpenSecond(false);
+  };
+
   const submitHandler = async (event) => {
     event.preventDefault();
     if (isAddMode) {
       dispatch(
-        saveData(movieData,movieData.title, "movies", itemsPerPage, currentPage, movieActions)
+        saveData(
+          movieData,
+          movieData.title,
+          "movies",
+          itemsPerPage,
+          currentPage,
+          movieActions
+        )
       );
     } else {
       dispatch(
@@ -173,7 +215,6 @@ const MovieForm = (props) => {
         )
       );
     }
-    
     navigate("/movies");
   };
 
@@ -367,53 +408,38 @@ const MovieForm = (props) => {
               </Grid>
               <Grid xs={6}>
                 <FormControl>
-                  <InputLabel id="genre-select">Genre</InputLabel>
-                  <Select
-                    labelId="genre-select"
+                  <InputLabel htmlFor="title-input">Genres</InputLabel>
+                  <Input
+                    error={genreIsValid ? false : true}
                     {...register("genre")}
                     onChange={onchangeHandler}
                     value={movieData.genre || ""}
-                    id="genre-select"
-                    label="genre-selec"
-                    sx={{
-                      paddingRight: 2,
-                      paddingLeft: 3,
-                    }}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    {genreOptions.map((genre, index) => (
-                      <MenuItem value={genre} key={index}>
-                        {genre}
-                      </MenuItem>
-                    ))}
-                  </Select>
+                    id="genre-input"
+                    aria-describedby="genre-input"
+                  />
+                  {!genreIsValid && (
+                    <FormHelperText>
+                      should not be longer than 200 characters
+                    </FormHelperText>
+                  )}
                 </FormControl>
               </Grid>
               <Grid xs={6}>
                 <FormControl>
-                  <InputLabel id="language-select">Languages</InputLabel>
-                  <Select
-                    labelId="language-select"
+                  <InputLabel htmlFor="title-input">Languages</InputLabel>
+                  <Input
+                    error={languageIsValid ? false : true}
                     {...register("language")}
                     onChange={onchangeHandler}
                     value={movieData.language || ""}
-                    label="language-selec"
-                    sx={{
-                      paddingRight: 6,
-                      paddingLeft: 4,
-                    }}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    {languageOptions.map((language, index) => (
-                      <MenuItem value={language} key={index}>
-                        {language}
-                      </MenuItem>
-                    ))}
-                  </Select>
+                    id="language-input"
+                    aria-describedby="language-input"
+                  />
+                  {!languageIsValid && (
+                    <FormHelperText>
+                      should not be longer than 200 characters
+                    </FormHelperText>
+                  )}
                 </FormControl>
               </Grid>
               <Grid xs={6}>
@@ -449,17 +475,44 @@ const MovieForm = (props) => {
                   {!urlIsValid && <FormHelperText>invalid url.</FormHelperText>}
                 </FormControl>
               </Grid>
+              <Grid item xs={12}>
+                <Box>
+                  <Button onClick={handleOpenSecond}>Add crew</Button>
+                  <Modal
+                    hideBackdrop
+                    open={openSecond}
+                    onClose={handleCloseSecond}
+                    aria-labelledby="child-modal-title"
+                    aria-describedby="child-modal-description"
+                  >
+                    <Box sx={{ ...style }}>
+                      <div style={{ height: 400, width: "100%" }}>
+                        <DataGrid
+                          rows={crewData}
+                          columns={columns}
+                          pageSize={5}
+                          rowsPerPageOptions={[5]}
+                          checkboxSelection
+                          onSelectionModelChange={(selectionModel) => {
+                            setSelectedTableData(selectionModel);
+                          }}
+                        />
+                      </div>
+                      <Button onClick={handleCloseSecond}>Cancel</Button>
+                      <Button onClick={handleSubmitTableData}>submit</Button>
+                    </Box>
+                  </Modal>
+                </Box>
+              </Grid>
               <Grid xs={12}>
                 <Button
-                  sx={{
-                    width: "100%",
-                    color: "black",
-                    border: "1px solid rgb(0, 0, 0)",
-                  }}
-                  disabled={formIsValid ? false : true}
                   type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  disabled={formIsValid ? false : true}
                 >
-                  Submit
+                  submit
                 </Button>
               </Grid>
             </Grid>

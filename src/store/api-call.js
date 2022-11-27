@@ -1,5 +1,5 @@
 import { loginActions } from "./login-slice";
-const BASEURL = `http://localhost:8080/api`;
+import { BASEURL } from "../assets/config";
 
 const getDataRequest = async (url) => {
   const response = await fetch(url);
@@ -232,7 +232,7 @@ export const login = (dataObj) => {
         })
       );
       dispatch(
-       loginActions.setActionState({
+        loginActions.setActionState({
           actionState: {
             status: "success",
             action: "login",
@@ -303,6 +303,23 @@ export const deleteAccount = (id) => {
       await fetch(url, {
         method: "DELETE",
       });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const fetchCrewTable = (action) => {
+  return async (dispatch) => {
+    try {
+      const url = `${BASEURL}/crews`;
+      const getData = await getDataRequest(url);
+      dispatch(
+        action.setData({
+          fetchedData: getData.content,
+          pageCount: getData.page.totalPages,
+        })
+      );
     } catch (err) {
       console.log(err);
     }

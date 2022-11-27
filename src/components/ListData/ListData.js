@@ -9,8 +9,6 @@ import Select from "@mui/material/Select";
 import ShowList from "../ShowList/ShowList";
 import Pagination from "@mui/material/Pagination";
 import LinearProgress from "@mui/material/LinearProgress";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { style } from "../../assets/config";
 import { styleActions } from "../../store/style-slice";
