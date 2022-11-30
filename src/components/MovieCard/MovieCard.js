@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteSelectedItem } from "../../store/api-call";
+import { deleteSelectedItem, fetchDetailList } from "../../store/api-call";
 import { movieActions } from "../../store/data-slice";
 import MovieForm from "../MovieForm/MovieForm";
 import { Link } from "@mui/material";
@@ -20,13 +20,16 @@ const MovieCard = (props) => {
   const currentPage = useSelector(
     (state) => state.movies.data.page.currentPage
   );
-  const itemsPerPage=useSelector((state)=>state.style.itemsPerPage)
+  const itemsPerPage = useSelector((state) => state.style.itemsPerPage);
   const content = useSelector((state) => state.movies.data.content);
   const account = useSelector((state) => state.login.account);
   const [open, setOpen] = useState(false);
   const [openConfirm, setOpenConfirm] = useState(false);
 
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+   
+    setOpen(true);
+  };
   const handleClose = () => setOpen(false);
 
   const handleOpenConfirm = () => setOpenConfirm(true);

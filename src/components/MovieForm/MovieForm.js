@@ -2,7 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { saveData, updateData, fetchDetail,fetchCrewTable } from "../../store/api-call";
+import {
+  saveData,
+  updateData,
+  fetchDetail,
+  fetchCrewTable,
+  fetchDetailList,
+} from "../../store/api-call";
 import { movieActions } from "../../store/data-slice";
 import { style, BASEURL } from "../../assets/config";
 import { crewTableActions } from "../../store/crewtable-Slice";
@@ -15,7 +21,6 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Unstable_Grid2";
 import Modal from "@mui/material/Modal";
 import { DataGrid } from "@mui/x-data-grid";
-
 
 const columns = [
   { field: "name", headerName: "Name", width: 130 },
@@ -32,13 +37,13 @@ const MovieForm = (props) => {
 
   const movie = useSelector((state) => state.movies.selectedItem);
   const crewData = useSelector((state) => state.crewTable.crew);
+  const movieCrew = useSelector((state) => state.movies.detailList);
   const itemsPerPage = useSelector(
     (state) => state.movies.data.page.itemsPerPage
   );
   const currentPage = useSelector(
     (state) => state.movies.data.page.currentPage
   );
-
   const currentYear = new Date().getFullYear();
 
   const [movieData, setMovieData] = useState({});
@@ -59,7 +64,6 @@ const MovieForm = (props) => {
   const [genreIsValid, setGenreIsValid] = useState(true);
 
   const handleOpenSecond = () => {
-    dispatch(fetchCrewTable(crewTableActions));
     setOpenSecond(true);
   };
 
@@ -71,8 +75,20 @@ const MovieForm = (props) => {
     dispatch(movieActions.setDetail({ selectedItem: {} }));
     if (!isAddMode && actionType === "edit") {
       dispatch(fetchDetail(id, "movies", movieActions));
+      dispatch(fetchDetailList(id, "movies", "crews", movieActions));
     }
   }, [id, actionType, isAddMode]);
+
+  useEffect(() => {
+    if (openSecond) {
+      dispatch(fetchCrewTable(crewTableActions));
+    }
+  }, [dispatch, openSecond]);
+
+  useEffect(() => {
+    const movieCrewList = movieCrew.map((item) => item.id);
+    setSelectedTableData(movieCrewList);
+  }, [movieCrew]);
 
   useEffect(() => {
     if (!isAddMode && actionType === "edit") {
@@ -496,6 +512,7 @@ const MovieForm = (props) => {
                           onSelectionModelChange={(selectionModel) => {
                             setSelectedTableData(selectionModel);
                           }}
+                          selectionModel={selecteTabledData}
                         />
                       </div>
                       <Button onClick={handleCloseSecond}>Cancel</Button>
