@@ -47,8 +47,8 @@ const MovieForm = (props) => {
   const currentYear = new Date().getFullYear();
 
   const [movieData, setMovieData] = useState({});
-  const [openSecond, setOpenSecond] = React.useState(false);
-  const [selecteTabledData, setSelectedTableData] = React.useState([]);
+  const [openTable, setOpenTable] = useState(false);
+  const [selecteTabledData, setSelectedTableData] =useState([]);
 
   const [urlIsValid, setUrlIsValid] = useState(true);
   const [titleLengthIsValid, setTitleLengthIsValid] = useState(true);
@@ -63,12 +63,12 @@ const MovieForm = (props) => {
   const [languageIsValid, setLanguageIsValid] = useState(true);
   const [genreIsValid, setGenreIsValid] = useState(true);
 
-  const handleOpenSecond = () => {
-    setOpenSecond(true);
+  const handleOpenTable = () => {
+    setOpenTable(true);
   };
 
-  const handleCloseSecond = () => {
-    setOpenSecond(false);
+  const handleCloseTable= () => {
+    setOpenTable(false);
   };
 
   useEffect(() => {
@@ -79,12 +79,7 @@ const MovieForm = (props) => {
     }
   }, [id, actionType, isAddMode]);
 
-  useEffect(() => {
-    if (openSecond) {
-      dispatch(fetchCrewTable(crewTableActions));
-    }
-  }, [dispatch, openSecond]);
-
+ 
   useEffect(() => {
     const movieCrewList = movieCrew.map((item) => item.id);
     setSelectedTableData(movieCrewList);
@@ -202,7 +197,7 @@ const MovieForm = (props) => {
       ...prevState,
       crews: crews,
     }));
-    setOpenSecond(false);
+    setOpenTable(false);
   };
 
   const submitHandler = async (event) => {
@@ -493,11 +488,11 @@ const MovieForm = (props) => {
               </Grid>
               <Grid item xs={12}>
                 <Box>
-                  <Button onClick={handleOpenSecond}>Add crew</Button>
+                  <Button onClick={handleOpenTable}>Add crew</Button>
                   <Modal
                     hideBackdrop
-                    open={openSecond}
-                    onClose={handleCloseSecond}
+                    open={openTable}
+                    onClose={handleCloseTable}
                     aria-labelledby="child-modal-title"
                     aria-describedby="child-modal-description"
                   >
@@ -515,7 +510,7 @@ const MovieForm = (props) => {
                           selectionModel={selecteTabledData}
                         />
                       </div>
-                      <Button onClick={handleCloseSecond}>Cancel</Button>
+                      <Button onClick={handleCloseTable}>Cancel</Button>
                       <Button onClick={handleSubmitTableData}>submit</Button>
                     </Box>
                   </Modal>

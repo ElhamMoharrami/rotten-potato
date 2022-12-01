@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteSelectedItem, fetchDetailList } from "../../store/api-call";
+import {
+  deleteSelectedItem,
+  fetchDetailList,
+  fetchCrewTable,
+} from "../../store/api-call";
 import { movieActions } from "../../store/data-slice";
+import { crewTableActions } from "../../store/crewtable-Slice";
 import MovieForm from "../MovieForm/MovieForm";
 import { Link } from "@mui/material";
 import Card from "@mui/material/Card";
@@ -27,7 +32,7 @@ const MovieCard = (props) => {
   const [openConfirm, setOpenConfirm] = useState(false);
 
   const handleOpen = () => {
-   
+    dispatch(fetchCrewTable(crewTableActions));
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
