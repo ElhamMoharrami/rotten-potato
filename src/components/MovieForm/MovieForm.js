@@ -6,12 +6,10 @@ import {
   saveData,
   updateData,
   fetchDetail,
-  fetchCrewTable,
   fetchDetailList,
 } from "../../store/api-call";
 import { movieActions } from "../../store/data-slice";
 import { style, BASEURL } from "../../assets/config";
-import { crewTableActions } from "../../store/crewtable-Slice";
 import { FormControl } from "@mui/material";
 import { InputLabel, Input, FormHelperText } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -21,6 +19,7 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Unstable_Grid2";
 import Modal from "@mui/material/Modal";
 import { DataGrid } from "@mui/x-data-grid";
+import Badge from "@mui/material/Badge";
 
 const columns = [
   { field: "name", headerName: "Name", width: 130 },
@@ -48,7 +47,8 @@ const MovieForm = (props) => {
 
   const [movieData, setMovieData] = useState({});
   const [openTable, setOpenTable] = useState(false);
-  const [selecteTabledData, setSelectedTableData] =useState([]);
+  const [selecteTabledData, setSelectedTableData] = useState([]);
+  const [numberOfSelectedRows, setNumberOfSelectedRows] = useState(0);
 
   const [urlIsValid, setUrlIsValid] = useState(true);
   const [titleLengthIsValid, setTitleLengthIsValid] = useState(true);
@@ -67,7 +67,7 @@ const MovieForm = (props) => {
     setOpenTable(true);
   };
 
-  const handleCloseTable= () => {
+  const handleCloseTable = () => {
     setOpenTable(false);
   };
 
@@ -79,10 +79,10 @@ const MovieForm = (props) => {
     }
   }, [id, actionType, isAddMode]);
 
- 
   useEffect(() => {
     const movieCrewList = movieCrew.map((item) => item.id);
     setSelectedTableData(movieCrewList);
+    setNumberOfSelectedRows(movieCrewList.length);
   }, [movieCrew]);
 
   useEffect(() => {
@@ -197,6 +197,7 @@ const MovieForm = (props) => {
       ...prevState,
       crews: crews,
     }));
+    setNumberOfSelectedRows(crews.length);
     setOpenTable(false);
   };
 
@@ -488,7 +489,9 @@ const MovieForm = (props) => {
               </Grid>
               <Grid item xs={12}>
                 <Box>
-                  <Button onClick={handleOpenTable}>Add crew</Button>
+                  <Badge badgeContent={numberOfSelectedRows} color="primary">
+                    <Button onClick={handleOpenTable}>Add crew</Button>
+                  </Badge>
                   <Modal
                     hideBackdrop
                     open={openTable}
