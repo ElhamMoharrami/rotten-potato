@@ -18,6 +18,9 @@ const createCrewTableSlice = () => {
       setIsLoading(state, action) {
         state.isLoading = action.payload.isLoading;
       },
+      setCurrentPage(state, action) {
+        state.page.currentPage = action.payload.currentPage;
+      },
     },
   });
 };
