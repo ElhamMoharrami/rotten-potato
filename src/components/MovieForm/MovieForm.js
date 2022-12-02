@@ -21,7 +21,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import Modal from "@mui/material/Modal";
 import { DataGrid } from "@mui/x-data-grid";
 import Badge from "@mui/material/Badge";
-import { crewTableActions } from "../../store/crewtable-Slice";
+import { movieCrewTableActions } from "../../store/dataTable-Slice";
 
 const columns = [
   { field: "name", headerName: "Name", width: 130 },
@@ -37,7 +37,7 @@ const MovieForm = (props) => {
   const isAddMode = !id;
 
   const movie = useSelector((state) => state.movies.selectedItem);
-  const crewData = useSelector((state) => state.crewTable.crew);
+  const crewData = useSelector((state) => state.movieCrewTable.data);
   const movieCrew = useSelector((state) => state.movies.detailList);
   const itemsPerPage = useSelector(
     (state) => state.movies.data.page.itemsPerPage
@@ -45,7 +45,7 @@ const MovieForm = (props) => {
   const currentPage = useSelector(
     (state) => state.movies.data.page.currentPage
   );
-  const pageCount = useSelector((state) => state.crewTable.page.pageCount);
+  const pageCount = useSelector((state) => state.movieCrewTable.page.pageCount);
   const currentYear = new Date().getFullYear();
 
   const [movieData, setMovieData] = useState({});
@@ -94,7 +94,7 @@ const MovieForm = (props) => {
   useEffect(() => {
     if (openTable) {
       dispatch(
-        fetchData("crews", pageSize, tableCurrentPage, crewTableActions)
+        fetchData("crews", pageSize, tableCurrentPage, movieCrewTableActions)
       );
     }
   }, [pageSize, dispatch, tableCurrentPage, openTable]);
