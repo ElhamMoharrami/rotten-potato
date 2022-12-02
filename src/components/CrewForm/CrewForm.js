@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import { saveData, updateData, fetchDetail } from "../../store/api-call";
+import { saveData, updateData, fetchDetail,fetchDetailList,fetchData } from "../../store/api-call";
 import { useNavigate } from "react-router-dom";
 import { artistActions } from "../../store/data-slice";
+import {crewMovieTableActions} from '../../store/dataTable-Slice'
 import { InputLabel, Input, FormHelperText } from "@mui/material";
 import { FormControl } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -12,7 +13,14 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Unstable_Grid2";
 import Modal from "@mui/material/Modal";
-import {style} from '../../assets/config'
+import { DataGrid } from "@mui/x-data-grid";
+import Badge from "@mui/material/Badge";
+import { style,BASEURL } from "../../assets/config";
+
+const columns = [
+  { field: "title", headerName: "title", width: 130 },
+  { field: "year", headerName: "year", width: 70 },
+];
 
 const CrewForm = (props) => {
   const { actionType, open, close, id } = props;
@@ -22,17 +30,29 @@ const CrewForm = (props) => {
   const isAddMode = !id;
 
   const crew = useSelector((state) => state.crews.selectedItem);
+  const movieData = useSelector((state) => state.crewMovieTable.data);
+  const crewMovie = useSelector((state) => state.crews.detailList);
+  const pageCount = useSelector((state) => state.crewMovieTable.page.pageCount);
   const currentPage = useSelector((state) => state.crews.data.page.currentPage);
   const itemsPerPage = useSelector(
     (state) => state.crews.data.page.itemsPerPage
   );
+  
   const [crewData, setCreweData] = useState({});
+  const [openTable, setOpenTable] = useState(false);
+  const [selectedTabledData, setSelectedTableData] = useState([]);
+  const [numberOfSelectedRows, setNumberOfSelectedRows] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
+  const [tableCurrentPage, setTableCurrentPage] = useState(1);
 
   const [nameisValid, setNameIsValid] = useState(true);
   const [birthIsValid, setBirthIsValid] = useState(true);
   const [deathIsValid, setDeathIsValid] = useState(true);
   const [professionIsValid, setProfessionIsValid] = useState(true);
   const [urlIsValid, setUrlIsValid] = useState(true);
+
+  const handleOpenTable = () => setOpenTable(true);
+  const handleCloseTable = () => setOpenTable(false);
 
   const urlPatternValidation = (url) => {
     const regex = new RegExp(
@@ -48,6 +68,7 @@ const CrewForm = (props) => {
     dispatch(artistActions.setDetail({ selectedItem: {} }));
     if (!isAddMode && actionType === "edit") {
       dispatch(fetchDetail(id, "crews", artistActions));
+      dispatch(fetchDetailList(id, "crews", "movies",artistActions));
     }
   }, [isAddMode, dispatch, id, actionType]);
 
@@ -56,6 +77,20 @@ const CrewForm = (props) => {
       setCreweData(crew);
     }
   }, [crew, isAddMode, actionType]);
+
+  useEffect(() => {
+    const crewMovieList = crewMovie.map((item) => item.id);
+    setSelectedTableData(crewMovieList);
+    setNumberOfSelectedRows(crewMovieList.length);
+  }, [crewMovie]);
+
+  useEffect(() => {
+    if (openTable) {
+      dispatch(
+        fetchData("movies", pageSize, tableCurrentPage,crewMovieTableActions)
+      );
+    }
+  }, [pageSize, dispatch, tableCurrentPage, openTable]);
 
   const onchangeHandler = (e) => {
     const name = e.target.name;
@@ -99,6 +134,18 @@ const CrewForm = (props) => {
     } else {
       setUrlIsValid(true);
     }
+  };
+
+  const handleSubmitTableData = () => {
+    const movies = selectedTabledData.map((item) => {
+      return `${BASEURL}/movies/${item}`;
+    });
+    setCreweData((prevState) => ({
+      ...prevState,
+      movies: movies,
+    }));
+    setNumberOfSelectedRows(movies.length);
+    setOpenTable(false);
   };
 
   const submitHandler = async (event) => {
@@ -245,7 +292,45 @@ const CrewForm = (props) => {
                 {!urlIsValid && <FormHelperText>invalid url.</FormHelperText>}
               </FormControl>
             </Grid>
-            <Grid xs={6}></Grid>
+            <Grid item xs={12}>
+              <Box>
+                <Badge badgeContent={numberOfSelectedRows} color="primary">
+                  <Button onClick={handleOpenTable}>Add crew</Button>
+                </Badge>
+                <Modal
+                  hideBackdrop
+                  open={openTable}
+                  onClose={handleCloseTable}
+                  aria-labelledby="child-modal-title"
+                  aria-describedby="child-modal-description"
+                >
+                  <Box sx={{ ...style }}>
+                    <div style={{ height: 400, width: "100%" }}>
+                      <DataGrid
+                        rows={movieData}
+                        columns={columns}
+                        checkboxSelection
+                        pagination
+                        onSelectionModelChange={(selectionModel) => {
+                          setSelectedTableData(selectionModel);
+                        }}
+                        selectionModel={selectedTabledData}
+                        paginationMode="server"
+                        rowCount={pageCount}
+                        onPageChange={(page) => setTableCurrentPage(page + 1)}
+                        pageSize={pageSize}
+                        onPageSizeChange={(newPageSize) =>
+                          setPageSize(newPageSize)
+                        }
+                        rowsPerPageOptions={[5, 10, 20]}
+                      />
+                    </div>
+                    <Button onClick={handleCloseTable}>Cancel</Button>
+                    <Button onClick={handleSubmitTableData}>submit</Button>
+                  </Box>
+                </Modal>
+              </Box>
+            </Grid>
             <Grid xs={12}>
               <Button
                 sx={{

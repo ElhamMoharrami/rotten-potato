@@ -7,6 +7,7 @@ import {
   updateData,
   fetchDetail,
   fetchDetailList,
+  fetchData,
 } from "../../store/api-call";
 import { movieActions } from "../../store/data-slice";
 import { style, BASEURL } from "../../assets/config";
@@ -20,6 +21,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import Modal from "@mui/material/Modal";
 import { DataGrid } from "@mui/x-data-grid";
 import Badge from "@mui/material/Badge";
+import { movieCrewTableActions } from "../../store/dataTable-Slice";
 
 const columns = [
   { field: "name", headerName: "Name", width: 130 },
@@ -35,7 +37,7 @@ const MovieForm = (props) => {
   const isAddMode = !id;
 
   const movie = useSelector((state) => state.movies.selectedItem);
-  const crewData = useSelector((state) => state.crewTable.crew);
+  const crewData = useSelector((state) => state.movieCrewTable.data);
   const movieCrew = useSelector((state) => state.movies.detailList);
   const itemsPerPage = useSelector(
     (state) => state.movies.data.page.itemsPerPage
@@ -43,12 +45,15 @@ const MovieForm = (props) => {
   const currentPage = useSelector(
     (state) => state.movies.data.page.currentPage
   );
+  const pageCount = useSelector((state) => state.movieCrewTable.page.pageCount);
   const currentYear = new Date().getFullYear();
 
   const [movieData, setMovieData] = useState({});
   const [openTable, setOpenTable] = useState(false);
-  const [selecteTabledData, setSelectedTableData] = useState([]);
+  const [selectedTabledData, setSelectedTableData] = useState([]);
   const [numberOfSelectedRows, setNumberOfSelectedRows] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
+  const [tableCurrentPage, setTableCurrentPage] = useState(1);
 
   const [urlIsValid, setUrlIsValid] = useState(true);
   const [titleLengthIsValid, setTitleLengthIsValid] = useState(true);
@@ -63,13 +68,8 @@ const MovieForm = (props) => {
   const [languageIsValid, setLanguageIsValid] = useState(true);
   const [genreIsValid, setGenreIsValid] = useState(true);
 
-  const handleOpenTable = () => {
-    setOpenTable(true);
-  };
-
-  const handleCloseTable = () => {
-    setOpenTable(false);
-  };
+  const handleOpenTable = () => setOpenTable(true);
+  const handleCloseTable = () => setOpenTable(false);
 
   useEffect(() => {
     dispatch(movieActions.setDetail({ selectedItem: {} }));
@@ -77,7 +77,13 @@ const MovieForm = (props) => {
       dispatch(fetchDetail(id, "movies", movieActions));
       dispatch(fetchDetailList(id, "movies", "crews", movieActions));
     }
-  }, [id, actionType, isAddMode]);
+  }, [id, actionType, isAddMode, dispatch]);
+
+  useEffect(() => {
+    if (!isAddMode && actionType === "edit") {
+      setMovieData(movie);
+    }
+  }, [movie, isAddMode, actionType]);
 
   useEffect(() => {
     const movieCrewList = movieCrew.map((item) => item.id);
@@ -86,10 +92,12 @@ const MovieForm = (props) => {
   }, [movieCrew]);
 
   useEffect(() => {
-    if (!isAddMode && actionType === "edit") {
-      setMovieData(movie);
+    if (openTable) {
+      dispatch(
+        fetchData("crews", pageSize, tableCurrentPage, movieCrewTableActions)
+      );
     }
-  }, [movie, isAddMode, actionType]);
+  }, [pageSize, dispatch, tableCurrentPage, openTable]);
 
   const onchangeHandler = (e) => {
     const name = e.target.name;
@@ -190,7 +198,7 @@ const MovieForm = (props) => {
   };
 
   const handleSubmitTableData = () => {
-    const crews = selecteTabledData.map((item) => {
+    const crews = selectedTabledData.map((item) => {
       return `${BASEURL}/crews/${item}`;
     });
     setMovieData((prevState) => ({
@@ -504,13 +512,20 @@ const MovieForm = (props) => {
                         <DataGrid
                           rows={crewData}
                           columns={columns}
-                          pageSize={5}
-                          rowsPerPageOptions={[5]}
                           checkboxSelection
+                          pagination
                           onSelectionModelChange={(selectionModel) => {
                             setSelectedTableData(selectionModel);
                           }}
-                          selectionModel={selecteTabledData}
+                          selectionModel={selectedTabledData}
+                          paginationMode="server"
+                          rowCount={pageCount}
+                          onPageChange={(page) => setTableCurrentPage(page + 1)}
+                          pageSize={pageSize}
+                          onPageSizeChange={(newPageSize) =>
+                            setPageSize(newPageSize)
+                          }
+                          rowsPerPageOptions={[5, 10, 20]}
                         />
                       </div>
                       <Button onClick={handleCloseTable}>Cancel</Button>

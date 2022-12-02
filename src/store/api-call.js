@@ -309,10 +309,10 @@ export const deleteAccount = (id) => {
   };
 };
 
-export const fetchCrewTable = (action) => {
+export const fetchCrewTable = (action,itemsPerPage,currentPage) => {
   return async (dispatch) => {
     try {
-      const url = `${BASEURL}/crews`;
+      const url = `${BASEURL}/crews/size=${itemsPerPage}&page=${currentPage - 1}`;
       const getData = await getDataRequest(url);
       dispatch(
         action.setData({
