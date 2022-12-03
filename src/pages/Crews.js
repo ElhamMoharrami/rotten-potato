@@ -33,7 +33,7 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
 
 const Artists = () => {
   const data = useSelector((state) => state.crews.data);
-  const itemsPerPage=useSelector((state)=>state.style.itemsPerPage)
+  const itemsPerPage=useSelector((state)=>state.login.itemsPerPage)
   const isSearching = useSelector((state) => state.crews.isSearching);
   const isLoading = useSelector((state) => state.crews.isLoading);
   const actionState = useSelector((state) => state.crews.actionState);

@@ -53,7 +53,6 @@ const Signin = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(signinForm);
     if (passwordIsValid && usernameIsValid) {
       const dataObj = {
         username: signinForm.username,

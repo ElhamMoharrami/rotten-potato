@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// const itemsPerPage = localStorage.getItem("itemsPerPage")
+//   ? localStorage.getItem("itemsPerPage")
+//   : 10;
+
 const initialState = {
   account: {
     isLoggedIn: false,
@@ -10,6 +14,7 @@ const initialState = {
     id: "",
   },
   actionState: { status: "", action: "", title: "" },
+  itemsPerPage: 10,
 };
 
 const createLoginSlice = () => {
@@ -30,6 +35,9 @@ const createLoginSlice = () => {
       },
       setActionState(state, action) {
         state.actionState = action.payload.actionState;
+      },
+      setItemsPerPage(state, action) {
+        state.itemsPerPage = action.payload.itemsPerPage;
       },
     },
   });

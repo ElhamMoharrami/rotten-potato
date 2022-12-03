@@ -40,6 +40,7 @@ const UserDrawer = () => {
     navigate("/movies");
   };
 
+
   return (
     <div>
       <AccountCircle

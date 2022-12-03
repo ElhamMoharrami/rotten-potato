@@ -1,12 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const itemsPerPage = localStorage.getItem("itemsPerPage")
-  ? localStorage.getItem("itemsPerPage")
-  : 10;
-
 const initialState = {
   drawer: { open: false },
-  itemsPerPage: itemsPerPage,
 };
 
 const createStyleSlice = () => {
@@ -19,9 +14,6 @@ const createStyleSlice = () => {
       },
       clearData(state, action) {
         state.open = initialState.open;
-      },
-      setItemsPerPage(state, action) {
-        state.itemsPerPage = action.payload.itemsPerPage;
       },
     },
   });

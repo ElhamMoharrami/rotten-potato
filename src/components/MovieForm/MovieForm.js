@@ -40,7 +40,7 @@ const MovieForm = (props) => {
   const crewData = useSelector((state) => state.movieCrewTable.data);
   const movieCrew = useSelector((state) => state.movies.detailList);
   const itemsPerPage = useSelector(
-    (state) => state.movies.data.page.itemsPerPage
+    (state) => state.login.itemsPerPage
   );
   const currentPage = useSelector(
     (state) => state.movies.data.page.currentPage
