@@ -39,6 +39,9 @@ const createLoginSlice = () => {
       setItemsPerPage(state, action) {
         state.itemsPerPage = action.payload.itemsPerPage;
       },
+      setIsLoggedIn(state, action) {
+        state.account.isLoggedIn = action.payload.isLoggedIn;
+      },
     },
   });
 };

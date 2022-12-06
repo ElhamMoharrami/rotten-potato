@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../store/api-call";
 import Avatar from "@mui/material/Avatar";
@@ -14,15 +14,18 @@ import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Input, FormHelperText,FormControl } from "@mui/material";
+import { Input, FormHelperText, FormControl } from "@mui/material";
+import { loginActions } from "../store/login-slice";
 
 const Signin = () => {
   const dispatch = useDispatch();
+  const [saveLogin, setSaveLogin] = useState(false);
   const [signinForm, setSigninForm] = useState({});
   const [showPass, setShowPass] = useState(false);
   const [usernameIsValid, setUsernameIsValid] = useState(true);
   const [passwordIsValid, setPasswordIsValid] = useState(true);
   const actionState = useSelector((state) => state.login.actionState);
+  const account = useSelector((state) => state.login.account);
 
   const showPasswordHandler = () => setShowPass(!showPass);
 
@@ -53,14 +56,50 @@ const Signin = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (passwordIsValid && usernameIsValid) {
-      const dataObj = {
-        username: signinForm.username,
-        password: signinForm.password,
-      };
+
+    const dataObj = {
+      username: signinForm.username,
+      password: signinForm.password,
+    };
+
+    const username =JSON.parse(localStorage.getItem(dataObj.username));
+
+    console.log(username[0]);
+
+    if (username) {
+      dispatch(
+        loginActions.setData({
+          role: username[0].role,
+          username: username[0].username,
+          password: username[0].password,
+          fullname:username[0].fullname,
+          id: username[0].id,
+          isLoggedIn: true,
+        })
+      );
+
+      dispatch(
+        loginActions.setActionState({
+          actionState: {
+            status: "success",
+            action: "login",
+            title: "account",
+          },
+        })
+      );
+    }
+
+    if (!username && passwordIsValid && usernameIsValid) {
       dispatch(login(dataObj));
+      setSaveLogin(true);
     }
   };
+
+  useEffect(() => {
+    if (saveLogin) {
+      localStorage.setItem(`${account.username}`, JSON.stringify([account]));
+    }
+  }, [account]);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -138,7 +177,9 @@ const Signin = () => {
           <Grid container>
             {actionState.action === "login" && (
               <Typography
-                color={actionState.status === "success" ? "success.main": "error"}
+                color={
+                  actionState.status === "success" ? "success.main" : "error"
+                }
               >
                 login {actionState.status}
               </Typography>

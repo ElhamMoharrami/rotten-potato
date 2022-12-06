@@ -145,7 +145,7 @@ const Profile = () => {
         isLoggedIn: false,
       })
     );
-    localStorage.clear();
+    // localStorage.clear();
     navigate("/signin");
   };
 

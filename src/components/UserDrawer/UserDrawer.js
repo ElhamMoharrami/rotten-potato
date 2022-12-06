@@ -28,18 +28,14 @@ const UserDrawer = () => {
 
   const logoutHandler = () => {
     dispatch(
-      loginActions.setData({
-        role: "",
-        username: "",
-        password: "",
+      loginActions.setIsLoggedIn({
         isLoggedIn: false,
       })
     );
-    localStorage.clear();
+    //  localStorage.clear();
     setAnchorEl(null);
     navigate("/movies");
   };
-
 
   return (
     <div>
@@ -71,7 +67,7 @@ const UserDrawer = () => {
             margin: "10px",
           }}
         >
-        <Typography>{account.username}</Typography>
+          <Typography>{account.username}</Typography>
         </Box>
         <MenuItem>
           <Link href="/profile" color="text.primary" underline="none">
