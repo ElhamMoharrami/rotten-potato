@@ -39,9 +39,7 @@ const MovieForm = (props) => {
   const movie = useSelector((state) => state.movies.selectedItem);
   const crewData = useSelector((state) => state.movieCrewTable.data);
   const movieCrew = useSelector((state) => state.movies.detailList);
-  const itemsPerPage = useSelector(
-    (state) => state.login.itemsPerPage
-  );
+  const itemsPerPage = useSelector((state) => state.login.itemsPerPage);
   const currentPage = useSelector(
     (state) => state.movies.data.page.currentPage
   );
@@ -96,6 +94,9 @@ const MovieForm = (props) => {
       dispatch(
         fetchData("crews", pageSize, tableCurrentPage, movieCrewTableActions)
       );
+      const movieCrewList = movieCrew.map((item) => item.id);
+      setSelectedTableData(movieCrewList);
+      setNumberOfSelectedRows(movieCrewList.length);
     }
   }, [pageSize, dispatch, tableCurrentPage, openTable]);
 
