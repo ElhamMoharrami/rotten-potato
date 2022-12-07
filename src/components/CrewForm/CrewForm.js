@@ -40,7 +40,7 @@ const CrewForm = (props) => {
   const crewMovie = useSelector((state) => state.crews.detailList);
   const pageCount = useSelector((state) => state.crewMovieTable.page.pageCount);
   const currentPage = useSelector((state) => state.crews.data.page.currentPage);
-  const itemsPerPage = useSelector((state) => state.login.itemsPerPage);
+  const itemsPerPage=useSelector((state)=>state.login.account.itemsPerPage)
 
   const [crewData, setCreweData] = useState({});
   const [openTable, setOpenTable] = useState(false);

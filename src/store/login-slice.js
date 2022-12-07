@@ -1,9 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// const itemsPerPage = localStorage.getItem("itemsPerPage")
-//   ? localStorage.getItem("itemsPerPage")
-//   : 10;
-
 const initialState = {
   account: {
     isLoggedIn: false,
@@ -12,9 +8,10 @@ const initialState = {
     role: "",
     fullname: "",
     id: "",
+    itemsPerPage: 10,
+    theme: "light",
   },
   actionState: { status: "", action: "", title: "" },
-  itemsPerPage: 10,
 };
 
 const createLoginSlice = () => {
@@ -29,6 +26,8 @@ const createLoginSlice = () => {
         state.account.isLoggedIn = action.payload.isLoggedIn;
         state.account.fullname = action.payload.fullname;
         state.account.id = action.payload.id;
+        state.account.itemsPerPage = action.payload.itemsPerPage;
+         state.account.theme = action.payload.theme;
       },
       clearData(state) {
         state.account = initialState.account;
@@ -37,10 +36,13 @@ const createLoginSlice = () => {
         state.actionState = action.payload.actionState;
       },
       setItemsPerPage(state, action) {
-        state.itemsPerPage = action.payload.itemsPerPage;
+        state.account.itemsPerPage = action.payload.itemsPerPage;
       },
       setIsLoggedIn(state, action) {
         state.account.isLoggedIn = action.payload.isLoggedIn;
+      },
+      setTheme(state, action) {
+        state.account.theme = action.payload.theme;
       },
     },
   });

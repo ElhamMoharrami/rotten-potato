@@ -62,9 +62,7 @@ const Signin = () => {
       password: signinForm.password,
     };
 
-    const username =JSON.parse(localStorage.getItem(dataObj.username));
-
-    console.log(username[0]);
+    const username = JSON.parse(localStorage.getItem(dataObj.username));
 
     if (username) {
       dispatch(
@@ -72,7 +70,9 @@ const Signin = () => {
           role: username[0].role,
           username: username[0].username,
           password: username[0].password,
-          fullname:username[0].fullname,
+          fullname: username[0].fullname,
+          itemsPerPage:  username[0].itemsPerPage,
+          theme:  username[0].theme,
           id: username[0].id,
           isLoggedIn: true,
         })
@@ -95,11 +95,9 @@ const Signin = () => {
     }
   };
 
-  useEffect(() => {
-    if (saveLogin) {
-      localStorage.setItem(`${account.username}`, JSON.stringify([account]));
-    }
-  }, [account]);
+  // useEffect(() => {
+  //   localStorage.setItem(`${account.username}`, JSON.stringify([account]));
+  // }, [account]);
 
   return (
     <Container component="main" maxWidth="xs">

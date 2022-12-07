@@ -27,12 +27,9 @@ const UserDrawer = () => {
   };
 
   const logoutHandler = () => {
-    dispatch(
-      loginActions.setIsLoggedIn({
-        isLoggedIn: false,
-      })
-    );
-    //  localStorage.clear();
+    localStorage.setItem(`${account.username}`, JSON.stringify([account]));
+    dispatch(loginActions.clearData());
+
     setAnchorEl(null);
     navigate("/movies");
   };
