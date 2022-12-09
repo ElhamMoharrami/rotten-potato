@@ -98,7 +98,7 @@ const MovieForm = (props) => {
       setSelectedTableData(movieCrewList);
       setNumberOfSelectedRows(movieCrewList.length);
     }
-  }, [pageSize, dispatch, tableCurrentPage, openTable]);
+  }, [pageSize, dispatch, tableCurrentPage, openTable,movieCrew]);
 
   const onchangeHandler = (e) => {
     const name = e.target.name;

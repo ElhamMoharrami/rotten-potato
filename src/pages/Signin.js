@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { login } from "../store/api-call";
+import { loginActions } from "../store/login-slice";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -15,17 +17,15 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Input, FormHelperText, FormControl } from "@mui/material";
-import { loginActions } from "../store/login-slice";
 
 const Signin = () => {
   const dispatch = useDispatch();
-  const [saveLogin, setSaveLogin] = useState(false);
+  const navigate = useNavigate();
   const [signinForm, setSigninForm] = useState({});
   const [showPass, setShowPass] = useState(false);
   const [usernameIsValid, setUsernameIsValid] = useState(true);
   const [passwordIsValid, setPasswordIsValid] = useState(true);
   const actionState = useSelector((state) => state.login.actionState);
-  const account = useSelector((state) => state.login.account);
 
   const showPasswordHandler = () => setShowPass(!showPass);
 
@@ -71,8 +71,8 @@ const Signin = () => {
           username: username[0].username,
           password: username[0].password,
           fullname: username[0].fullname,
-          itemsPerPage:  username[0].itemsPerPage,
-          theme:  username[0].theme,
+          itemsPerPage: username[0].itemsPerPage,
+          theme: username[0].theme,
           id: username[0].id,
           isLoggedIn: true,
         })
@@ -87,17 +87,13 @@ const Signin = () => {
           },
         })
       );
+      navigate("/home");
     }
 
     if (!username && passwordIsValid && usernameIsValid) {
       dispatch(login(dataObj));
-      setSaveLogin(true);
     }
   };
-
-  // useEffect(() => {
-  //   localStorage.setItem(`${account.username}`, JSON.stringify([account]));
-  // }, [account]);
 
   return (
     <Container component="main" maxWidth="xs">

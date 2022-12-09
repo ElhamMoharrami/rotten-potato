@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import ListData from "../components/ListData/ListData";
@@ -25,7 +25,6 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen,
       }),
-      marginLeft: 0,
       marginLeft: `${drawerWidth}px`,
     }),
   })

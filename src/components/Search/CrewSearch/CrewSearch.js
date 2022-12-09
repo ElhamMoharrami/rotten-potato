@@ -53,7 +53,7 @@ const CrewSearch = (props) => {
         fetchSearch(data, "crews", artistActions, itemsPerPage, currentPage - 1)
       );
     }
-  }, [itemsPerPage, currentPage, dispatch]);
+  }, [itemsPerPage, currentPage, dispatch,data,isSearching]);
 
   return (
     <Box>

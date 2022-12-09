@@ -39,13 +39,11 @@ const MovieDetail = () => {
               marginTop: "20px",
               fontSize: "24px",
               display: "flex",
-
-              display: "flex",
               justifyContent: "space-between",
             }}
           >
             <span>
-              <img src="https://img.icons8.com/tiny-color/16/000000/star.png" />
+              <img src="https://img.icons8.com/tiny-color/16/000000/star.png" alt="star icon" />
               IMDB Rating <i></i>: {movie.imdbRating}
             </span>
             <span>

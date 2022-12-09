@@ -58,7 +58,7 @@ const SearchMovie = (props) => {
         fetchSearch(data, "movies", movieActions, itemsPerPage, currentPage)
       );
     }
-  }, [itemsPerPage, currentPage, dispatch]);
+  }, [itemsPerPage, currentPage, dispatch,data,isSearching]);
 
   return (
     <Box>

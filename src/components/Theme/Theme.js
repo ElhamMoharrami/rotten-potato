@@ -42,7 +42,6 @@ export function ThemeSelector() {
 }
 
 export default function ToggleColorMode(props) {
-  const { account } = props;
   const dispatch = useDispatch();
   const mode = useSelector((state) => state.login.account.theme);
 
