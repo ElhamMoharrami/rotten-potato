@@ -295,7 +295,7 @@ const CrewForm = (props) => {
             <Grid item xs={12}>
               <Box>
                 <Badge badgeContent={numberOfSelectedRows} color="primary">
-                  <Button onClick={handleOpenTable}>Add crew</Button>
+                  <Button onClick={handleOpenTable}>Add Movies</Button>
                 </Badge>
                 <Modal
                   hideBackdrop

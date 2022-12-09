@@ -1,39 +1,38 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { useState } from "react";
-import ListData from "../components/ListData/ListData";
-import CrewCard from "../components/CrewCard/CrewCard";
-import CrewForm from "../components/CrewForm/CrewForm";
-import { artistActions } from "../store/data-slice";
-import Box from "@mui/material/Box";
-import CrewSearch from "../components/Search/CrewSearch/CrewSearch";
-import SearchDrawer from "../components/SearchDrawer/SearchDrawer";
-import AlertMessage from "../components/Alert/Alert";
-import { styled } from "@mui/material/styles";
-import { drawerWidth } from "../assets/config";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import ListData from '../components/ListData/ListData';
+import CrewCard from '../components/CrewCard/CrewCard';
+import CrewForm from '../components/CrewForm/CrewForm';
+import { artistActions } from '../store/data-slice';
+import Box from '@mui/material/Box';
+import CrewSearch from '../components/Search/CrewSearch/CrewSearch';
+import SearchDrawer from '../components/SearchDrawer/SearchDrawer';
+import AlertMessage from '../components/Alert/Alert';
+import { styled } from '@mui/material/styles';
+import { drawerWidth } from '../assets/config';
 
-const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
-    transition: theme.transitions.create("margin", {
+    transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
+      duration: theme.transitions.duration.leavingScreen
     }),
     ...(open && {
-      transition: theme.transitions.create("margin", {
+      transition: theme.transitions.create('margin', {
         easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
+        duration: theme.transitions.duration.enteringScreen
       }),
-      marginLeft: 0,
-      marginLeft: `${drawerWidth}px`,
-    }),
+      marginLeft: `${drawerWidth}px`
+    })
   })
 );
 
 const Artists = () => {
   const data = useSelector((state) => state.crews.data);
-  const itemsPerPage=useSelector((state)=>state.style.itemsPerPage)
+  const itemsPerPage = useSelector((state) => state.style.itemsPerPage);
   const isSearching = useSelector((state) => state.crews.isSearching);
   const isLoading = useSelector((state) => state.crews.isLoading);
   const actionState = useSelector((state) => state.crews.actionState);
@@ -51,7 +50,7 @@ const Artists = () => {
 
   return (
     <Box>
-      {actionState.status !== "" && (
+      {actionState.status !== '' && (
         <AlertMessage
           openAlert={openAlert}
           handleCloseAlert={handleCloseAlert}
