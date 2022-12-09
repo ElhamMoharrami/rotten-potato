@@ -92,7 +92,7 @@ const Profile = () => {
 
   const itemsPerPageHandler = (event) => {
     setDefaultItemsPerPage(event.target.value);
-    localStorage.setItem("itemsPerPage", event.target.value);
+   dispatch(loginActions.setItemsPerPage({itemsPerPage:event.target.value}))
   };
 
   const handleSubmit = (event) => {
@@ -145,7 +145,6 @@ const Profile = () => {
         isLoggedIn: false,
       })
     );
-    localStorage.clear();
     navigate("/signin");
   };
 
@@ -297,6 +296,7 @@ const Profile = () => {
               startIcon={<DeleteIcon />}
               onClick={handleOpenConfirm}
               color="error"
+              fullWidth
             >
               Delete account
             </Button>
@@ -309,8 +309,8 @@ const Profile = () => {
             )}
           </Grid>
           <Grid item xs={12}>
-            <FormControl>
-              <InputLabel id="select-label">Size</InputLabel>
+            <FormControl sx={{width:'100%'}}>
+              <InputLabel id="select-label">choose items shown per page</InputLabel>
               <Select
                 sx={{
                   paddingRight: 2,

@@ -8,6 +8,8 @@ const initialState = {
     role: "",
     fullname: "",
     id: "",
+    itemsPerPage: 10,
+    theme: "light",
   },
   actionState: { status: "", action: "", title: "" },
 };
@@ -24,12 +26,23 @@ const createLoginSlice = () => {
         state.account.isLoggedIn = action.payload.isLoggedIn;
         state.account.fullname = action.payload.fullname;
         state.account.id = action.payload.id;
+        state.account.itemsPerPage = action.payload.itemsPerPage;
+         state.account.theme = action.payload.theme;
       },
       clearData(state) {
         state.account = initialState.account;
       },
       setActionState(state, action) {
         state.actionState = action.payload.actionState;
+      },
+      setItemsPerPage(state, action) {
+        state.account.itemsPerPage = action.payload.itemsPerPage;
+      },
+      setIsLoggedIn(state, action) {
+        state.account.isLoggedIn = action.payload.isLoggedIn;
+      },
+      setTheme(state, action) {
+        state.account.theme = action.payload.theme;
       },
     },
   });

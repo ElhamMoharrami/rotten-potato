@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import { saveData, updateData, fetchDetail,fetchDetailList,fetchData } from "../../store/api-call";
+import {
+  saveData,
+  updateData,
+  fetchDetail,
+  fetchDetailList,
+  fetchData,
+} from "../../store/api-call";
 import { useNavigate } from "react-router-dom";
 import { artistActions } from "../../store/data-slice";
-import {crewMovieTableActions} from '../../store/dataTable-Slice'
+import { crewMovieTableActions } from "../../store/dataTable-Slice";
 import { InputLabel, Input, FormHelperText } from "@mui/material";
 import { FormControl } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -15,7 +21,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import Modal from "@mui/material/Modal";
 import { DataGrid } from "@mui/x-data-grid";
 import Badge from "@mui/material/Badge";
-import { style,BASEURL } from "../../assets/config";
+import { style, BASEURL } from "../../assets/config";
 
 const columns = [
   { field: "title", headerName: "title", width: 130 },
@@ -34,10 +40,8 @@ const CrewForm = (props) => {
   const crewMovie = useSelector((state) => state.crews.detailList);
   const pageCount = useSelector((state) => state.crewMovieTable.page.pageCount);
   const currentPage = useSelector((state) => state.crews.data.page.currentPage);
-  const itemsPerPage = useSelector(
-    (state) => state.crews.data.page.itemsPerPage
-  );
-  
+  const itemsPerPage=useSelector((state)=>state.login.account.itemsPerPage)
+
   const [crewData, setCreweData] = useState({});
   const [openTable, setOpenTable] = useState(false);
   const [selectedTabledData, setSelectedTableData] = useState([]);
@@ -68,7 +72,7 @@ const CrewForm = (props) => {
     dispatch(artistActions.setDetail({ selectedItem: {} }));
     if (!isAddMode && actionType === "edit") {
       dispatch(fetchDetail(id, "crews", artistActions));
-      dispatch(fetchDetailList(id, "crews", "movies",artistActions));
+      dispatch(fetchDetailList(id, "crews", "movies", artistActions));
     }
   }, [isAddMode, dispatch, id, actionType]);
 
@@ -87,7 +91,7 @@ const CrewForm = (props) => {
   useEffect(() => {
     if (openTable) {
       dispatch(
-        fetchData("movies", pageSize, tableCurrentPage,crewMovieTableActions)
+        fetchData("movies", pageSize, tableCurrentPage, crewMovieTableActions)
       );
     }
   }, [pageSize, dispatch, tableCurrentPage, openTable]);

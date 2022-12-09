@@ -43,7 +43,7 @@ const MovieDetail = () => {
             }}
           >
             <span>
-              <img src="https://img.icons8.com/tiny-color/16/000000/star.png" alt="start-icon" />
+              <img src="https://img.icons8.com/tiny-color/16/000000/star.png" alt="star icon" />
               IMDB Rating <i></i>: {movie.imdbRating}
             </span>
             <span>

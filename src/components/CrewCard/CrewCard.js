@@ -17,7 +17,7 @@ import Confirmation from "../Confirmation/Confirmation";
 const CrewCard = (props) => {
   const { crew, movieDetail } = props;
   const dispatch = useDispatch();
-  const itemsPerPage=useSelector((state)=>state.style.itemsPerPage)
+  const itemsPerPage=useSelector((state)=>state.login.account.itemsPerPage)
   const currentPage = useSelector((state) => state.crews.data.page.currentPage);
   const content = useSelector((state) => state.crews.data.content);
   const account = useSelector((state) => state.login.account);

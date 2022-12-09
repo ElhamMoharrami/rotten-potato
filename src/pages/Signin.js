@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { login } from "../store/api-call";
+import { loginActions } from "../store/login-slice";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -14,10 +16,11 @@ import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Input, FormHelperText,FormControl } from "@mui/material";
+import { Input, FormHelperText, FormControl } from "@mui/material";
 
 const Signin = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [signinForm, setSigninForm] = useState({});
   const [showPass, setShowPass] = useState(false);
   const [usernameIsValid, setUsernameIsValid] = useState(true);
@@ -53,12 +56,41 @@ const Signin = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(signinForm);
-    if (passwordIsValid && usernameIsValid) {
-      const dataObj = {
-        username: signinForm.username,
-        password: signinForm.password,
-      };
+
+    const dataObj = {
+      username: signinForm.username,
+      password: signinForm.password,
+    };
+
+    const username = JSON.parse(localStorage.getItem(dataObj.username));
+
+    if (username) {
+      dispatch(
+        loginActions.setData({
+          role: username[0].role,
+          username: username[0].username,
+          password: username[0].password,
+          fullname: username[0].fullname,
+          itemsPerPage: username[0].itemsPerPage,
+          theme: username[0].theme,
+          id: username[0].id,
+          isLoggedIn: true,
+        })
+      );
+
+      dispatch(
+        loginActions.setActionState({
+          actionState: {
+            status: "success",
+            action: "login",
+            title: "account",
+          },
+        })
+      );
+      navigate("/home");
+    }
+
+    if (!username && passwordIsValid && usernameIsValid) {
       dispatch(login(dataObj));
     }
   };
@@ -139,7 +171,9 @@ const Signin = () => {
           <Grid container>
             {actionState.action === "login" && (
               <Typography
-                color={actionState.status === "success" ? "success.main": "error"}
+                color={
+                  actionState.status === "success" ? "success.main" : "error"
+                }
               >
                 login {actionState.status}
               </Typography>
