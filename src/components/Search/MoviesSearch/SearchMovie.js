@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { fetchSearch } from "../../../store/api-call";
 import { useForm } from "react-hook-form";
 import { movieActions } from "../../../store/data-slice";
+import { fetchSearch } from "../../../store/api-call";
+
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { Button } from "@mui/material";
@@ -18,8 +19,7 @@ const SearchMovie = (props) => {
   const { itemsPerPage, currentPage, isSearching } = props;
   const dispatch = useDispatch();
   const { register } = useForm();
-  const initialData = localStorage.getItem("data");
-  const [data, setData] = useState(JSON.parse(initialData) || {});
+  const [data, setData] = useState({});
 
   const rates = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const genreOptions = [
@@ -45,25 +45,17 @@ const SearchMovie = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
     localStorage.clear();
-    dispatch(movieActions.setIsSearching({ isSearching: "movies" }));
+    dispatch(movieActions.setIsSearching({ isSearching: true }));
     dispatch(
       fetchSearch(data, "movies", movieActions, itemsPerPage, currentPage)
     );
     localStorage.setItem("data", JSON.stringify(data));
   };
 
-  useEffect(() => {
-    if (isSearching === "movies") {
-      dispatch(
-        fetchSearch(data, "movies", movieActions, itemsPerPage, currentPage)
-      );
-    }
-  }, [itemsPerPage, currentPage, dispatch,data,isSearching]);
-
   return (
     <Box>
       <form onSubmit={submitHandler}>
-        <Box sx={{marginTop:2}}>
+        <Box sx={{ marginTop: 2 }}>
           <Box>
             <FormControl>
               <InputLabel htmlFor="title-input">Movie Title</InputLabel>
@@ -73,12 +65,14 @@ const SearchMovie = (props) => {
                 value={data.title || ""}
                 id="title-input"
                 aria-describedby="title-input"
+                name="title"
+                role="textbox"
               />
             </FormControl>
           </Box>
           <Box>
             <FormControl sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel id="rate-select">Movie Rate</InputLabel>
+              <InputLabel id="rate-select">Movie Rate Select</InputLabel>
               <Select
                 labelId="rate-select"
                 id="rate-select"
@@ -86,11 +80,8 @@ const SearchMovie = (props) => {
                 onChange={onchangeHandler}
                 value={data.minRate || ""}
                 label="minRate"
-                type="number"
+                data-testid='select-option'
               >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
                 {rates.map((rate, index) => (
                   <MenuItem value={rate} key={index}>
                     {rate}+
@@ -193,10 +184,11 @@ const SearchMovie = (props) => {
         </Box>
         <Box>
           <Button
-             type="submit"
-             fullWidth
-             variant="contained"
-             sx={{ mt: 3, mb: 2 }}
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            name="submit"
           >
             submit
           </Button>

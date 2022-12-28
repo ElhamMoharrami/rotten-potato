@@ -184,6 +184,7 @@ export const fetchSearch = (data, type, action, itemsPerPage, currentPage) => {
       if (data.sort && data.sortType) {
         url.href = url.href + `,${data.sortType}`;
       }
+ 
       const getData = await getDataRequest(url.href);
       dispatch(
         action.setData({

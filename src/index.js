@@ -9,11 +9,13 @@ import { Provider } from "react-redux";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 
-let persistor = persistStore(store);
+const preloadedState = {};
+const storeindex = store(preloadedState);
+let persistor = persistStore(storeindex);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Provider store={store}>
+  <Provider store={storeindex}>
     <PersistGate persistor={persistor}>
       <BrowserRouter>
         <App />

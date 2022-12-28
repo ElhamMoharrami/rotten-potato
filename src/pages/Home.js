@@ -12,11 +12,7 @@ const myStyle = {
 };
 
 const Home = () => {
-  return (
-    <Box>
-      <Box style={myStyle}></Box>
-    </Box>
-  );
+  return <Box role='img' style={myStyle}></Box>;
 };
 
 export default Home;

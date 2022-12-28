@@ -32,7 +32,7 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
 
 const Artists = () => {
   const data = useSelector((state) => state.crews.data);
-  const itemsPerPage=useSelector((state)=>state.login.account.itemsPerPage)
+  const itemsPerPage = useSelector((state) => state.login.account.itemsPerPage);
   const isSearching = useSelector((state) => state.crews.isSearching);
   const isLoading = useSelector((state) => state.crews.isLoading);
   const actionState = useSelector((state) => state.crews.actionState);
@@ -60,9 +60,6 @@ const Artists = () => {
         />
       )}
       <SearchDrawer
-        itemsPerPage={itemsPerPage}
-        currentPage={data.page.currentPage}
-        isSearching={isSearching}
         search={
           <CrewSearch
             itemsPerPage={itemsPerPage}

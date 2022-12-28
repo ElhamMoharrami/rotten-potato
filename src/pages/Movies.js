@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ListData from "../components/ListData/ListData";
 import MovieCard from "../components/MovieCard/MovieCard";
 import { movieActions } from "../store/data-slice";
@@ -31,8 +31,9 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
 );
 
 const Movies = () => {
+  const dispatch = useDispatch();
   const data = useSelector((state) => state.movies.data);
-  const itemsPerPage=useSelector((state)=>state.login.account.itemsPerPage)
+  const itemsPerPage = useSelector((state) => state.login.account.itemsPerPage);
   const isSearching = useSelector((state) => state.movies.isSearching);
   const isLoading = useSelector((state) => state.movies.isLoading);
   const actionState = useSelector((state) => state.movies.actionState);
@@ -45,12 +46,12 @@ const Movies = () => {
     return <MovieCard movie={item} />;
   };
 
-  const form = (close, open,actionType) => {
-    return <MovieForm open={open} close={close} actionType={actionType}  />;
+  const form = (close, open, actionType) => {
+    return <MovieForm open={open} close={close} actionType={actionType} />;
   };
 
   return (
-    <Box >
+    <Box>
       {actionState.status !== "" && (
         <AlertMessage
           openAlert={openAlert}
@@ -61,14 +62,12 @@ const Movies = () => {
       )}
 
       <SearchDrawer
-        itemsPerPage={itemsPerPage}
-        currentPage={data.page.currentPage}
-        isSearching={isSearching}
         search={
           <SearchMovie
             itemsPerPage={itemsPerPage}
             currentPage={data.page.currentPage}
             isSearching={isSearching}
+            open={open}
           />
         }
       />

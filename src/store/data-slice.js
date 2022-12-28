@@ -8,7 +8,7 @@ const initialState = {
   selectedItem: [],
   detailList: [],
   isLoading: false,
-  isSearching: "",
+  isSearching: false,
   actionState: { status: "", action: "", title: "" },
 };
 
