@@ -591,10 +591,14 @@ export const handlers = [
       })
     );
   }),
-
   rest.post("http://localhost:8080/api/crews", (req, res, ctx) => {
+    console.log("this is called");
     return res(
-      ctx.json()
+      ctx.json({
+        name: "Bas",
+        birth: "1922",
+        profession: "actor",
+      })
     );
   }),
 ];

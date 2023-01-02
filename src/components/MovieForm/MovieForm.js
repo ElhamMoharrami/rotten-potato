@@ -40,9 +40,7 @@ const MovieForm = (props) => {
   const crewData = useSelector((state) => state.movieCrewTable.data);
   const movieCrew = useSelector((state) => state.movies.detailList);
   const itemsPerPage=useSelector((state)=>state.login.account.itemsPerPage)
-  const currentPage = useSelector(
-    (state) => state.movies.data.page.currentPage
-  );
+  const currentPage = useSelector((state) => state.movies.data.page.currentPage);
   const pageCount = useSelector((state) => state.movieCrewTable.page.pageCount);
   const currentYear = new Date().getFullYear();
 
@@ -236,6 +234,7 @@ const MovieForm = (props) => {
         )
       );
     }
+    dispatch(movieActions.setOpenAlert({ openAlert: true }));
     navigate("/movies");
   };
 

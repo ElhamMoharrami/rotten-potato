@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import ListData from "../components/ListData/ListData";
 import CrewCard from "../components/CrewCard/CrewCard";
@@ -31,21 +31,25 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
 );
 
 const Artists = () => {
+  const dispatch=useDispatch()
   const data = useSelector((state) => state.crews.data);
   const itemsPerPage = useSelector((state) => state.login.account.itemsPerPage);
   const isSearching = useSelector((state) => state.crews.isSearching);
   const isLoading = useSelector((state) => state.crews.isLoading);
   const actionState = useSelector((state) => state.crews.actionState);
-  const [openAlert, setOpenAlert] = useState(true);
+  const openAlert=useSelector((state) => state.crews.openAlert);
   const open = useSelector((state) => state.style.drawer.open);
 
-  const handleCloseAlert = () => setOpenAlert(false);
+  const handleCloseAlert = () => {
+    dispatch(artistActions.setOpenAlert({openAlert:false}))
+  }
+
   const card = (item) => {
     return <CrewCard crew={item} />;
   };
 
-  const form = (close, open) => {
-    return <CrewForm open={open} close={close} />;
+  const form = (close, open, actionType) => {
+    return <CrewForm open={open} close={close} actionType={actionType} />;
   };
 
   return (
@@ -56,9 +60,9 @@ const Artists = () => {
           handleCloseAlert={handleCloseAlert}
           actionState={actionState}
           title={actionState.title}
-          type="crews"
         />
       )}
+
       <SearchDrawer
         search={
           <CrewSearch

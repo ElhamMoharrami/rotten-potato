@@ -214,6 +214,6 @@ test("add movie works", async () => {
   expect(formSubmit).toBeInTheDocument();
   fireEvent.click(formSubmit);
 
-   const alertMsg=await screen.findByTestId("alertMsg")
+   const alertMsg=await screen.findByRole("alert")
   expect(alertMsg).toBeInTheDocument()
 });

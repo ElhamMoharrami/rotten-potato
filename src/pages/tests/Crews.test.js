@@ -129,22 +129,21 @@ test("add crew works", async () => {
   fireEvent.click(addCard);
 
   const nameInput = screen.getByLabelText("*Artist Name");
-  fireEvent.change(nameInput, { target: { value: "Eli" } });
-  expect(nameInput).toHaveDisplayValue("Eli");
+  fireEvent.change(nameInput, { target: { value: "Bas" } });
+  expect(nameInput).toHaveDisplayValue("Bas");
 
   const input = screen.getByLabelText("*Artist Birth");
-  fireEvent.change(input, { target: { value: "2000" } });
-  expect(input).toHaveDisplayValue("2000");
+  fireEvent.change(input, { target: { value: "1922" } });
+  expect(input).toHaveDisplayValue("1922");
 
   const professionInput = screen.getByLabelText("*Artist Profession");
-  fireEvent.change(professionInput, { target: { value: "actress" } });
-  expect(professionInput).toHaveDisplayValue("actress");
-  
-  const formSubmit = screen.getByRole("button", { name: /submit/i });
+  fireEvent.change(professionInput, { target: { value: "actor" } });
+  expect(professionInput).toHaveDisplayValue("actor");
+
+  const formSubmit = screen.getByTestId("crewFormSubmit");
   expect(formSubmit).toBeInTheDocument();
   fireEvent.click(formSubmit);
 
-  const alertMsg=await screen.findByTestId("alertMsg")
-  expect(alertMsg).toBeInTheDocument()
-
+  const alertMsg = await screen.findByRole("alert");
+  expect(alertMsg).toBeInTheDocument();
 });

@@ -31,16 +31,18 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
 );
 
 const Movies = () => {
-  const dispatch = useDispatch();
+  const dispatch=useDispatch()
   const data = useSelector((state) => state.movies.data);
   const itemsPerPage = useSelector((state) => state.login.account.itemsPerPage);
   const isSearching = useSelector((state) => state.movies.isSearching);
   const isLoading = useSelector((state) => state.movies.isLoading);
   const actionState = useSelector((state) => state.movies.actionState);
   const open = useSelector((state) => state.style.drawer.open);
-  const [openAlert, setOpenAlert] = useState(true);
+  const openAlert=useSelector((state) => state.movies.openAlert);
 
-  const handleCloseAlert = () => setOpenAlert(false);
+  const handleCloseAlert = () => {
+    dispatch(movieActions.setOpenAlert({openAlert:false}))
+  }
 
   const card = (item) => {
     return <MovieCard movie={item} />;

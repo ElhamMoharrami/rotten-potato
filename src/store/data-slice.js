@@ -9,6 +9,7 @@ const initialState = {
   detailList: [],
   isLoading: false,
   isSearching: false,
+  openAlert: false,
   actionState: { status: "", action: "", title: "" },
 };
 
@@ -42,6 +43,9 @@ const createDataSlice = (name) => {
       },
       setActionState(state, action) {
         state.actionState = action.payload.actionState;
+      },
+      setOpenAlert(state,action) {
+        state.openAlert = action.payload.openAlert;
       },
     },
   });

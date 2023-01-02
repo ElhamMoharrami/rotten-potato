@@ -40,7 +40,7 @@ const CrewForm = (props) => {
   const crewMovie = useSelector((state) => state.crews.detailList);
   const pageCount = useSelector((state) => state.crewMovieTable.page.pageCount);
   const currentPage = useSelector((state) => state.crews.data.page.currentPage);
-  const itemsPerPage=useSelector((state)=>state.login.account.itemsPerPage)
+  const itemsPerPage = useSelector((state) => state.login.account.itemsPerPage);
 
   const [crewData, setCreweData] = useState({});
   const [openTable, setOpenTable] = useState(false);
@@ -93,8 +93,11 @@ const CrewForm = (props) => {
       dispatch(
         fetchData("movies", pageSize, tableCurrentPage, crewMovieTableActions)
       );
+      const crewMoviesList = crewMovie.map((item) => item.id);
+      setSelectedTableData(crewMoviesList);
+      setNumberOfSelectedRows(crewMoviesList.length);
     }
-  }, [pageSize, dispatch, tableCurrentPage, openTable]);
+  }, [pageSize, dispatch, tableCurrentPage, openTable, crewMovie]);
 
   const onchangeHandler = (e) => {
     const name = e.target.name;
@@ -178,6 +181,7 @@ const CrewForm = (props) => {
         )
       );
     }
+    dispatch(artistActions.setOpenAlert({ openAlert: true }));
     navigate("/crews");
   };
 
@@ -185,7 +189,7 @@ const CrewForm = (props) => {
     if (formState.isSubmitSuccessful) {
       setCreweData({});
     }
-  }, [formState, crewData, reset]);
+  }, [formState, crewData]);
 
   const formIsValid =
     nameisValid &&
@@ -342,6 +346,7 @@ const CrewForm = (props) => {
                   border: "1px solid rgb(0, 0, 0)",
                 }}
                 disabled={formIsValid ? false : true}
+                data-testid="crewFormSubmit"
                 type="submit"
               >
                 Submit

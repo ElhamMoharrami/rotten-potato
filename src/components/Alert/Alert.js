@@ -8,7 +8,6 @@ const AlertMessage = (props) => {
   return (
     <Collapse in={openAlert}>
       <Alert
-        data-testid="alertMsg"
         severity={actionState.status}
         onClose={handleCloseAlert}
       >
