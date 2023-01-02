@@ -49,7 +49,7 @@ const Profile = () => {
   });
   const [usernameIsValid, setUsernameIsValid] = useState(true);
   const [passwordIsValid, setPasswordIsValid] = useState(true);
-  const [showPass, setShowPass] = useState(false);
+  const [showPass, setShowPass] = useState(true);
   const [defaultItemsPerPage, setDefaultItemsPerPage] = useState("");
 
   const showPasswordHandler = () => setShowPass(!showPass);
@@ -92,7 +92,9 @@ const Profile = () => {
 
   const itemsPerPageHandler = (event) => {
     setDefaultItemsPerPage(event.target.value);
-   dispatch(loginActions.setItemsPerPage({itemsPerPage:event.target.value}))
+    dispatch(
+      loginActions.setItemsPerPage({ itemsPerPage: event.target.value })
+    );
   };
 
   const handleSubmit = (event) => {
@@ -149,7 +151,7 @@ const Profile = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container  component="main" maxWidth="xs">
       <CssBaseline />
       <Box
         sx={{
@@ -164,8 +166,10 @@ const Profile = () => {
             <Typography>Profile</Typography>
             <Grid item xs={12}>
               <FormControl fullWidth>
+                <InputLabel htmlFor="fullname-input">Full name</InputLabel>
                 <Input
                   name="fullname"
+                  id="fullname-input"
                   required
                   fullWidth
                   placeholder="fullname*"
@@ -210,7 +214,11 @@ const Profile = () => {
 
             <Grid item xs={12}>
               <FormControl fullWidth>
+                <InputLabel htmlFor="newPassword-input">
+                  New password
+                </InputLabel>
                 <Input
+                  id="newPassword-input"
                   required
                   fullWidth
                   value={profileForm.newPassword}
@@ -218,7 +226,6 @@ const Profile = () => {
                   name="newPassword"
                   placeholder="newPassword"
                   type={showPass ? "text" : "password"}
-                  id="newPassword"
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
@@ -239,7 +246,11 @@ const Profile = () => {
             </Grid>
             <Grid item xs={12}>
               <FormControl fullWidth>
+                <InputLabel htmlFor="confirmPassword-input">
+                  Confirm password
+                </InputLabel>
                 <Input
+                  id="confirmPassword-input"
                   required
                   fullWidth
                   value={profileForm.confirmPassword}
@@ -247,7 +258,6 @@ const Profile = () => {
                   name="confirmPassword"
                   placeholder="confirmPassword*"
                   type={showPass ? "text" : "password"}
-                  id="confirmPassword"
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
@@ -309,8 +319,10 @@ const Profile = () => {
             )}
           </Grid>
           <Grid item xs={12}>
-            <FormControl sx={{width:'100%'}}>
-              <InputLabel id="select-label">choose items shown per page</InputLabel>
+            <FormControl sx={{ width: "100%" }}>
+              <InputLabel id="select-label">
+                choose items shown per page
+              </InputLabel>
               <Select
                 sx={{
                   paddingRight: 2,

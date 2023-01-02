@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { fetchSearch } from "../../../store/api-call";
 import { artistActions } from "../../../store/data-slice";
 import { professions } from "../../../assets/config";
 import { useForm } from "react-hook-form";
-import { InputLabel, Input, FormHelperText, FormControl } from "@mui/material";
+import { InputLabel, Input, FormControl } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { Button } from "@mui/material";
@@ -15,7 +15,7 @@ import FormLabel from "@mui/material/FormLabel";
 import Box from "@mui/material/Box";
 
 const CrewSearch = (props) => {
-  const { currentPage, itemsPerPage, isSearching } = props;
+  const { currentPage, itemsPerPage } = props;
   const initialData = localStorage.getItem("data");
 
   const [data, setData] = useState(JSON.parse(initialData) || {});
@@ -83,34 +83,6 @@ const CrewSearch = (props) => {
                   </MenuItem>
                 ))}
               </Select>
-            </FormControl>
-          </Box>
-          <Box>
-            <FormControl>
-              <InputLabel htmlFor="birthFrom-input">birthYear</InputLabel>
-              <Input
-                type="number"
-                {...register("birthFrom")}
-                onChange={onchangeHandler}
-                value={data.birthFrom || ""}
-                id="birthFrom-input"
-                aria-describedby="birthFrom-input"
-              />
-              <FormHelperText>example:1900</FormHelperText>
-            </FormControl>
-          </Box>
-          <Box>
-            <FormControl>
-              <InputLabel htmlFor="deathYear-input">deathYear</InputLabel>
-              <Input
-                type="number"
-                {...register("birthTo")}
-                onChange={onchangeHandler}
-                value={data.birthTo || ""}
-                id="birthTo-input"
-                aria-describedby="birthTo-input"
-              />
-              <FormHelperText>example:1900</FormHelperText>
             </FormControl>
           </Box>
           <Box>

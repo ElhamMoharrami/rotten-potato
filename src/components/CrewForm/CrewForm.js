@@ -263,7 +263,6 @@ const CrewForm = (props) => {
             <Grid xs={6}>
               <FormControl>
                 <InputLabel htmlFor="death-input">
-                  {" "}
                   *Artist Profession
                 </InputLabel>
                 <Input

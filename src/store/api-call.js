@@ -184,7 +184,7 @@ export const fetchSearch = (data, type, action, itemsPerPage, currentPage) => {
       if (data.sort && data.sortType) {
         url.href = url.href + `,${data.sortType}`;
       }
- 
+
       const getData = await getDataRequest(url.href);
       dispatch(
         action.setData({
@@ -310,10 +310,12 @@ export const deleteAccount = (id) => {
   };
 };
 
-export const fetchCrewTable = (action,itemsPerPage,currentPage) => {
+export const fetchCrewTable = (action, itemsPerPage, currentPage) => {
   return async (dispatch) => {
     try {
-      const url = `${BASEURL}/crews/size=${itemsPerPage}&page=${currentPage - 1}`;
+      const url = `${BASEURL}/crews/size=${itemsPerPage}&page=${
+        currentPage - 1
+      }`;
       const getData = await getDataRequest(url);
       dispatch(
         action.setData({
@@ -326,5 +328,3 @@ export const fetchCrewTable = (action,itemsPerPage,currentPage) => {
     }
   };
 };
-
-

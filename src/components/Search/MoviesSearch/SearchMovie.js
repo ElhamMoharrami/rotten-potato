@@ -80,7 +80,7 @@ const SearchMovie = (props) => {
                 onChange={onchangeHandler}
                 value={data.minRate || ""}
                 label="minRate"
-                data-testid='select-option'
+                data-testid="select-option"
               >
                 {rates.map((rate, index) => (
                   <MenuItem value={rate} key={index}>
@@ -167,6 +167,7 @@ const SearchMovie = (props) => {
                 {...register("sortType")}
                 onChange={onchangeHandler}
                 value={data.sortType || ""}
+                data-testid="radio-button-sort"
               >
                 <FormControlLabel
                   value="asc"

@@ -86,9 +86,20 @@ export const handlers = [
         ctx.json({
           content: [
             {
+              id: "tt6193408",
+              title: "A Shaun the Sheep Movie: Farmageddon",
+              genre: "Animation, Adventure, Comedy",
+              poster:
+                "https://m.media-amazon.com/images/M/MV5BNTdjZjBkMDMtODBlNi00N2E0LWE1OGItOTgxODNmMDkzNGJmXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_SX300.jpg",
+              metaScore: "79",
+              imdbRating: 6.8,
+              imdbVotes: "13,553",
+            },
+            {
               id: "tt0322802",
               title: "Jackass: The Movie",
               imdbRating: 6.6,
+              genre: "Adventure",
               year: 2002,
               poster:
                 "https://m.media-amazon.com/images/M/MV5BOTgwMmU0YzktOGNhNi00MDcyLTg1OGEtZGQwM2RlMTAyYzhlXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
@@ -215,6 +226,11 @@ export const handlers = [
       ctx.status(200),
       ctx.json({
         content: [
+          {
+            id: "nm0957858",
+            name: "A.M. Zopfi",
+            profession: "miscellaneous",
+          },
           {
             id: "nm0001146",
             name: "Donna Dixon",
@@ -517,6 +533,68 @@ export const handlers = [
           },
         ],
       })
+    );
+  }),
+  rest.put("http://localhost:8080/api/users/", (req, res, ctx) => {
+    return res(
+      ctx.json({
+        id: "8dfd88a8-fdb4-25aa-b85d-e10256aa68ea",
+        username: "admin",
+        fullname: "Khadijeh Ghamilouy",
+        password: "112233",
+        role: "ADMIN",
+      })
+    );
+  }),
+  rest.delete("http://localhost:8080/api/users/:id", (req, res, ctx) => {
+    return res(
+      ctx.json({
+        id: "8dfd88a8-fdb4-25aa-b85d-e10256aa68ea",
+        username: "admin",
+        fullname: "Khadijeh Ghamilouy",
+        password: "112233",
+        role: "ADMIN",
+      })
+    );
+  }),
+  rest.post("http://localhost:8080/api/login", (req, res, ctx) => {
+    return res(
+      ctx.json({
+        id: "8dfd88a8-fdb4-25aa-b85d-e10256aa68ea",
+        username: "admin",
+        fullname: "Khadijeh Ghamilouy",
+        password: "112233",
+        role: "ADMIN",
+      })
+    );
+  }),
+  rest.post("http://localhost:8080/api/users", (req, res, ctx) => {
+    return res(
+      ctx.json({
+        username: "elham",
+        fullname: "Elham Moharrami",
+        password: "15161718",
+        role: "ADMIN",
+      })
+    );
+  }),
+  rest.post("http://localhost:8080/api/movies", (req, res, ctx) => {
+    return res(
+      ctx.json({
+        title: "test Movie",
+        year: 2010,
+        director: "Steven Spielberg",
+        poster:
+          "https://m.media-amazon.com/images/M/MV5BMjE2NTAyMjUxMl5BMl5BanBnXkFtZTYwOTAwODQ3._V1_SX300.jpg",
+
+        imdbRating: 6,
+      })
+    );
+  }),
+
+  rest.post("http://localhost:8080/api/crews", (req, res, ctx) => {
+    return res(
+      ctx.json()
     );
   }),
 ];

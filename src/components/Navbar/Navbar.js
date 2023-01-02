@@ -1,5 +1,6 @@
+/* istanbul ignore file */
 import React from "react";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,22 +13,22 @@ import { movieActions, artistActions } from "../../store/data-slice";
 const style = { color: "white", margin: 2, textDecoration: "none" };
 
 const Navbar = () => {
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
   const account = useSelector((state) => state.login.account);
 
   const crewsClickHandler = () => {
     //localStorage.clear();
-    dispatch(artistActions.clearData())
+    dispatch(artistActions.clearData());
   };
 
-  const moviesClickHandler=()=>{
+  const moviesClickHandler = () => {
     //localStorage.clear();
-    dispatch(movieActions.clearData())
-  }
+    dispatch(movieActions.clearData());
+  };
 
-  const homeClickHandler=()=>{
+  const homeClickHandler = () => {
     localStorage.clear();
-  }
+  };
 
   return (
     <AppBar

@@ -1,5 +1,7 @@
 import { screen, fireEvent, within } from "@testing-library/react";
 import { renderWithProviders } from "../../test-utils/testing-library-utils.js";
+import { createMemoryHistory } from "history";
+import { Router } from "react-router-dom";
 import Crews from "../Crews";
 
 test("search icon is displayed", () => {
@@ -51,16 +53,14 @@ test("search by profession works properly", async () => {
   const searchIcon = screen.getByTestId("ManageSearchIcon");
   fireEvent.click(searchIcon);
 
-  fireEvent.mouseDown(
-    screen.getByRole("button", { name: "profession" })
-  );
+  fireEvent.mouseDown(screen.getByRole("button", { name: "profession" }));
 
   const listbox = within(screen.getByRole("listbox"));
   fireEvent.click(listbox.getByText("Actress"));
 
-  expect(
-    screen.getByRole("button", { name: "profession" })
-  ).toHaveTextContent("Actress");
+  expect(screen.getByRole("button", { name: "profession" })).toHaveTextContent(
+    "Actress"
+  );
 
   const formSubmit = screen.getByRole("button", { name: /submit/i });
   expect(formSubmit).toBeInTheDocument();
@@ -70,3 +70,81 @@ test("search by profession works properly", async () => {
   expect(crewPoster).toBeInTheDocument();
 });
 
+test("sort select works", async () => {
+  renderWithProviders(<Crews />);
+
+  const searchIcon = screen.getByTestId("ManageSearchIcon");
+  fireEvent.click(searchIcon);
+
+  fireEvent.mouseDown(screen.getByRole("button", { name: "Sort" }));
+
+  const listbox = within(screen.getByRole("listbox"));
+  fireEvent.click(listbox.getByText(/Name/i));
+
+  expect(screen.getByRole("button", { name: "Sort" })).toHaveTextContent(
+    /Name/i
+  );
+
+  const ascBtn = screen.getByLabelText("Ascending");
+  fireEvent.change(ascBtn, { target: { checked: true } });
+
+  const formSubmit = screen.getByRole("button", { name: /submit/i });
+  expect(formSubmit).toBeInTheDocument();
+  fireEvent.click(formSubmit);
+
+  const moviePoster = await screen.findByAltText("A.M. Zopfi");
+  expect(moviePoster).toBeInTheDocument();
+});
+
+test("add crew works", async () => {
+  const history = createMemoryHistory();
+  const state = {
+    login: {
+      account: {
+        isLoggedIn: true,
+        username: "admin",
+        password: "112233",
+        role: "ADMIN",
+        fullname: "Khadijeh Ghamilouy",
+        id: "8dfd88a8-fdb4-25aa-b85d-e10256aa68ea",
+        itemsPerPage: 10,
+        theme: "light",
+      },
+      actionState: {
+        actionState: { status: "", action: "", title: "" },
+      },
+    },
+  };
+
+  renderWithProviders(
+    <Router location={history.location} navigator={history}>
+      <Crews />
+    </Router>,
+    { preloadedState: state }
+  );
+
+  const addCard = await screen.findByAltText("add sign");
+  expect(addCard).toBeInTheDocument();
+
+  fireEvent.click(addCard);
+
+  const nameInput = screen.getByLabelText("*Artist Name");
+  fireEvent.change(nameInput, { target: { value: "Eli" } });
+  expect(nameInput).toHaveDisplayValue("Eli");
+
+  const input = screen.getByLabelText("*Artist Birth");
+  fireEvent.change(input, { target: { value: "2000" } });
+  expect(input).toHaveDisplayValue("2000");
+
+  const professionInput = screen.getByLabelText("*Artist Profession");
+  fireEvent.change(professionInput, { target: { value: "actress" } });
+  expect(professionInput).toHaveDisplayValue("actress");
+  
+  const formSubmit = screen.getByRole("button", { name: /submit/i });
+  expect(formSubmit).toBeInTheDocument();
+  fireEvent.click(formSubmit);
+
+  const alertMsg=await screen.findByTestId("alertMsg")
+  expect(alertMsg).toBeInTheDocument()
+
+});

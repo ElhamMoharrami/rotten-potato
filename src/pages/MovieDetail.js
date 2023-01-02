@@ -43,7 +43,10 @@ const MovieDetail = () => {
             }}
           >
             <span>
-              <img src="https://img.icons8.com/tiny-color/16/000000/star.png" alt="star icon" />
+              <img
+                src="https://img.icons8.com/tiny-color/16/000000/star.png"
+                alt="star icon"
+              />
               IMDB Rating <i></i>: {movie.imdbRating}
             </span>
             <span>
@@ -117,7 +120,6 @@ const MovieDetail = () => {
             transitionDuration={500}
             removeArrowOnDeviceType={["tablet", "mobile"]}
             itemClass="carousel-item-padding-40-px"
-            
           >
             {crews.map((item) => (
               <CrewCard movieDetail={true} crew={item} key={item.id} />
