@@ -17,12 +17,12 @@ const Navbar = () => {
   const account = useSelector((state) => state.login.account);
 
   const crewsClickHandler = () => {
-    //localStorage.clear();
+    localStorage.clear();
     dispatch(artistActions.clearData());
   };
 
   const moviesClickHandler = () => {
-    //localStorage.clear();
+    localStorage.clear();
     dispatch(movieActions.clearData());
   };
 

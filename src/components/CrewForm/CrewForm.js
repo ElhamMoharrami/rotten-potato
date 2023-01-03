@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import {
-  saveData,
-  updateData,
-  fetchDetail,
-  fetchDetailList,
-  fetchData,
-} from "../../store/api-call";
+import {saveData,updateData,fetchDetail,fetchDetailList,fetchData} from "../../store/api-call";
 import { useNavigate } from "react-router-dom";
 import { artistActions } from "../../store/data-slice";
 import { crewMovieTableActions } from "../../store/dataTable-Slice";
+import { style, BASEURL } from "../../assets/config";
 import { InputLabel, Input, FormHelperText } from "@mui/material";
 import { FormControl } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -21,7 +16,6 @@ import Grid from "@mui/material/Unstable_Grid2";
 import Modal from "@mui/material/Modal";
 import { DataGrid } from "@mui/x-data-grid";
 import Badge from "@mui/material/Badge";
-import { style, BASEURL } from "../../assets/config";
 
 const columns = [
   { field: "title", headerName: "title", width: 130 },
@@ -32,7 +26,7 @@ const CrewForm = (props) => {
   const { actionType, open, close, id } = props;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { register, reset, formState } = useForm();
+  const { register,formState } = useForm();
   const isAddMode = !id;
 
   const crew = useSelector((state) => state.crews.selectedItem);

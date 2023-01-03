@@ -15,14 +15,14 @@ test("profile edit works correctly", () => {
   );
 
   const nameInput = screen.getByLabelText("Full name");
-  fireEvent.change(nameInput, { target: { value: "Elham" } });
-  expect(nameInput).toHaveDisplayValue("Elham");
+  fireEvent.change(nameInput, { target: { value: "Tom" } });
+  expect(nameInput).toHaveDisplayValue("Tom");
 
   const formSubmit = screen.getByRole("button", { name: /submit/i });
   expect(formSubmit).toBeInTheDocument();
   fireEvent.click(formSubmit);
 
-  expect(nameInput).toHaveDisplayValue("Elham");
+  expect(nameInput).toHaveDisplayValue("Tom");
 
   const password = screen.getByLabelText("New password");
   fireEvent.change(password, { target: { value: "123456" } });

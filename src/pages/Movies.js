@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ListData from "../components/ListData/ListData";
 import MovieCard from "../components/MovieCard/MovieCard";
@@ -31,18 +30,19 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
 );
 
 const Movies = () => {
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
   const data = useSelector((state) => state.movies.data);
   const itemsPerPage = useSelector((state) => state.login.account.itemsPerPage);
+  const pageCount = useSelector((state) => state.movies.data.page.pageCount);
   const isSearching = useSelector((state) => state.movies.isSearching);
   const isLoading = useSelector((state) => state.movies.isLoading);
   const actionState = useSelector((state) => state.movies.actionState);
   const open = useSelector((state) => state.style.drawer.open);
-  const openAlert=useSelector((state) => state.movies.openAlert);
+  const openAlert = useSelector((state) => state.movies.openAlert);
 
   const handleCloseAlert = () => {
-    dispatch(movieActions.setOpenAlert({openAlert:false}))
-  }
+    dispatch(movieActions.setOpenAlert({ openAlert: false }));
+  };
 
   const card = (item) => {
     return <MovieCard movie={item} />;
@@ -68,7 +68,6 @@ const Movies = () => {
           <SearchMovie
             itemsPerPage={itemsPerPage}
             currentPage={data.page.currentPage}
-            isSearching={isSearching}
             open={open}
           />
         }
@@ -85,6 +84,7 @@ const Movies = () => {
           itemsPerPage={itemsPerPage}
           currentPage={data.page.currentPage}
           actionState={actionState}
+          pageCount={pageCount}
         />
       </Main>
     </Box>

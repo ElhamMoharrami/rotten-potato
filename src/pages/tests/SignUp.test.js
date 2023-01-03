@@ -13,10 +13,10 @@ test("sign up works properly", () => {
   );
 
   const username = screen.getByTestId("signupUsername");
-  fireEvent.change(username, { target: { value: "elham" } });
+  fireEvent.change(username, { target: { value: "Tom" } });
 
   const fullname = screen.getByTestId("signupFullname");
-  fireEvent.change(fullname, { target: { value: "Elham Moharrami" } });
+  fireEvent.change(fullname, { target: { value: "Tom Felton" } });
 
   const password = screen.getByTestId("signupPassword");
   fireEvent.change(password, { target: { value: "15161718" } });

@@ -7,7 +7,6 @@ import Pagination from "@mui/material/Pagination";
 import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
 import { style } from "../../assets/config";
-import { movieActions } from "../../store/data-slice";
 
 const ListData = (props) => {
   const {
@@ -20,6 +19,7 @@ const ListData = (props) => {
     form,
     itemsPerPage,
     currentPage,
+    pageCount,
   } = props;
   const dispatch = useDispatch();
   const pageRangeDisplayed = 3;
@@ -29,11 +29,12 @@ const ListData = (props) => {
   useEffect(() => {
     if (!isSearching) {
       dispatch(fetchData(type, itemsPerPage, currentPage, action));
-      // window.scrollTo(0, 0);
+      console.log('this is main fetch',isSearching);
     } else if (isSearching && isFirstRun.current) {
       isFirstRun.current = false;
       return;
     } else if (isSearching && !isFirstRun.current) {
+      console.log('this is search fetch',isSearching);
       dispatch(
         fetchSearch(
           JSON.parse(initialData),
@@ -54,33 +55,31 @@ const ListData = (props) => {
     initialData,
   ]);
 
-
-  //there is a bug here for no result
   const List = () => {
-    // if (data.content.length >= 1) {
-    return (
-      <Box>
-        <ShowList form={form} type={type} data={data.content} card={card} />
-      </Box>
-    );
-    // } else if (data.content.length < 1 && isSearching) {
-    //   return (
-    //     <Box sx={style}>
-    //       <Typography
-    //         sx={{
-    //           fontSize: 14,
-    //           textAlign: " center",
-    //           verticalAlign: "middle",
-    //           lineHeight: "90px",
-    //         }}
-    //         color="text.secondary"
-    //         gutterBottom
-    //       >
-    //         The Search Term Did Not Bring Any Results.
-    //       </Typography>
-    //     </Box>
-    //   );
-    // }
+    if (pageCount !== 0) {
+      return (
+        <Box>
+          <ShowList form={form} type={type} data={data.content} card={card} />
+        </Box>
+      );
+    } else if (pageCount === 0 && isSearching) {
+      return (
+        <Box sx={style}>
+          <Typography
+            sx={{
+              fontSize: 14,
+              textAlign: " center",
+              verticalAlign: "middle",
+              lineHeight: "90px",
+            }}
+            color="text.secondary"
+            gutterBottom
+          >
+            The Search Term Did Not Bring Any Results.
+          </Typography>
+        </Box>
+      );
+    }
   };
 
   const handlePageClick = async (event, page) => {
@@ -102,13 +101,15 @@ const ListData = (props) => {
           marginTop: 10,
         }}
       >
-        <Pagination
-          boundaryCount={pageRangeDisplayed}
-          count={data.page.pageCount}
-          onChange={handlePageClick}
-          page={currentPage}
-          size="medium"
-        />
+        {pageCount !== 0 && (
+          <Pagination
+            boundaryCount={pageRangeDisplayed}
+            count={data.page.pageCount}
+            onChange={handlePageClick}
+            page={currentPage}
+            size="medium"
+          />
+        )}
       </Box>
     </Box>
   );

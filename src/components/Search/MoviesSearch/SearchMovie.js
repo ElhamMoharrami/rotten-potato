@@ -16,7 +16,7 @@ import FormLabel from "@mui/material/FormLabel";
 import Box from "@mui/material/Box";
 
 const SearchMovie = (props) => {
-  const { itemsPerPage, currentPage, isSearching } = props;
+  const { itemsPerPage, currentPage } = props;
   const dispatch = useDispatch();
   const { register } = useForm();
   const [data, setData] = useState({});

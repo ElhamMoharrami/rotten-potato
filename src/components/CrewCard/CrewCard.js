@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link as LinkRouter } from "react-router-dom";
 import CrewForm from "../CrewForm/CrewForm";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -17,7 +18,7 @@ import Confirmation from "../Confirmation/Confirmation";
 const CrewCard = (props) => {
   const { crew, movieDetail } = props;
   const dispatch = useDispatch();
-  const itemsPerPage=useSelector((state)=>state.login.account.itemsPerPage)
+  const itemsPerPage = useSelector((state) => state.login.account.itemsPerPage);
   const currentPage = useSelector((state) => state.crews.data.page.currentPage);
   const content = useSelector((state) => state.crews.data.content);
   const account = useSelector((state) => state.login.account);
@@ -53,18 +54,20 @@ const CrewCard = (props) => {
         width: "240px",
       }}
     >
-      <Link href={`/crews/${crew.id}`} sx={{ textDecoration: "none" }}>
-        <CardMedia
-          component="img"
-          alt={crew.name}
-          height="320"
-          image={crew.poster !== null ? crew.poster : blankProfilePicture}
-        />
-        <CardContent>
-          <Typography sx={{ fontSize: 18 }} variant="h5">
-            {crew.name}
-          </Typography>
-        </CardContent>
+      <Link component="span" href="#" sx={{ textDecoration: "none" }}>
+        <LinkRouter to={`/crews/${crew.id}`}>
+          <CardMedia
+            component="img"
+            alt={crew.name}
+            height="320"
+            image={crew.poster !== null ? crew.poster : blankProfilePicture}
+          />
+          <CardContent>
+            <Typography sx={{ fontSize: 18 }} variant="h5">
+              {crew.name}
+            </Typography>
+          </CardContent>
+        </LinkRouter>
       </Link>
       {account.role === "ADMIN" && !movieDetail && (
         <CardActions

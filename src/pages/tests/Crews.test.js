@@ -105,7 +105,7 @@ test("add crew works", async () => {
         username: "admin",
         password: "112233",
         role: "ADMIN",
-        fullname: "Khadijeh Ghamilouy",
+        fullname: "Ali Karimi",
         id: "8dfd88a8-fdb4-25aa-b85d-e10256aa68ea",
         itemsPerPage: 10,
         theme: "light",
