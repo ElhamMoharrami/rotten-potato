@@ -16,7 +16,7 @@ import Box from "@mui/material/Box";
 
 const CrewSearch = (props) => {
   const { currentPage, itemsPerPage } = props;
-  const initialData = localStorage.getItem("data");
+  const initialData = localStorage.getItem("crews");
 
   const [data, setData] = useState(JSON.parse(initialData) || {});
   const dispatch = useDispatch();
@@ -39,12 +39,11 @@ const CrewSearch = (props) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    localStorage.clear();
     dispatch(artistActions.setIsSearching({ isSearching: "crews" }));
     dispatch(
       fetchSearch(data, "crews", artistActions, itemsPerPage, currentPage)
     );
-    localStorage.setItem("data", JSON.stringify(data));
+    localStorage.setItem("crews", JSON.stringify(data));
   };
 
   return (

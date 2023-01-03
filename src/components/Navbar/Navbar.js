@@ -1,34 +1,19 @@
 /* istanbul ignore file */
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
+import { Link as LinkRouter } from "react-router-dom";
 import UserDrawer from "../UserDrawer/UserDrawer";
 import AppBar from "@mui/material/AppBar";
-import { movieActions, artistActions } from "../../store/data-slice";
 
-const style = { color: "white", margin: 2, textDecoration: "none" };
+const style = { color: "white", margin: "15px", textDecoration: "none" };
 
 const Navbar = () => {
-  const dispatch = useDispatch();
   const account = useSelector((state) => state.login.account);
-
-  const crewsClickHandler = () => {
-    localStorage.clear();
-    dispatch(artistActions.clearData());
-  };
-
-  const moviesClickHandler = () => {
-    localStorage.clear();
-    dispatch(movieActions.clearData());
-  };
-
-  const homeClickHandler = () => {
-    localStorage.clear();
-  };
 
   return (
     <AppBar
@@ -45,15 +30,15 @@ const Navbar = () => {
           <Typography>Rotton Potato</Typography>
         </Box>
         <List sx={{ marginRight: "70px" }}>
-          <Link onClick={homeClickHandler} sx={style} href="/home">
+          <LinkRouter style={style} to="/home">
             Home
-          </Link>
-          <Link onClick={moviesClickHandler} sx={style} href="/Movies">
+          </LinkRouter>
+          <LinkRouter style={style} to="/movies">
             Movies
-          </Link>
-          <Link onClick={crewsClickHandler} sx={style} href="/crews">
+          </LinkRouter>
+          <LinkRouter style={style} to="/crews">
             Crews
-          </Link>
+          </LinkRouter>
         </List>
         {!account.isLoggedIn ? (
           <Link sx={style} href="/signin">

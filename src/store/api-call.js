@@ -328,3 +328,20 @@ export const fetchCrewTable = (action, itemsPerPage, currentPage) => {
     }
   };
 };
+
+export const commitComment = (data) => {
+  return async (dispatch) => {
+    try {
+      let url = new URL(`${BASEURL}/reviews`);
+
+      console.log(url);
+      await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};

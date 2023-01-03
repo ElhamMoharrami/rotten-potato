@@ -19,7 +19,9 @@ const SearchMovie = (props) => {
   const { itemsPerPage, currentPage } = props;
   const dispatch = useDispatch();
   const { register } = useForm();
-  const [data, setData] = useState({});
+  const initialData = localStorage.getItem("movies");
+  const [data, setData] = useState(JSON.parse(initialData) || {});
+  
 
   const rates = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const genreOptions = [
@@ -44,12 +46,11 @@ const SearchMovie = (props) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    localStorage.clear();
     dispatch(movieActions.setIsSearching({ isSearching: true }));
     dispatch(
       fetchSearch(data, "movies", movieActions, itemsPerPage, currentPage)
     );
-    localStorage.setItem("data", JSON.stringify(data));
+    localStorage.setItem("movies", JSON.stringify(data));
   };
 
   return (

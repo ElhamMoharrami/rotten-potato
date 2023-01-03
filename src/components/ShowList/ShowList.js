@@ -23,16 +23,17 @@ const ShowList = (props) => {
           </Box>
         ))}
         {account.role === "ADMIN" && (
-          <Grid item>
+          <Grid sx={{position:"relative"}} item>
             <Card
               onClick={handleOpen}
               sx={{
-                height: 510,
                 borderRadius: "20px",
-                position: "relative",
+                position: "absolute",
                 width: "240px",
+                height: "100%",
+                boxShadow:"none"
               }}
-             data-testid= "addMovie" 
+              data-testid="addMovie"
             >
               <CardMedia
                 component="img"
@@ -42,12 +43,12 @@ const ShowList = (props) => {
               />
               <CardContent>
                 <Typography
-                  sx={{ fontSize: 18, cursor: "pointer" }}
+                  sx={{ fontSize: 18, cursor: "pointer",textAlign:"center" }}
                   gutterBottom
                   variant="h5"
                   component="div"
                 >
-                  Add new Item 
+                  Add new Item
                 </Typography>
               </CardContent>
             </Card>

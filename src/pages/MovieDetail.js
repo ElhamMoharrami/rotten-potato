@@ -9,12 +9,14 @@ import Box from "@mui/material/Box";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { responsive } from "../assets/config";
+import UserReview from "../components/UserReview/UserReview";
 
 const MovieDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const movie = useSelector((state) => state.movies.selectedItem);
   const crews = useSelector((state) => state.movies.detailList);
+  const account=useSelector((state)=>state.login.account)
 
   useEffect(() => {
     dispatch(fetchDetail(id, "movies", movieActions));
@@ -93,6 +95,21 @@ const MovieDetail = () => {
           <img src={movie.poster} alt={movie.title} />
         </Box>
       </Card>
+      <Box
+        sx={{
+          fontSize: "28px",
+          marginLeft: "20px",
+          marginRight: "20px",
+          marginBottom: "30px",
+          marginTop: "30px",
+          alignContent: "center",
+      
+          boxShadow:
+            "rgba(114, 100, 165, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
+        }}
+      >
+        <UserReview movieId={id} userId={account.id}  />
+      </Box>
       <Box>
         <Typography
           sx={{
