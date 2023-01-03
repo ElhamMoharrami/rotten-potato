@@ -108,6 +108,7 @@ const Signup = () => {
                   placeholder="username*"
                   autoFocus
                   onChange={onchangeHandler}
+                  inputProps={{ "data-testid": "signupUsername" }}
                 />
                 {!usernameIsValid && (
                   <FormHelperText>
@@ -125,6 +126,7 @@ const Signup = () => {
                   placeholder="fullname*"
                   autoFocus
                   onChange={onchangeHandler}
+                  inputProps={{ "data-testid": "signupFullname" }}
                 />
                 {!fullnameIsValid && (
                   <FormHelperText>
@@ -153,6 +155,7 @@ const Signup = () => {
                       </IconButton>
                     </InputAdornment>
                   }
+                  inputProps={{ "data-testid": "signupPassword" }}
                 />
                 {!passwordIsValid && (
                   <FormHelperText>
@@ -181,6 +184,7 @@ const Signup = () => {
                       </IconButton>
                     </InputAdornment>
                   }
+                  inputProps={{ "data-testid": "signupConfirmPassword" }}
                 />
               </FormControl>
             </Grid>

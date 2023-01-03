@@ -4,6 +4,7 @@ import { deleteSelectedItem } from "../../store/api-call";
 import { movieActions } from "../../store/data-slice";
 import MovieForm from "../MovieForm/MovieForm";
 import { Link } from "@mui/material";
+import { Link as LinkRouter } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -20,7 +21,7 @@ const MovieCard = (props) => {
   const currentPage = useSelector(
     (state) => state.movies.data.page.currentPage
   );
-  const itemsPerPage=useSelector((state)=>state.login.account.itemsPerPage)
+  const itemsPerPage = useSelector((state) => state.login.account.itemsPerPage);
   const content = useSelector((state) => state.movies.data.content);
   const account = useSelector((state) => state.login.account);
   const [open, setOpen] = useState(false);
@@ -55,26 +56,28 @@ const MovieCard = (props) => {
         width: "240px",
       }}
     >
-      <Link href={`/movies/${movie.id}`} sx={{ textDecoration: "none" }}>
-        <CardMedia
-          component="img"
-          alt={movie.title}
-          height="340"
-          image={movie.poster}
-        />
-        <CardContent>
-          <Typography
-            sx={{ fontSize: 18 }}
-            gutterBottom
-            variant="h5"
-            component="div"
-          >
-            {movie.title}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {movie.year}
-          </Typography>
-        </CardContent>
+      <Link component="span" href="#" sx={{ textDecoration: "none" }}>
+        <LinkRouter to={`/movies/${movie.id}`}>
+          <CardMedia
+            component="img"
+            alt={movie.title}
+            height="340"
+            image={movie.poster}
+          />
+          <CardContent>
+            <Typography
+              sx={{ fontSize: 18 }}
+              gutterBottom
+              variant="h5"
+              component="div"
+            >
+              {movie.title}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {movie.year}
+            </Typography>
+          </CardContent>
+        </LinkRouter>
       </Link>
       {!artistDetail && account.role === "ADMIN" && (
         <CardActions

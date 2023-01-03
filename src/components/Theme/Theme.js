@@ -30,6 +30,7 @@ export function ThemeSelector() {
         sx={{ ml: 1 }}
         onClick={colorMode.toggleColorMode}
         color="inherit"
+        data-testid="theme-button"
       >
         {theme.palette.mode === "dark" ? (
           <Brightness7Icon />

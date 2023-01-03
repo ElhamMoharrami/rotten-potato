@@ -12,12 +12,13 @@
     "@szhsin/react-menu": "^3.1.2",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
-    "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.2.0",
     "eslint-plugin-jest-dom": "^4.0.3",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-testing-library": "^5.9.1",
     "final-form": "^4.20.7",
+    "history": "^5.3.0",
+    "msw": "^0.49.2",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
     "react-dom": "^18.2.0",
@@ -42,7 +43,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --coverage --watchAll=false",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "browserslist": {
@@ -65,7 +66,13 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/dom": "^8.19.0",
+    "@testing-library/user-event": "^14.4.3",
     "eslint": "^8.29.0",
-    "eslint-config-react-app": "^7.0.1"
+    "eslint-config-react-app": "^7.0.1",
+    "react-select-event": "^5.5.1"
+  },
+  "msw": {
+    "workerDirectory": "workspace/rotten-potato-backend-main"
   }
 }

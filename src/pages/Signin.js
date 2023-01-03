@@ -123,6 +123,7 @@ const Signin = () => {
                   placeholder="username*"
                   autoFocus
                   onChange={onchangeHandler}
+                  inputProps={{ "data-testid": "signinUsername" }}
                 />
                 {!usernameIsValid && (
                   <FormHelperText>
@@ -137,6 +138,7 @@ const Signin = () => {
                   required
                   fullWidth
                   onChange={onchangeHandler}
+                  inputProps={{ "data-testid": "signinPassword" }}
                   name="password"
                   placeholder="password*"
                   type={showPass ? "text" : "password"}
@@ -174,6 +176,7 @@ const Signin = () => {
                 color={
                   actionState.status === "success" ? "success.main" : "error"
                 }
+                data-testid= "signinSuccess"
               >
                 login {actionState.status}
               </Typography>

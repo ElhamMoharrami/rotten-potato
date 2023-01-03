@@ -7,7 +7,10 @@ const AlertMessage = (props) => {
 
   return (
     <Collapse in={openAlert}>
-      <Alert severity={actionState.status} onClose={handleCloseAlert}>
+      <Alert
+        severity={actionState.status}
+        onClose={handleCloseAlert}
+      >
         {title} {actionState.action} {actionState.status}
       </Alert>
     </Collapse>

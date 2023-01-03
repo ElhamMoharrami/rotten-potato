@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { Routes, Route } from "react-router-dom";
 import NavBar from "./components/Navbar/Navbar";
 import Movies from "./pages/Movies";

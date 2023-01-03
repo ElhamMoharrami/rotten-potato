@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { fetchData } from "../../store/api-call";
+import { fetchData, fetchSearch } from "../../store/api-call";
 import Box from "@mui/material/Box";
 import ShowList from "../ShowList/ShowList";
 import Pagination from "@mui/material/Pagination";
@@ -19,25 +19,50 @@ const ListData = (props) => {
     form,
     itemsPerPage,
     currentPage,
+    pageCount,
   } = props;
   const dispatch = useDispatch();
   const pageRangeDisplayed = 3;
+  const initialData = localStorage.getItem("data");
+  const isFirstRun = useRef(true);
 
   useEffect(() => {
-    if (isSearching === "") {
+    if (!isSearching) {
       dispatch(fetchData(type, itemsPerPage, currentPage, action));
-      window.scrollTo(0, 0);
+      console.log('this is main fetch',isSearching);
+    } else if (isSearching && isFirstRun.current) {
+      isFirstRun.current = false;
+      return;
+    } else if (isSearching && !isFirstRun.current) {
+      console.log('this is search fetch',isSearching);
+      dispatch(
+        fetchSearch(
+          JSON.parse(initialData),
+          type,
+          action,
+          itemsPerPage,
+          currentPage
+        )
+      );
     }
-  }, [itemsPerPage, dispatch, currentPage, action, type, isSearching]);
+  }, [
+    itemsPerPage,
+    dispatch,
+    currentPage,
+    action,
+    type,
+    isSearching,
+    initialData,
+  ]);
 
   const List = () => {
-    if (data.content.length >= 1) {
+    if (pageCount !== 0) {
       return (
         <Box>
           <ShowList form={form} type={type} data={data.content} card={card} />
         </Box>
       );
-    } else if (data.content.length < 1 && isSearching) {
+    } else if (pageCount === 0 && isSearching) {
       return (
         <Box sx={style}>
           <Typography
@@ -76,13 +101,15 @@ const ListData = (props) => {
           marginTop: 10,
         }}
       >
-        <Pagination
-          boundaryCount={pageRangeDisplayed}
-          count={data.page.pageCount}
-          onChange={handlePageClick}
-          page={currentPage}
-          size="medium"
-        />
+        {pageCount !== 0 && (
+          <Pagination
+            boundaryCount={pageRangeDisplayed}
+            count={data.page.pageCount}
+            onChange={handlePageClick}
+            page={currentPage}
+            size="medium"
+          />
+        )}
       </Box>
     </Box>
   );

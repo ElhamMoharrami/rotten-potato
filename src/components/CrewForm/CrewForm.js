@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import {
-  saveData,
-  updateData,
-  fetchDetail,
-  fetchDetailList,
-  fetchData,
-} from "../../store/api-call";
+import {saveData,updateData,fetchDetail,fetchDetailList,fetchData} from "../../store/api-call";
 import { useNavigate } from "react-router-dom";
 import { artistActions } from "../../store/data-slice";
 import { crewMovieTableActions } from "../../store/dataTable-Slice";
+import { style, BASEURL } from "../../assets/config";
 import { InputLabel, Input, FormHelperText } from "@mui/material";
 import { FormControl } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -21,7 +16,6 @@ import Grid from "@mui/material/Unstable_Grid2";
 import Modal from "@mui/material/Modal";
 import { DataGrid } from "@mui/x-data-grid";
 import Badge from "@mui/material/Badge";
-import { style, BASEURL } from "../../assets/config";
 
 const columns = [
   { field: "title", headerName: "title", width: 130 },
@@ -32,7 +26,7 @@ const CrewForm = (props) => {
   const { actionType, open, close, id } = props;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { register, reset, formState } = useForm();
+  const { register,formState } = useForm();
   const isAddMode = !id;
 
   const crew = useSelector((state) => state.crews.selectedItem);
@@ -40,7 +34,7 @@ const CrewForm = (props) => {
   const crewMovie = useSelector((state) => state.crews.detailList);
   const pageCount = useSelector((state) => state.crewMovieTable.page.pageCount);
   const currentPage = useSelector((state) => state.crews.data.page.currentPage);
-  const itemsPerPage=useSelector((state)=>state.login.account.itemsPerPage)
+  const itemsPerPage = useSelector((state) => state.login.account.itemsPerPage);
 
   const [crewData, setCreweData] = useState({});
   const [openTable, setOpenTable] = useState(false);
@@ -93,8 +87,11 @@ const CrewForm = (props) => {
       dispatch(
         fetchData("movies", pageSize, tableCurrentPage, crewMovieTableActions)
       );
+      const crewMoviesList = crewMovie.map((item) => item.id);
+      setSelectedTableData(crewMoviesList);
+      setNumberOfSelectedRows(crewMoviesList.length);
     }
-  }, [pageSize, dispatch, tableCurrentPage, openTable]);
+  }, [pageSize, dispatch, tableCurrentPage, openTable, crewMovie]);
 
   const onchangeHandler = (e) => {
     const name = e.target.name;
@@ -178,6 +175,7 @@ const CrewForm = (props) => {
         )
       );
     }
+    dispatch(artistActions.setOpenAlert({ openAlert: true }));
     navigate("/crews");
   };
 
@@ -185,7 +183,7 @@ const CrewForm = (props) => {
     if (formState.isSubmitSuccessful) {
       setCreweData({});
     }
-  }, [formState, crewData, reset]);
+  }, [formState, crewData]);
 
   const formIsValid =
     nameisValid &&
@@ -263,7 +261,6 @@ const CrewForm = (props) => {
             <Grid xs={6}>
               <FormControl>
                 <InputLabel htmlFor="death-input">
-                  {" "}
                   *Artist Profession
                 </InputLabel>
                 <Input
@@ -343,6 +340,7 @@ const CrewForm = (props) => {
                   border: "1px solid rgb(0, 0, 0)",
                 }}
                 disabled={formIsValid ? false : true}
+                data-testid="crewFormSubmit"
                 type="submit"
               >
                 Submit

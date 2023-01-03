@@ -32,6 +32,7 @@ const ShowList = (props) => {
                 position: "relative",
                 width: "240px",
               }}
+             data-testid= "addMovie" 
             >
               <CardMedia
                 component="img"
