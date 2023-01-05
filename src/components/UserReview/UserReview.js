@@ -1,15 +1,14 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import { useDispatch } from "react-redux";
-import { Card, Typography } from "@mui/material";
-import TextField from "@mui/material/TextField";
-import { InputLabel, Input, FormHelperText } from "@mui/material";
+import { Typography } from "@mui/material";
 import Rating from "@mui/material/Rating";
 import InputAdornment from "@mui/material/InputAdornment";
 import Button from "@mui/material/Button";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import FormControl from "@mui/material/FormControl";
 import { commitComment } from "../../store/api-call";
+import { reviewsActions } from "../../store/reviews-slice";
 
 const UserReview = (props) => {
   const dispatch = useDispatch();
@@ -26,8 +25,8 @@ const UserReview = (props) => {
       rate: value,
       description: comment,
     };
-    dispatch(commitComment(data));
-    console.log(data);
+    dispatch(commitComment(data,movieId));
+    dispatch(reviewsActions.setOpenAlert({ openAlert: true }));
   };
 
   return (

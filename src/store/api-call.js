@@ -1,5 +1,6 @@
 import { loginActions } from "./login-slice";
 import { BASEURL } from "../assets/config";
+import { reviewsActions } from "./reviews-slice";
 
 const getDataRequest = async (url) => {
   const response = await fetch(url);
@@ -329,17 +330,50 @@ export const fetchCrewTable = (action, itemsPerPage, currentPage) => {
   };
 };
 
-export const commitComment = (data) => {
+export const commitComment = (data, movieId) => {
   return async (dispatch) => {
     try {
       let url = new URL(`${BASEURL}/reviews`);
-
-      console.log(url);
       await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
+      dispatch(fetchReviews(movieId));
+      dispatch(
+        reviewsActions.setActionState({
+          actionState: {
+            status: "success",
+            action: "submit",
+            title: "comment",
+          },
+        })
+      );
+    } catch (err) {
+      dispatch(
+        reviewsActions.setActionState({
+          actionState: {
+            status: "error",
+            action: "submit",
+            title: "comment",
+          },
+        })
+      );
+    }
+  };
+};
+
+export const fetchReviews = (movieId) => {
+  return async (dispatch) => {
+    try {
+      const url = `http://localhost:8080/api/reviews/search/search?movie=${movieId}`;
+      const getData = await getDataRequest(url);
+      console.log(getData.content);
+      dispatch(
+        reviewsActions.setData({
+          reviews: getData.content,
+        })
+      );
     } catch (err) {
       console.log(err);
     }
