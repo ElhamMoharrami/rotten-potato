@@ -214,6 +214,23 @@ export const createAccount = (dataObj) => {
   };
 };
 
+export const usernameCheck = (username) => {
+  return async (dispatch) => {
+    try {
+      const url = `${BASEURL}/users/search/byUsername?username=${username}`;
+      const response = await fetch(url);
+
+      dispatch(
+        loginActions.setUsernameExists({
+          usernameExists: response.ok ? true : false,
+        })
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
 export const login = (dataObj) => {
   return async (dispatch) => {
     try {
@@ -366,7 +383,7 @@ export const commitComment = (data, movieId) => {
 export const fetchReviews = (movieId) => {
   return async (dispatch) => {
     try {
-      const url = `http://localhost:8080/api/reviews/search/search?movie=${movieId}`;
+      const url = `${BASEURL}/reviews/search/search?movie=${movieId}`;
       const getData = await getDataRequest(url);
       console.log(getData.content);
       dispatch(
@@ -374,6 +391,26 @@ export const fetchReviews = (movieId) => {
           reviews: getData.content,
         })
       );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const fetchTableData = (type, size, currentPage, action) => {
+  return async (dispatch) => {
+    try {
+      dispatch(action.setIsLoading({ isLoading: true }));
+      const url = `${BASEURL}/${type}?page=${currentPage - 1}&size=${size}`;
+      const getData = await getDataRequest(url);
+      dispatch(
+        action.setData({
+          fetchedData: getData.content,
+          pageCount: getData.page.totalPages,
+          totalElements: getData.page.totalElements,
+        })
+      );
+      dispatch(action.setIsLoading({ isLoading: false }));
     } catch (err) {
       console.log(err);
     }

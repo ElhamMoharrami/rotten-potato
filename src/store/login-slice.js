@@ -12,6 +12,7 @@ const initialState = {
     theme: "light",
   },
   actionState: { status: "", action: "", title: "" },
+  usernameExists:false
 };
 
 const createLoginSlice = () => {
@@ -44,6 +45,9 @@ const createLoginSlice = () => {
       setTheme(state, action) {
         state.account.theme = action.payload.theme;
       },
+      setUsernameExists(state,action){
+        state.usernameExists=action.payload.usernameExists
+      }
     },
   });
 };

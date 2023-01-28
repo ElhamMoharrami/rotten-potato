@@ -1,26 +1,31 @@
 import React from "react";
-import { Card, Typography } from "@mui/material";
-import CardContent from "@mui/material/CardContent";
-import ShowMoreText from "react-show-more-text";
+import InputAdornment from "@mui/material/InputAdornment";
+import Rating from "@mui/material/Rating";
+import Box from "@mui/material/Box";
+import OutlinedInput from "@mui/material/OutlinedInput";
 
 const ReviewCard = (props) => {
   const { data } = props;
+
   return (
-    <Card variant="outlined">
-      <CardContent>
-        <ShowMoreText
-          lines={3}
-          more="Show more"
-          less="Show less"
-          className="content-css"
-          anchorClass="show-more-less-clickable"
-          expanded={false}
-          truncatedEndingComponent={"... "}
-        >
-          <Typography>{data.description}</Typography>
-        </ShowMoreText>
-      </CardContent>
-    </Card>
+    <Box
+      sx={{
+        width: "100%",
+      }}
+    >
+      <OutlinedInput
+        fullWidth
+        inputProps={{ "data-testid": "review-comment" }}
+        id="user-review"
+        placeholder="Write Your Own Review"
+        value={data.description}
+        endAdornment={
+          <InputAdornment position="end">
+            <Rating readOnly value={data.rate} />
+          </InputAdornment>
+        }
+      />
+    </Box>
   );
 };
 

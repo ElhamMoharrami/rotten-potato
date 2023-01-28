@@ -6,13 +6,7 @@ import ToggleColorMode from "../../components/Theme/Theme";
 import Profile from "../Profile";
 
 test("profile edit works correctly", () => {
-  const history = createMemoryHistory();
-
-  renderWithProviders(
-    <Router location={history.location} navigator={history}>
-      <Profile />
-    </Router>
-  );
+  renderWithProviders(<Profile />);
 
   const nameInput = screen.getByLabelText("Full name");
   fireEvent.change(nameInput, { target: { value: "Tom" } });
@@ -36,14 +30,10 @@ test("profile edit works correctly", () => {
 });
 
 test("theme chages correctly", async () => {
-  const history = createMemoryHistory();
-
   renderWithProviders(
-    <Router location={history.location} navigator={history}>
-      <ToggleColorMode>
-        <Profile />
-      </ToggleColorMode>
-    </Router>
+    <ToggleColorMode>
+      <Profile />
+    </ToggleColorMode>
   );
 
   const themeButton = screen.getByTestId("theme-button");
@@ -55,12 +45,7 @@ test("theme chages correctly", async () => {
 });
 
 test("delete account works properly", () => {
-  const history = createMemoryHistory();
-  renderWithProviders(
-    <Router location={history.location} navigator={history}>
-      <Profile />
-    </Router>
-  );
+  renderWithProviders(<Profile />);
 
   const deleteBtn = screen.getByRole("button", { name: /Delete account/i });
   expect(deleteBtn).toBeInTheDocument();

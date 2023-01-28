@@ -38,6 +38,7 @@ const UserReview = (props) => {
       <form onSubmit={submitHandler}>
         <FormControl fullWidth variant="standard">
           <OutlinedInput
+           inputProps={{ "data-testid": "review-comment" }}
             id="user-review"
             placeholder="Write Your Own Review"
             value={comment}

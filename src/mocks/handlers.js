@@ -433,4 +433,35 @@ export const handlers = [
       })
     );
   }),
+  rest.post("http://localhost:8080/api/reviews", (req, res, ctx) => {
+    return res(
+      ctx.json({
+        movie: "http://localhost:8080/api/movies/tt0306841",
+        user: "http://localhost:8080/api/users/94501dc6-2006-7189-3eb7-a8fe1b14c588",
+        rate: 3.5,
+        description: "test",
+      })
+    );
+  }),
+  rest.get(
+    "http://localhost:8080/api/reviews/search/search",
+    (req, res, ctx) => {
+      return res(
+        ctx.json({
+          content: [
+            {
+              id: "tt0389790",
+              rate: 3.5,
+              description: "test1",
+            },
+            {
+              id: "tt0389790",
+              rate: 3.5,
+              description: "test2",
+            },
+          ],
+        })
+      );
+    }
+  ),
 ];

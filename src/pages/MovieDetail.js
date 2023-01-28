@@ -188,8 +188,8 @@ const MovieDetail = () => {
           </Typography>
           <Box sx={{ marginTop: "20px" }}>
             <React.Fragment>
-              {reviewsForDisplay.map((item) => (
-                <ReviewCard data={item} key={item.id} />
+              {reviewsForDisplay.map((item, index) => (
+                <ReviewCard data-testid="review-data" data={item} key={index} />
               ))}
               {reviews.length > 1 && (
                 <Button
