@@ -9,6 +9,7 @@ import { Card, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import Grid from "@mui/material/Unstable_Grid2";
 import { responsive } from "../assets/config";
 import blankProfile from "../assets/images/blankProfilePicture.png";
 
@@ -24,59 +25,104 @@ const CrewsDetail = () => {
   }, [dispatch, id]);
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Card
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          gap: "80px",
-          margin: "80px 10px 10px 10px",
-        }}
-      >
-        <Box sx={{ marginLeft: "2%", marginTop: "2%" }}>
-          <Typography sx={{ color: "black" }}>{artist.name}</Typography>
-          <Box sx={{ marginRight: "20px" }}>
-            {artist.birth !== "/" && <span>Birth : {artist.birth}</span>}
-            {artist.death !== "\\N" && <span>Death : {artist.death}</span>}
-          </Box>
-          <Typography sx={{ color: "black" }}>{artist.profession}</Typography>
-        </Box>
-        <Box>
-          {artist.poster !== null && (
-            <img src={artist.poster} alt={artist.title} />
-          )}
-          {artist.poster === null && (
-            <img src={blankProfile} alt={artist.title} />
-          )}
-        </Box>
+    <Box sx={{ m: 5 }}>
+      <Card>
+        <Grid container alignItems="stretch">
+          <Grid
+            xs={6}
+            container
+            direction="column"
+            justifyContent="space-between"
+            alignItems="flex-start"
+            item
+          >
+            <Grid
+              item
+              sx={{
+                m: "20px",
+              }}
+            >
+              <Typography>{artist.name}</Typography>
+            </Grid>
+            <Grid
+              item
+              sx={{
+                m: "20px",
+              }}
+            >
+              <Typography>{artist.birth}</Typography>
+            </Grid>
+            <Grid
+              item
+              sx={{
+                m: "20px",
+              }}
+            >
+              <Typography>{artist.profession}</Typography>
+            </Grid>
+          </Grid>
+          <Grid xs={6} item>
+            <Box
+              component="img"
+              sx={{
+                float: "right",
+                height: "250px",
+                width: "250px",
+              }}
+              src={artist.poster !== null ? artist.poster : blankProfile}
+              alt={artist.title}
+           />
+          </Grid>
+        </Grid>
       </Card>
+
       <Box>
         <Typography
           sx={{
-            padding: "20px",
+            padding: "10px",
             boxShadow:
               "rgba(114, 100, 165, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
           }}
         >
           movies
         </Typography>
-        <Box sx={{ margin: "10px", overflow: "hidden" }}>
-          <Carousel
-            swipeable={false}
-            responsive={responsive}
-            ssr={true}
-            infinite={true}
-            autoPlaySpeed={1000}
-            keyBoardControl={true}
-            customTransition="all .5"
-            transitionDuration={500}
-            removeArrowOnDeviceType={["tablet", "mobile"]}
-            itemClass="carousel-item-padding-40-px"
-          >
-            {movies.map((item) => (
-              <MovieCard artistDetail={true} movie={item} key={item.id} />
-            ))}
-          </Carousel>
+        <Box>
+        
+          <Box sx={{ margin: "10px", overflow: "hidden" }}>
+            <Carousel
+              swipeable={false}
+              responsive={responsive}
+              ssr={true}
+              infinite={true}
+              autoPlaySpeed={1000}
+              keyBoardControl={true}
+              customTransition="all .5"
+              transitionDuration={500}
+              removeArrowOnDeviceType={["tablet", "mobile"]}
+              itemClass="carousel-item-padding-40-px"
+            >
+              {movies.map((item) => (
+                <MovieCard artistDetail={true} movie={item} key={item.id} />
+              ))}
+            </Carousel>
+          </Box>
+        
+        {/* {!movies[0].id ===undefined && (
+          <Box>
+            <Typography
+              sx={{
+                fontSize: 14,
+                textAlign: " center",
+                verticalAlign: "middle",
+                lineHeight: "90px",
+              }}
+              color="text.secondary"
+              gutterBottom
+            >
+              There is no movie for <span>{artist.name}</span>.
+            </Typography>
+          </Box>
+        )} */}
         </Box>
       </Box>
     </Box>

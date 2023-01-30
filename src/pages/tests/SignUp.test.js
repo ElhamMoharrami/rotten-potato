@@ -5,12 +5,11 @@ import { createMemoryHistory } from "history";
 import Signup from "../Signup";
 
 test("sign up works properly", () => {
-  const history = createMemoryHistory({ initialEntries: ['/signup'] });
-  renderWithProviders(
-    <Router location={history.location} navigator={history}>
-      <Signup />
-    </Router>
-  );
+  const history = createMemoryHistory({ initialEntries: ["/signup"] });
+
+  renderWithProviders(<Signup />, {
+    history: history,
+  });
 
   const username = screen.getByTestId("signupUsername");
   fireEvent.change(username, { target: { value: "Tom" } });
@@ -27,9 +26,9 @@ test("sign up works properly", () => {
   const signup = screen.getByRole("button", { name: /Sign up/i });
   expect(signup).toBeInTheDocument();
 
-  expect(history.location.pathname).toBe('/signup');
+  expect(history.location.pathname).toBe("/signup");
 
   fireEvent.click(signup);
 
-  expect(history.location.pathname).toBe('/signin');
+  expect(history.location.pathname).toBe("/signin");
 });

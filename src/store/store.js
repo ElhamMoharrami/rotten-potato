@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { artistsSlice, movieSlice } from "./data-slice";
 import { loginSlice } from "./login-slice";
 import { styleSlice } from "./style-slice";
+import {reviewsSlice} from "./reviews-slice";
 import { movieCrewTableSlice, crewMovieTableSlice } from "./dataTable-Slice";
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
@@ -28,6 +29,7 @@ const reducers = combineReducers({
   style: styleSlice.reducer,
   movieCrewTable: movieCrewTableSlice.reducer,
   crewMovieTable: crewMovieTableSlice.reducer,
+  reviews: reviewsSlice.reducer,
 });
 
 const store = (preloadedState) => {

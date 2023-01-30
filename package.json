@@ -32,6 +32,8 @@
     "react-router-dom": "^6.3.0",
     "react-router-redux": "^4.0.8",
     "react-scripts": "5.0.1",
+    "react-show-more-list": "^0.5.2",
+    "react-show-more-text": "^1.6.2",
     "react-spinners": "^0.13.4",
     "redux": "^4.2.0",
     "redux-persist": "^6.0.0",
@@ -43,7 +45,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --coverage --watchAll=false",
     "eject": "react-scripts eject"
   },
   "browserslist": {

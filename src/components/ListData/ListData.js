@@ -23,18 +23,16 @@ const ListData = (props) => {
   } = props;
   const dispatch = useDispatch();
   const pageRangeDisplayed = 3;
-  const initialData = localStorage.getItem("data");
+  const initialData = localStorage.getItem(`${type}`);
   const isFirstRun = useRef(true);
 
   useEffect(() => {
     if (!isSearching) {
       dispatch(fetchData(type, itemsPerPage, currentPage, action));
-      console.log('this is main fetch',isSearching);
     } else if (isSearching && isFirstRun.current) {
       isFirstRun.current = false;
       return;
     } else if (isSearching && !isFirstRun.current) {
-      console.log('this is search fetch',isSearching);
       dispatch(
         fetchSearch(
           JSON.parse(initialData),
@@ -56,13 +54,7 @@ const ListData = (props) => {
   ]);
 
   const List = () => {
-    if (pageCount !== 0) {
-      return (
-        <Box>
-          <ShowList form={form} type={type} data={data.content} card={card} />
-        </Box>
-      );
-    } else if (pageCount === 0 && isSearching) {
+    if (pageCount === 0 && isSearching) {
       return (
         <Box sx={style}>
           <Typography
@@ -79,7 +71,19 @@ const ListData = (props) => {
           </Typography>
         </Box>
       );
-    }
+    } 
+      return (
+        <Box>
+          <ShowList
+            pageCount={pageCount}
+            form={form}
+            type={type}
+            data={data.content}
+            card={card}
+          />
+        </Box>
+      );
+    
   };
 
   const handlePageClick = async (event, page) => {
@@ -87,10 +91,11 @@ const ListData = (props) => {
   };
 
   return (
-    <Box>
-      {isLoading && <LinearProgress />}
-      {!isLoading && <List />}
-
+    <Box sx={{ display: "flex", flexDirection: "column" }}>
+      <Box>
+        {isLoading && <LinearProgress />}
+        {!isLoading && <List />}
+      </Box>
       <Box
         sx={{
           display: "flex",

@@ -1,5 +1,6 @@
 import { loginActions } from "./login-slice";
 import { BASEURL } from "../assets/config";
+import { reviewsActions } from "./reviews-slice";
 
 const getDataRequest = async (url) => {
   const response = await fetch(url);
@@ -139,7 +140,7 @@ export const updateData = (
     try {
       const url = `${BASEURL}/${type}/${id}`;
       await fetch(url, {
-        method: "PUT",
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dataObj),
       });
@@ -207,6 +208,23 @@ export const createAccount = (dataObj) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dataObj),
       });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const usernameCheck = (username) => {
+  return async (dispatch) => {
+    try {
+      const url = `${BASEURL}/users/search/byUsername?username=${username}`;
+      const response = await fetch(url);
+
+      dispatch(
+        loginActions.setUsernameExists({
+          usernameExists: response.ok ? true : false,
+        })
+      );
     } catch (err) {
       console.log(err);
     }
@@ -323,6 +341,76 @@ export const fetchCrewTable = (action, itemsPerPage, currentPage) => {
           pageCount: getData.page.totalPages,
         })
       );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const commitComment = (data, movieId) => {
+  return async (dispatch) => {
+    try {
+      let url = new URL(`${BASEURL}/reviews`);
+      await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      dispatch(fetchReviews(movieId));
+      dispatch(
+        reviewsActions.setActionState({
+          actionState: {
+            status: "success",
+            action: "submit",
+            title: "comment",
+          },
+        })
+      );
+    } catch (err) {
+      dispatch(
+        reviewsActions.setActionState({
+          actionState: {
+            status: "error",
+            action: "submit",
+            title: "comment",
+          },
+        })
+      );
+    }
+  };
+};
+
+export const fetchReviews = (movieId) => {
+  return async (dispatch) => {
+    try {
+      const url = `${BASEURL}/reviews/search/search?movie=${movieId}`;
+      const getData = await getDataRequest(url);
+      console.log(getData.content);
+      dispatch(
+        reviewsActions.setData({
+          reviews: getData.content,
+        })
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const fetchTableData = (type, size, currentPage, action) => {
+  return async (dispatch) => {
+    try {
+      dispatch(action.setIsLoading({ isLoading: true }));
+      const url = `${BASEURL}/${type}?page=${currentPage - 1}&size=${size}`;
+      const getData = await getDataRequest(url);
+      dispatch(
+        action.setData({
+          fetchedData: getData.content,
+          pageCount: getData.page.totalPages,
+          totalElements: getData.page.totalElements,
+        })
+      );
+      dispatch(action.setIsLoading({ isLoading: false }));
     } catch (err) {
       console.log(err);
     }

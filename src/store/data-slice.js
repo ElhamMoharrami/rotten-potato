@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   data: {
     content: [],
-    page: { pageCount: 0, currentPage: 1 },
+    page: { pageCount: 0, currentPage: 1},
   },
   selectedItem: [],
   detailList: [],
@@ -44,7 +44,7 @@ const createDataSlice = (name) => {
       setActionState(state, action) {
         state.actionState = action.payload.actionState;
       },
-      setOpenAlert(state,action) {
+      setOpenAlert(state, action) {
         state.openAlert = action.payload.openAlert;
       },
     },

@@ -5,13 +5,7 @@ import { createMemoryHistory } from "history";
 import SignIn from "../Signin";
 
 test("can sign in properly", async () => {
-  const history = createMemoryHistory();
-
-  renderWithProviders(
-    <Router location={history.location} navigator={history}>
-      <SignIn />
-    </Router>
-  );
+  renderWithProviders(<SignIn />);
 
   const password = screen.getByTestId("signinPassword");
   fireEvent.change(password, { target: { value: "112233" } });

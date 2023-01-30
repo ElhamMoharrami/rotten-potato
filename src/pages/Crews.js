@@ -30,18 +30,19 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
 );
 
 const Artists = () => {
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
   const data = useSelector((state) => state.crews.data);
   const itemsPerPage = useSelector((state) => state.login.account.itemsPerPage);
+  const pageCount = useSelector((state) => state.crews.data.page.pageCount);
   const isSearching = useSelector((state) => state.crews.isSearching);
   const isLoading = useSelector((state) => state.crews.isLoading);
   const actionState = useSelector((state) => state.crews.actionState);
-  const openAlert=useSelector((state) => state.crews.openAlert);
+  const openAlert = useSelector((state) => state.crews.openAlert);
   const open = useSelector((state) => state.style.drawer.open);
 
   const handleCloseAlert = () => {
-    dispatch(artistActions.setOpenAlert({openAlert:false}))
-  }
+    dispatch(artistActions.setOpenAlert({ openAlert: false }));
+  };
 
   const card = (item) => {
     return <CrewCard crew={item} />;
@@ -82,6 +83,7 @@ const Artists = () => {
           form={form}
           itemsPerPage={itemsPerPage}
           currentPage={data.page.currentPage}
+          pageCount={pageCount}
         />
       </Main>
     </Box>

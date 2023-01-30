@@ -159,7 +159,6 @@ test("sort select works", async () => {
 });
 
 test("add movie works", async () => {
-  const history = createMemoryHistory();
   const state = {
     login: {
       account: {
@@ -178,12 +177,7 @@ test("add movie works", async () => {
     },
   };
 
-  renderWithProviders(
-    <Router location={history.location} navigator={history}>
-      <Movies />
-    </Router>,
-    { preloadedState: state }
-  );
+  renderWithProviders(<Movies />, { preloadedState: state });
 
   const addCard = await screen.findByAltText("add sign");
   expect(addCard).toBeInTheDocument();
@@ -214,6 +208,6 @@ test("add movie works", async () => {
   expect(formSubmit).toBeInTheDocument();
   fireEvent.click(formSubmit);
 
-   const alertMsg=await screen.findByRole("alert")
-  expect(alertMsg).toBeInTheDocument()
+  const alertMsg = await screen.findByRole("alert");
+  expect(alertMsg).toBeInTheDocument();
 });

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteSelectedItem } from "../../store/api-call";
 import { movieActions } from "../../store/data-slice";
 import MovieForm from "../MovieForm/MovieForm";
-import { Link } from "@mui/material";
 import { Link as LinkRouter } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -13,6 +12,8 @@ import Typography from "@mui/material/Typography";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Confirmation from "../Confirmation/Confirmation";
+
+const style = { textDecoration: "none" };
 
 const MovieCard = (props) => {
   const { artistDetail } = props;
@@ -56,29 +57,29 @@ const MovieCard = (props) => {
         width: "240px",
       }}
     >
-      <Link component="span" href="#" sx={{ textDecoration: "none" }}>
-        <LinkRouter to={`/movies/${movie.id}`}>
-          <CardMedia
-            component="img"
-            alt={movie.title}
-            height="340"
-            image={movie.poster}
-          />
-          <CardContent>
-            <Typography
-              sx={{ fontSize: 18 }}
-              gutterBottom
-              variant="h5"
-              component="div"
-            >
-              {movie.title}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {movie.year}
-            </Typography>
-          </CardContent>
-        </LinkRouter>
-      </Link>
+      <LinkRouter style={style} to={`/movies/${movie.id}`}>
+        <CardMedia
+          component="img"
+          alt={movie.title}
+          height="340"
+          image={movie.poster}
+        />
+        <CardContent>
+          <Typography
+            sx={{ fontSize: 18 }}
+            gutterBottom
+            variant="h5"
+            component="div"
+            color="text.primary"
+          >
+            {movie.title}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {movie.year}
+          </Typography>
+        </CardContent>
+      </LinkRouter>
+
       {!artistDetail && account.role === "ADMIN" && (
         <CardActions
           sx={{

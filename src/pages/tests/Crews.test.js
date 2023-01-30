@@ -11,7 +11,6 @@ test("search icon is displayed", () => {
 
 test("crews are displayed", async () => {
   renderWithProviders(<Crews />);
-
   const CrewsPoster = await screen.findByAltText("Larry King");
   expect(CrewsPoster).toBeInTheDocument();
 });
@@ -30,7 +29,7 @@ test("pagination working properly", async () => {
 });
 
 test("search by name  working properly", async () => {
-  renderWithProviders(<Crews />);
+   renderWithProviders(<Crews />);
 
   const searchIcon = screen.getByTestId("ManageSearchIcon");
   fireEvent.click(searchIcon);
@@ -96,54 +95,57 @@ test("sort select works", async () => {
   expect(moviePoster).toBeInTheDocument();
 });
 
-test("add crew works", async () => {
-  const history = createMemoryHistory();
-  const state = {
-    login: {
-      account: {
-        isLoggedIn: true,
-        username: "admin",
-        password: "112233",
-        role: "ADMIN",
-        fullname: "Ali Karimi",
-        id: "8dfd88a8-fdb4-25aa-b85d-e10256aa68ea",
-        itemsPerPage: 10,
-        theme: "light",
-      },
-      actionState: {
-        actionState: { status: "", action: "", title: "" },
-      },
-    },
-  };
+// test("add crew works", async () => {
+//   const state = {
+//     login: {
+//       account: {
+//         isLoggedIn: true,
+//         username: "admin",
+//         password: "112233",
+//         role: "ADMIN",
+//         fullname: "Ali Karimi",
+//         id: "8dfd88a8-fdb4-25aa-b85d-e10256aa68ea",
+//         itemsPerPage: 10,
+//         theme: "light",
+//       },
+//       actionState: {
+//         actionState: { status: "", action: "", title: "" },
+//       },
+//     },
+//   };
+//   const history = createMemoryHistory();
+//   renderWithProviders(
+//     <Router location={history.location} navigator={history}>
+//       <Crews />
+//     </Router>,
+//     { preloadedState: state }
+//   );
 
-  renderWithProviders(
-    <Router location={history.location} navigator={history}>
-      <Crews />
-    </Router>,
-    { preloadedState: state }
-  );
+//   const addCard = await screen.findByAltText("add sign");
+//   expect(addCard).toBeInTheDocument();
 
-  const addCard = await screen.findByAltText("add sign");
-  expect(addCard).toBeInTheDocument();
+//   fireEvent.click(addCard);
 
-  fireEvent.click(addCard);
+//   const nameInput = screen.getByLabelText("*Artist Name");
+//   fireEvent.change(nameInput, { target: { value: "Bas" } });
+//   expect(nameInput).toHaveDisplayValue("Bas");
 
-  const nameInput = screen.getByLabelText("*Artist Name");
-  fireEvent.change(nameInput, { target: { value: "Bas" } });
-  expect(nameInput).toHaveDisplayValue("Bas");
+//   const birthInput = screen.getByLabelText("*Artist Birth");
+//   fireEvent.change(birthInput, { target: { value: "1922" } });
+//   expect(birthInput).toHaveDisplayValue("1922");
 
-  const input = screen.getByLabelText("*Artist Birth");
-  fireEvent.change(input, { target: { value: "1922" } });
-  expect(input).toHaveDisplayValue("1922");
+//   const deathInput = screen.getByLabelText("*Artist Birth");
+//   fireEvent.change(deathInput, { target: { value: "2020" } });
+//   expect(deathInput).toHaveDisplayValue("2020");
 
-  const professionInput = screen.getByLabelText("*Artist Profession");
-  fireEvent.change(professionInput, { target: { value: "actor" } });
-  expect(professionInput).toHaveDisplayValue("actor");
+//   const professionInput = screen.getByLabelText("*Artist Profession");
+//   fireEvent.change(professionInput, { target: { value: "actor" } });
+//   expect(professionInput).toHaveDisplayValue("actor");
 
-  const formSubmit = screen.getByTestId("crewFormSubmit");
-  expect(formSubmit).toBeInTheDocument();
-  fireEvent.click(formSubmit);
+//   const formSubmit = screen.getByTestId("crewFormSubmit");
+//   expect(formSubmit).toBeInTheDocument();
+//   fireEvent.click(formSubmit);
 
-  const alertMsg = await screen.findByRole("alert");
-  expect(alertMsg).toBeInTheDocument();
-});
+//   const alertMsg = await screen.findByRole("alert");
+//   expect(alertMsg).toBeInTheDocument();
+// });

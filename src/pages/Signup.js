@@ -1,7 +1,7 @@
 import * as React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { createAccount } from "../store/api-call";
+import { createAccount, usernameCheck } from "../store/api-call";
 import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -28,8 +28,11 @@ const Signup = () => {
   const [usernameIsValid, setUsernameIsValid] = useState(true);
   const [fullnameIsValid, setFullnameIsValid] = useState(true);
   const [passwordIsValid, setPasswordIsValid] = useState(true);
+  const [usernameAlreadyExists, setUsernameAlreadyExists] = useState(false);
 
   const showPasswordHandler = () => setShowPass(!showPass);
+
+  const userExists = useSelector((state) => state.login.usernameExists);
 
   const onchangeHandler = (e) => {
     const name = e.target.name;
@@ -41,12 +44,14 @@ const Signup = () => {
     }));
 
     if (name === "username") {
-      if (value.length > 20) {
+      dispatch(usernameCheck(value));
+      if (value.length > 10) {
         setUsernameIsValid(false);
       } else {
         setUsernameIsValid(true);
       }
     }
+
     if (name === "fullname") {
       if (value.length > 50) {
         setFullnameIsValid(false);
@@ -65,7 +70,15 @@ const Signup = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (signupForm.password === signupForm.confirmPassword) {
+
+    if (userExists) {
+      setUsernameAlreadyExists(true);
+    }
+
+    if (
+      signupForm.password === signupForm.confirmPassword &&
+      !userExists
+    ) {
       const dataObj = {
         username: signupForm.username,
         password: signupForm.password,
@@ -74,7 +87,8 @@ const Signup = () => {
       };
       dispatch(createAccount(dataObj));
       navigate("/signin");
-    } else {
+    }
+    if (signupForm.password !== signupForm.confirmPassword) {
       setShowMsg(true);
     }
   };
@@ -112,7 +126,12 @@ const Signup = () => {
                 />
                 {!usernameIsValid && (
                   <FormHelperText>
-                    username should not be more than 20 characters.
+                    username should not be more than 10 characters.
+                  </FormHelperText>
+                )}
+                {usernameAlreadyExists && (
+                  <FormHelperText>
+                    username already exists.please choose another username.
                   </FormHelperText>
                 )}
               </FormControl>

@@ -12,8 +12,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import { artistActions } from "../../store/data-slice";
 import { deleteSelectedItem } from "../../store/api-call";
 import blankProfilePicture from "../../assets/images/blankProfilePicture.png";
-import { Link } from "@mui/material";
 import Confirmation from "../Confirmation/Confirmation";
+
+const style = {textDecoration: "none" };
 
 const CrewCard = (props) => {
   const { crew, movieDetail } = props;
@@ -54,21 +55,20 @@ const CrewCard = (props) => {
         width: "240px",
       }}
     >
-      <Link component="span" href="#" sx={{ textDecoration: "none" }}>
-        <LinkRouter to={`/crews/${crew.id}`}>
-          <CardMedia
-            component="img"
-            alt={crew.name}
-            height="320"
-            image={crew.poster !== null ? crew.poster : blankProfilePicture}
-          />
-          <CardContent>
-            <Typography sx={{ fontSize: 18 }} variant="h5">
-              {crew.name}
-            </Typography>
-          </CardContent>
-        </LinkRouter>
-      </Link>
+      <LinkRouter style={style} to={`/crews/${crew.id}`}>
+        <CardMedia
+          component="img"
+          alt={crew.name}
+          height="320"
+          image={crew.poster !== null ? crew.poster : blankProfilePicture}
+        />
+        <CardContent>
+          <Typography sx={{ fontSize: 18 }} color="text.primary" variant="h5">
+            {crew.name}
+          </Typography>
+        </CardContent>
+      </LinkRouter>
+
       {account.role === "ADMIN" && !movieDetail && (
         <CardActions
           sx={{
