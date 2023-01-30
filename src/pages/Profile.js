@@ -26,6 +26,7 @@ import {
   Box,
   InputLabel,
 } from "@mui/material";
+import {Pink} from '@mui/material/colors';
 
 const Profile = () => {
   const dispatch = useDispatch();

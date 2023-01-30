@@ -13,6 +13,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import Box from "@mui/material/Box";
+import Grid from "@mui/material/Unstable_Grid2";
 
 const CrewSearch = (props) => {
   const { currentPage, itemsPerPage } = props;
@@ -49,8 +50,13 @@ const CrewSearch = (props) => {
   return (
     <Box>
       <form onSubmit={submitHandler}>
-        <Box>
-          <Box>
+        <Grid
+          container
+          direction="column"
+          justifyContent="space-between"
+          alignItems="flex-start"
+        >
+          <Grid sx={{ margin: 3 }} item>
             <FormControl>
               <InputLabel htmlFor="name-input">Artist Name</InputLabel>
               <Input
@@ -61,8 +67,8 @@ const CrewSearch = (props) => {
                 aria-describedby="name-input"
               />
             </FormControl>
-          </Box>
-          <Box>
+          </Grid>
+          <Grid sx={{ margin: 3 }} item>
             <FormControl sx={{ m: 1, minWidth: 120 }}>
               <InputLabel id="profession-select">profession</InputLabel>
               <Select
@@ -72,6 +78,7 @@ const CrewSearch = (props) => {
                 onChange={onchangeHandler}
                 value={data.profession || ""}
                 label="profession"
+                variant="standard"
               >
                 <MenuItem value="">
                   <em>None</em>
@@ -83,8 +90,8 @@ const CrewSearch = (props) => {
                 ))}
               </Select>
             </FormControl>
-          </Box>
-          <Box>
+          </Grid>
+          <Grid sx={{ margin: 3 }} item>
             <FormControl sx={{ m: 1, minWidth: 120 }}>
               <InputLabel id="sort-select">Sort</InputLabel>
               <Select
@@ -94,13 +101,14 @@ const CrewSearch = (props) => {
                 onChange={onchangeHandler}
                 value={data.sort || ""}
                 label="sort"
+                variant="standard"
               >
                 <MenuItem value="name">Name</MenuItem>
                 <MenuItem value="profession">Profession</MenuItem>
               </Select>
             </FormControl>
-          </Box>
-          <Box>
+          </Grid>
+          <Grid sx={{ margin: 3 }} item>
             <FormControl>
               <FormLabel id="demo-radio-buttons-group-label">
                 Sort order
@@ -124,8 +132,8 @@ const CrewSearch = (props) => {
                 />
               </RadioGroup>
             </FormControl>
-          </Box>
-        </Box>
+          </Grid>
+        </Grid>
         <Box>
           <Button
             type="submit"

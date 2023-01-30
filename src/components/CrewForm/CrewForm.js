@@ -166,7 +166,7 @@ const CrewForm = (props) => {
       ...prevState,
       movies: movies,
     }));
-   
+
     setOpenTable(false);
     setBadge(movies.length);
   };

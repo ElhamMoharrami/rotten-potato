@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { movieActions } from "../../../store/data-slice";
 import { fetchSearch } from "../../../store/api-call";
-
+import Grid from "@mui/material/Unstable_Grid2";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { Button } from "@mui/material";
@@ -14,6 +14,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import Box from "@mui/material/Box";
+import { Margin } from "@mui/icons-material";
 
 const SearchMovie = (props) => {
   const { itemsPerPage, currentPage } = props;
@@ -21,7 +22,6 @@ const SearchMovie = (props) => {
   const { register } = useForm();
   const initialData = localStorage.getItem("movies");
   const [data, setData] = useState(JSON.parse(initialData) || {});
-  
 
   const rates = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const genreOptions = [
@@ -56,8 +56,13 @@ const SearchMovie = (props) => {
   return (
     <Box>
       <form onSubmit={submitHandler}>
-        <Box sx={{ marginTop: 2 }}>
-          <Box>
+        <Grid
+          container
+          direction="column"
+          justifyContent="space-between"
+          alignItems="flex-start"
+        >
+          <Grid sx={{margin:3}} item>
             <FormControl>
               <InputLabel htmlFor="title-input">Movie Title</InputLabel>
               <Input
@@ -70,10 +75,10 @@ const SearchMovie = (props) => {
                 role="textbox"
               />
             </FormControl>
-          </Box>
-          <Box>
+          </Grid>
+          <Grid sx={{margin:3}} item>
             <FormControl sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel id="rate-select">Movie Rate Select</InputLabel>
+              <InputLabel id="rate-select">Movie Rate</InputLabel>
               <Select
                 labelId="rate-select"
                 id="rate-select"
@@ -82,6 +87,7 @@ const SearchMovie = (props) => {
                 value={data.minRate || ""}
                 label="minRate"
                 data-testid="select-option"
+                variant="standard"
               >
                 {rates.map((rate, index) => (
                   <MenuItem value={rate} key={index}>
@@ -90,8 +96,8 @@ const SearchMovie = (props) => {
                 ))}
               </Select>
             </FormControl>
-          </Box>
-          <Box>
+          </Grid>
+          <Grid sx={{margin:3}} item>
             <FormControl>
               <InputLabel htmlFor="title-input">From Year</InputLabel>
               <Input
@@ -104,8 +110,8 @@ const SearchMovie = (props) => {
               />
               <FormHelperText>example:1900</FormHelperText>
             </FormControl>
-          </Box>
-          <Box>
+          </Grid>
+          <Grid sx={{margin:3}} item>
             <FormControl>
               <InputLabel htmlFor="title-input">To Year</InputLabel>
               <Input
@@ -118,8 +124,8 @@ const SearchMovie = (props) => {
               />
               <FormHelperText>example: 2022</FormHelperText>
             </FormControl>
-          </Box>
-          <Box>
+          </Grid>
+          <Grid sx={{margin:3}} item>
             <FormControl sx={{ m: 1, minWidth: 120 }}>
               <InputLabel id="genre-select">Genre</InputLabel>
               <Select
@@ -129,6 +135,7 @@ const SearchMovie = (props) => {
                 value={data.genre || ""}
                 id="genre-select"
                 label="genre"
+                variant="standard"
               >
                 <MenuItem value="">
                   <em>None</em>
@@ -140,8 +147,8 @@ const SearchMovie = (props) => {
                 ))}
               </Select>
             </FormControl>
-          </Box>
-          <Box>
+          </Grid>
+          <Grid sx={{margin:3}} item>
             <FormControl sx={{ m: 1, minWidth: 120 }}>
               <InputLabel id="sort-select">Sort</InputLabel>
               <Select
@@ -151,13 +158,14 @@ const SearchMovie = (props) => {
                 onChange={onchangeHandler}
                 value={data.sort || ""}
                 label="sort"
+                variant="standard"
               >
                 <MenuItem value="title">Title</MenuItem>
                 <MenuItem value="year">Year</MenuItem>
               </Select>
             </FormControl>
-          </Box>
-          <Box>
+          </Grid>
+          <Grid sx={{margin:3}} item>
             <FormControl>
               <FormLabel id="demo-radio-buttons-group-label">
                 Sort order
@@ -182,8 +190,8 @@ const SearchMovie = (props) => {
                 />
               </RadioGroup>
             </FormControl>
-          </Box>
-        </Box>
+          </Grid>
+        </Grid>
         <Box>
           <Button
             type="submit"

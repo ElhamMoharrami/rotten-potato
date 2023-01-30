@@ -16,22 +16,27 @@ const ShowList = (props) => {
 
   return (
     <Box>
-      <Grid container spacing={2}>
+      <Grid
+        container
+        direction="row"
+        alignItems="center"
+        spacing={{ xs: 2, md: 3 }}
+        columns={{ xs: 4, sm: 8, md: 12 }}
+      >
         {props.data.map((item, index) => (
           <Box key={index}>
-            <Grid item>{props.card(item)}</Grid>
+            {props.pageCount !== 0 && <Grid item>{props.card(item)}</Grid>}
           </Box>
         ))}
-        {account.role === "ADMIN" && (
-          <Grid sx={{position:"relative"}} item>
+        <Grid item>
+          {account.role === "ADMIN" && (
             <Card
               onClick={handleOpen}
               sx={{
+                height: "60%",
                 borderRadius: "20px",
-                position: "absolute",
+                position: "relative",
                 width: "240px",
-                height: "100%",
-                boxShadow:"none"
               }}
               data-testid="addMovie"
             >
@@ -43,7 +48,7 @@ const ShowList = (props) => {
               />
               <CardContent>
                 <Typography
-                  sx={{ fontSize: 18, cursor: "pointer",textAlign:"center" }}
+                  sx={{ fontSize: 18, cursor: "pointer" }}
                   gutterBottom
                   variant="h5"
                   component="div"
@@ -52,9 +57,9 @@ const ShowList = (props) => {
                 </Typography>
               </CardContent>
             </Card>
-            {props.form(handleClose, open, "add")}
-          </Grid>
-        )}
+          )}
+          {props.form(handleClose, open, "add")}
+        </Grid>
       </Grid>
     </Box>
   );

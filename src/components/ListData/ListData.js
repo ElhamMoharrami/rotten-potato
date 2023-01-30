@@ -54,13 +54,7 @@ const ListData = (props) => {
   ]);
 
   const List = () => {
-    if (pageCount !== 0) {
-      return (
-        <Box>
-          <ShowList form={form} type={type} data={data.content} card={card} />
-        </Box>
-      );
-    } else if (pageCount === 0 && isSearching) {
+    if (pageCount === 0 && isSearching) {
       return (
         <Box sx={style}>
           <Typography
@@ -77,7 +71,19 @@ const ListData = (props) => {
           </Typography>
         </Box>
       );
-    }
+    } 
+      return (
+        <Box>
+          <ShowList
+            pageCount={pageCount}
+            form={form}
+            type={type}
+            data={data.content}
+            card={card}
+          />
+        </Box>
+      );
+    
   };
 
   const handlePageClick = async (event, page) => {
@@ -85,10 +91,11 @@ const ListData = (props) => {
   };
 
   return (
-    <Box>
-      {isLoading && <LinearProgress />}
-      {!isLoading && <List />}
-
+    <Box sx={{ display: "flex", flexDirection: "column" }}>
+      <Box>
+        {isLoading && <LinearProgress />}
+        {!isLoading && <List />}
+      </Box>
       <Box
         sx={{
           display: "flex",

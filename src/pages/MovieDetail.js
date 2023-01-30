@@ -15,6 +15,7 @@ import Button from "@mui/material/Button";
 import AlertMessage from "../components/Alert/Alert";
 import { reviewsActions } from "../store/reviews-slice";
 import ReviewCard from "../components/ReviewCard/ReviewCard";
+import Grid from "@mui/material/Unstable_Grid2";
 
 const MovieDetail = () => {
   const { id } = useParams();
@@ -43,7 +44,7 @@ const MovieDetail = () => {
   }, [dispatch, id]);
 
   return (
-    <Box>
+    <Box sx={{ m: 5 }}>
       {actionState.status !== "" && (
         <AlertMessage
           openAlert={openAlert}
@@ -52,75 +53,99 @@ const MovieDetail = () => {
           title={actionState.title}
         />
       )}
-      <Card
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          gap: "80px",
-          margin: "80px 10px 10px 10px",
-        }}
-      >
-        <Box sx={{ margin: "10px" }}>
-          <Typography sx={{ fontSize: "25px" }}>{movie.title}</Typography>
-          <Box
-            sx={{
-              paddingLeft: "3px",
-              marginTop: "20px",
-              fontSize: "24px",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
+      <Card>
+        <Grid container>
+          <Grid
+            item
+            container
+            direction="column"
+            alignItems="flex-start"
+            xs={9}
           >
-            <span>
-              <img
-                src="https://img.icons8.com/tiny-color/16/000000/star.png"
-                alt="star icon"
-              />
-              IMDB Rating <i></i>: {movie.imdbRating}
-            </span>
-            <span>
-              IMDB Votes <i></i>: {movie.imdbVotes}
-            </span>
-            <span>
-              Runtime <i></i> : {movie.runtime}
-            </span>
-            <span>
-              Year <i></i> : {movie.year}
-            </span>
-          </Box>
-          <Typography sx={{ margin: "20px" }}>{movie.plot}</Typography>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "30px",
-            }}
-          >
-            <Box sx={{ display: "flex", gap: "20px" }}>
-              <span>Director</span>
-              <span>{movie.director}</span>
-            </Box>
-            <Box sx={{ display: "flex", gap: "20px" }}>
-              <span>Stars</span>
-              <span>{movie.actors}</span>
-            </Box>
-            <Box sx={{ display: "flex", gap: "20px" }}>
-              <span>Generes</span>
-              <span>{movie.genre}</span>
-            </Box>
-            <Box sx={{ display: "flex", gap: "20px" }}>
-              <span>Languages</span>
-              <span>{movie.language}</span>
-            </Box>
-            <Box sx={{ display: "flex", gap: "20px" }}>
-              <span>Awards</span>
-              <span>{movie.awards}</span>
-            </Box>
-          </Box>
-        </Box>
-        <Box>
-          <img src={movie.poster} alt={movie.title} />
-        </Box>
+            <Grid
+              sx={{
+                m: "20px",
+              }}
+              item
+              container
+              direction="row"
+              justifyContent="space-between"
+              alignItems="flex-start"
+              gap="20px"
+            >
+              <Grid item>
+                <img
+                  src="https://img.icons8.com/tiny-color/16/000000/star.png"
+                  alt="star icon"
+                />
+                IMDB Rating <i></i>: {movie.imdbRating}
+              </Grid>
+              <Grid item>
+                <Typography> IMDB Votes : {movie.imdbVotes}</Typography>
+              </Grid>
+              <Grid item>
+                <Typography> Runtime : {movie.runtime}</Typography>
+              </Grid>
+              <Grid item>
+                <Typography> Year : {movie.year}</Typography>
+              </Grid>
+            </Grid>
+
+            <Grid
+              sx={{
+                m: "20px",
+              }}
+              item
+            >
+              <Typography>{movie.plot}</Typography>
+            </Grid>
+            <Grid
+              sx={{
+                m: "20px",
+              }}
+              item
+              container
+              direction="column"
+              justifyContent="space-between"
+              alignItems="flex-start"
+              gap="10px"
+            >
+              <Grid item>
+                <Typography>
+                  Director : <span>{movie.director}</span>
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography>
+                  Stars : <span>{movie.actors}</span>
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography>Generes : {movie.genre}</Typography>
+              </Grid>
+              <Grid item>
+                <Typography>
+                  Languages : <span>{movie.language}</span>
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography>Awards : {movie.awards}</Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={3}>
+            <Box
+              component="img"
+              sx={{
+                float: "right",
+                height: "250px",
+                width: "250px",
+              }}
+              src={movie.poster}
+              alt={movie.title}
+            />
+          </Grid>
+        </Grid>
       </Card>
       <Box
         sx={{
@@ -140,17 +165,12 @@ const MovieDetail = () => {
       <Box>
         <Typography
           sx={{
-            fontSize: "28px",
-            marginLeft: "20px",
-            marginRight: "20px",
-            alignContent: "center",
-            paddingLeft: "20px",
-
+            padding: "10px",
             boxShadow:
               "rgba(114, 100, 165, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
           }}
         >
-          Movie Crew
+          movies
         </Typography>
         <Box sx={{ margin: "10px" }}>
           <Carousel

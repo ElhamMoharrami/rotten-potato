@@ -140,7 +140,7 @@ export const updateData = (
     try {
       const url = `${BASEURL}/${type}/${id}`;
       await fetch(url, {
-        method: "PUT",
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dataObj),
       });
