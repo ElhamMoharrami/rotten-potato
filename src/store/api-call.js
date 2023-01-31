@@ -385,7 +385,7 @@ export const fetchReviews = (movieId) => {
     try {
       const url = `${BASEURL}/reviews/search/search?movie=${movieId}`;
       const getData = await getDataRequest(url);
-      console.log(getData.content);
+
       dispatch(
         reviewsActions.setData({
           reviews: getData.content,

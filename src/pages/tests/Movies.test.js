@@ -1,7 +1,5 @@
 import { screen, fireEvent, within } from "@testing-library/react";
 import { renderWithProviders } from "../../test-utils/testing-library-utils.js";
-import { createMemoryHistory } from "history";
-import { Router } from "react-router-dom";
 import Movies from "../Movies";
 
 test("search icon is displayed", () => {
@@ -12,14 +10,18 @@ test("search icon is displayed", () => {
 test("movies are displayed", async () => {
   renderWithProviders(<Movies />);
 
-  const moviePoster = await screen.findByAltText("Bee Movie");
+  const moviePoster = await screen.findByAltText(
+    "The Gangster, the Cop, the Devil"
+  );
   expect(moviePoster).toBeInTheDocument();
 });
 
 test("pagination working properly", async () => {
   renderWithProviders(<Movies />);
 
-  const moviePoster = await screen.findByAltText("Bee Movie");
+  const moviePoster = await screen.findByAltText(
+    "The Gangster, the Cop, the Devil"
+  );
   expect(moviePoster).toBeInTheDocument();
 
   const nextPage = await screen.findByTestId("NavigateNextIcon");
@@ -36,21 +38,21 @@ test("search by title  working properly", async () => {
   fireEvent.click(searchIcon);
 
   const input = screen.getByLabelText("Movie Title");
-  fireEvent.change(input, { target: { value: "Twilight" } });
-  expect(input).toHaveDisplayValue("Twilight");
+  fireEvent.change(input, { target: { value: "Outlaws" } });
+  expect(input).toHaveDisplayValue("Outlaws");
 
   const formSubmit = screen.getByRole("button", { name: /submit/i });
   expect(formSubmit).toBeInTheDocument();
   fireEvent.click(formSubmit);
 
-  const moviePoster = await screen.findByAltText("Twilight Zone: The Movie");
+  const moviePoster = await screen.findByAltText("The Outlaws");
   expect(moviePoster).toBeInTheDocument();
 });
 
 test("search pagination works properly", async () => {
   renderWithProviders(<Movies />);
 
-  const moviePoster = await screen.findByAltText("Twilight Zone: The Movie");
+  const moviePoster = await screen.findByAltText("The Outlaws");
   expect(moviePoster).toBeInTheDocument();
 
   const nextPage = await screen.findByTestId("NavigateNextIcon");
@@ -66,22 +68,22 @@ test("search by movie rate works properly", async () => {
   const searchIcon = screen.getByTestId("ManageSearchIcon");
   fireEvent.click(searchIcon);
 
-  fireEvent.mouseDown(
-    screen.getByRole("button", { name: "Movie Rate Select" })
-  );
+  fireEvent.mouseDown(screen.getByRole("button", { name: "Movie Rate" }));
 
   const listbox = within(screen.getByRole("listbox"));
-  fireEvent.click(listbox.getByText(/9/i));
+  fireEvent.click(listbox.getByText(/6/i));
 
-  expect(
-    screen.getByRole("button", { name: "Movie Rate Select" })
-  ).toHaveTextContent(/9/i);
+  expect(screen.getByRole("button", { name: "Movie Rate" })).toHaveTextContent(
+    /6/i
+  );
 
   const formSubmit = screen.getByRole("button", { name: /submit/i });
   expect(formSubmit).toBeInTheDocument();
   fireEvent.click(formSubmit);
 
-  const moviePoster = await screen.findByAltText("Uno: The Movie");
+  const moviePoster = await screen.findByAltText(
+    "The Gangster, the Cop, the Devil"
+  );
   expect(moviePoster).toBeInTheDocument();
 });
 
@@ -92,18 +94,20 @@ test("search by movie year works properly", async () => {
   fireEvent.click(searchIcon);
 
   const inputYearFrom = screen.getByLabelText("From Year");
-  fireEvent.change(inputYearFrom, { target: { value: 2000 } });
-  expect(inputYearFrom).toHaveDisplayValue(2000);
+  fireEvent.change(inputYearFrom, { target: { value: 2018 } });
+  expect(inputYearFrom).toHaveDisplayValue(2018);
 
   const inputYearTo = screen.getByLabelText("From Year");
-  fireEvent.change(inputYearTo, { target: { value: 2005 } });
-  expect(inputYearTo).toHaveDisplayValue(2005);
+  fireEvent.change(inputYearTo, { target: { value: 2022 } });
+  expect(inputYearTo).toHaveDisplayValue(2022);
 
   const formSubmit = screen.getByRole("button", { name: /submit/i });
   expect(formSubmit).toBeInTheDocument();
   fireEvent.click(formSubmit);
 
-  const moviePoster = await screen.findByAltText("Digimon: The Movie");
+  const moviePoster = await screen.findByAltText(
+    "The Gangster, the Cop, the Devil"
+  );
   expect(moviePoster).toBeInTheDocument();
 });
 
@@ -116,17 +120,17 @@ test("genre select works", async () => {
   fireEvent.mouseDown(screen.getByRole("button", { name: "Genre" }));
 
   const listbox = within(screen.getByRole("listbox"));
-  fireEvent.click(listbox.getByText(/Adventure/i));
+  fireEvent.click(listbox.getByText(/Action/i));
 
   expect(screen.getByRole("button", { name: "Genre" })).toHaveTextContent(
-    /Adventure/i
+    /Action/i
   );
 
   const formSubmit = screen.getByRole("button", { name: /submit/i });
   expect(formSubmit).toBeInTheDocument();
   fireEvent.click(formSubmit);
 
-  const moviePoster = await screen.findByAltText("Jackass: The Movie");
+  const moviePoster = await screen.findByAltText("The Outlaws");
   expect(moviePoster).toBeInTheDocument();
 });
 
@@ -153,7 +157,7 @@ test("sort select works", async () => {
   fireEvent.click(formSubmit);
 
   const moviePoster = await screen.findByAltText(
-    "A Shaun the Sheep Movie: Farmageddon"
+    "The Gangster, the Cop, the Devil"
   );
   expect(moviePoster).toBeInTheDocument();
 });

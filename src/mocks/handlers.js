@@ -7,22 +7,15 @@ export const handlers = [
       ctx.json({
         content: [
           {
-            id: "tt0389790",
-            title: "Bee Movie",
+            id: "40280fec8602c26f0186032908f10000",
+            title: "The Gangster, the Cop, the Devil",
             poster:
-              "https://m.media-amazon.com/images/M/MV5BMjE1MDYxOTA4MF5BMl5BanBnXkFtZTcwMDE0MDUzMw@@._V1_SX300.jpg",
+              "https://upload.wikimedia.org/wikipedia/en/b/bf/The_Gangster%2C_The_Cop%2C_The_Devil.jpg",
           },
           {
-            id: "tt0322802",
-            title: "Jackass: The Movie",
-            poster:
-              "https://m.media-amazon.com/images/M/MV5BOTgwMmU0YzktOGNhNi00MDcyLTg1OGEtZGQwM2RlMTAyYzhlXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
-          },
-          {
-            id: "tt0086491",
-            title: "Twilight Zone: The Movie",
-            poster:
-              "https://m.media-amazon.com/images/M/MV5BYjQ2NzgzYjEtMzAxNy00MzhkLWE5ZTUtZDA1ODY3MTBjOTRiXkEyXkFqcGdeQXVyNTAyNDQ2NjI@._V1_SX300.jpg",
+            id: "40280fec8602c26f0186032f44eb0001",
+            title: "The Outlaws",
+            poster: "https://m.media-amazon.com/images/I/8183e1ztAXL._RI_.jpg",
           },
         ],
         page: {
@@ -40,22 +33,28 @@ export const handlers = [
       ctx.json({
         content: [
           {
-            id: "tt0019760",
-            title: "Man with a Movie Camera",
+            id: "4028c6ec8606581f018606e124ae0013",
+            title: "Broker",
             poster:
-              "https://m.media-amazon.com/images/M/MV5BYTc3NGVlN2QtYWJlZi00YjhjLThiZjctZDA1MmE1NGI4ZmE4XkEyXkFqcGdeQXVyODQyNDU4OTk@._V1_SX300.jpg",
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEk3g0kfaNadgbNgef4qzIPq9-acfO_8sdvmc73ebKR3jIv2Da7M8AXb6kkcpX4FbZD7w&usqp=CAU",
           },
           {
-            id: "tt4943998",
-            title: "Deadwood: The Movie",
+            id: "4028c6ec8606581f018606dcf8160012",
+            title: "The Pirates: The Last Royal Treasure",
             poster:
-              "https://m.media-amazon.com/images/M/MV5BM2Y1OGQ4ZjEtZWUzMi00MzZmLTk3MmEtMThiNjIwNzg4MjRkXkEyXkFqcGdeQXVyMTE5NDkxMA@@._V1_SX300.jpg",
+              "https://m.media-amazon.com/images/M/MV5BZGFjYWM0NzgtOGJkNi00ZjgyLThjZGEtMDhlYTg5NThlYjIxXkEyXkFqcGdeQXVyMTM1NTM4MzQx._V1_.jpg",
+          },
+          {
+            id: "4028c6ec8606581f018606dab4020011",
+            title: "The King and the Clown",
+            poster:
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSh9F0xhT6liypZZONdVRj85EX6W7lE-azwC8G-Sk5QwNAzlq8lj7fsu0Rq5JtnXvjbDKA&usqp=CAU",
           },
         ],
         page: {
-          size: 4,
+          size: 3,
           totalElements: 50,
-          totalPages: 13,
+          totalPages: 2,
           number: 1,
         },
       })
@@ -68,48 +67,22 @@ export const handlers = [
         ctx.json({
           content: [
             {
-              id: "tt6193408",
-              title: "A Shaun the Sheep Movie: Farmageddon",
-              genre: "Animation, Adventure, Comedy",
+              id: "40280fec8602c26f0186032908f10000",
+              title: "The Gangster, the Cop, the Devil",
+              genre: "Action,Thriller",
+              year: 2019,
+              imdbRating: 6.9,
               poster:
-                "https://m.media-amazon.com/images/M/MV5BNTdjZjBkMDMtODBlNi00N2E0LWE1OGItOTgxODNmMDkzNGJmXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_SX300.jpg",
-              metaScore: "79",
-              imdbRating: 6.8,
-              imdbVotes: "13,553",
+                "https://upload.wikimedia.org/wikipedia/en/b/bf/The_Gangster%2C_The_Cop%2C_The_Devil.jpg",
             },
             {
-              id: "tt0322802",
-              title: "Jackass: The Movie",
-              imdbRating: 6.6,
-              genre: "Adventure",
-              year: 2002,
+              id: "40280fec8602c26f0186032f44eb0001",
+              title: "The Outlaws",
+              imdbRating: 7.2,
+              genre: " Action,Crime",
+              year: 2017,
               poster:
-                "https://m.media-amazon.com/images/M/MV5BOTgwMmU0YzktOGNhNi00MDcyLTg1OGEtZGQwM2RlMTAyYzhlXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
-            },
-            {
-              id: "tt0086491",
-              title: "Twilight Zone: The Movie",
-              year: 1983,
-              imdbRating: 6.4,
-              poster:
-                "https://m.media-amazon.com/images/M/MV5BYjQ2NzgzYjEtMzAxNy00MzhkLWE5ZTUtZDA1ODY3MTBjOTRiXkEyXkFqcGdeQXVyNTAyNDQ2NjI@._V1_SX300.jpg",
-            },
-            {
-              id: "tt6290024",
-              title: "Uno: The Movie",
-              year: 2016,
-              imdbRating: 9.5,
-              poster:
-                "https://m.media-amazon.com/images/M/MV5BN2YyNmMzZmQtYjg1MS00OTEwLTkwZDEtOWNlMTEzOWIzMWM3L2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNzQwNDg4MQ@@._V1_SX300.jpg",
-            },
-            {
-              id: "tt0259974",
-              title: "Digimon: The Movie",
-              year: 2000,
-              poster:
-                "https://m.media-amazon.com/images/M/MV5BMjE2NTAyMjUxMl5BMl5BanBnXkFtZTYwOTAwODQ3._V1_SX300.jpg",
-
-              imdbRating: 6.0,
+                "https://m.media-amazon.com/images/I/8183e1ztAXL._RI_.jpg",
             },
           ],
           page: {
@@ -129,18 +102,20 @@ export const handlers = [
         ctx.json({
           content: [
             {
-              id: "tt6290024",
-              title: "Uno: The Movie",
-
+              id: "4028c6ec8606581f018606dcf8160012",
+              title: "The Pirates: The Last Royal Treasure",
+              year: 2022,
+              imdbRating: 6.1,
               poster:
-                "https://m.media-amazon.com/images/M/MV5BN2YyNmMzZmQtYjg1MS00OTEwLTkwZDEtOWNlMTEzOWIzMWM3L2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNzQwNDg4MQ@@._V1_SX300.jpg",
+                "https://m.media-amazon.com/images/M/MV5BZGFjYWM0NzgtOGJkNi00ZjgyLThjZGEtMDhlYTg5NThlYjIxXkEyXkFqcGdeQXVyMTM1NTM4MzQx._V1_.jpg",
             },
             {
-              id: "tt0110169",
-              title: "It's Pat: The Movie",
-
+              id: "4028c6ec8606581f018606dab4020011",
+              title: "The King and the Clown",
+              year: 2005,
+              imdbRating: 7.3,
               poster:
-                "https://m.media-amazon.com/images/M/MV5BM2VhMjI0NDQtZWRjMS00ZWY4LTk2MmItZTY4MzE4M2ZmOTQ3L2ltYWdlXkEyXkFqcGdeQXVyNjE5MjUyOTM@._V1_SX300.jpg",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSh9F0xhT6liypZZONdVRj85EX6W7lE-azwC8G-Sk5QwNAzlq8lj7fsu0Rq5JtnXvjbDKA&usqp=CAU",
             },
           ],
           page: {
@@ -159,35 +134,31 @@ export const handlers = [
       ctx.json({
         content: [
           {
-            id: "nm0957858",
-            name: "A.M. Zopfi",
-            profession: "miscellaneous",
-          },
-          {
-            id: "nm0001146",
-            name: "Donna Dixon",
-            profession: "actress,soundtrack",
+            id: "4028a5ec8601caf8018601d8f8d80000",
+            name: "Ma Dong-seok",
+            profession: "actor",
             poster:
-              "https://m.media-amazon.com/images/M/MV5BMTkyMTMyNTQxOF5BMl5BanBnXkFtZTcwNjEwNzYzMw@@._V1_UY317_CR7,0,214,317_AL_.jpg",
+              "https://m.media-amazon.com/images/M/MV5BMjJkNTk0NGQtOGU3NS00M2JlLTg2NzktNjQ1ZTU2YzU0YWI2XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_.jpg",
           },
           {
-            id: "nm0005092",
-            name: "Larry King",
-            profession: "producer,actor,director",
+            id: "4028a5ec8601f663018601f8cfb20000",
+            name: "Kim Sung-kyu",
+            profession: "actor",
             poster:
-              "https://m.media-amazon.com/images/M/MV5BMTI0NjY4MTYyOF5BMl5BanBnXkFtZTYwOTc3NDg1._V1_UY317_CR3,0,214,317_AL_.jpg",
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQekyj9dfOHzBwYO8HSFOOKGkxD2SjYKVrxS8bAUO2j8TJty4Ti",
           },
           {
-            id: "nm0011178",
-            name: "Maria Adams",
-            profession: "actress",
-            poster: null,
+            id: "4028a5ec8601f663018601ff3e880001",
+            name: "Song Joong-ki",
+            profession: "actor",
+            poster:
+              "https://upload.wikimedia.org/wikipedia/commons/1/13/Song_Joong-ki_at_Style_Icon_Asia_2016.jpg",
           },
         ],
         page: {
           size: 20,
-          totalElements: 1973,
-          totalPages: 99,
+          totalElements: 20,
+          totalPages: 2,
           number: 0,
         },
       })
@@ -199,28 +170,31 @@ export const handlers = [
       ctx.json({
         content: [
           {
-            id: "nm0024116",
-            name: "Chloe Amateau",
-            profession: "actress,miscellaneous,location_management",
-            poster: null,
+            id: "4028c6ec8606581f018606f81864001b",
+            name: "Kang Yoon-Sung",
+            profession: "director",
+            poster:
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7Jz1rdtOh8wYNIzGm8VER-1yFqaBpqDHdL2DVDa4X8FtkWwjF_VijjB_Fktrh5bH5v-U&usqp=CAU",
           },
           {
-            id: "nm0024990",
-            name: "Sebastian Amiri",
-            profession: "camera_department,actor,art_department",
-            poster: null,
+            id: "4028c6ec8606581f018606f69a0c001a",
+            name: "won tae lee",
+            profession: "writer, director, producer",
+            poster:
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBEC_k8vrcKoGdonJb9WYDF4lWXOLogG3DZ7_JiKcK4U6u_RGIxV_NwghED6SJ50mhJlM&usqp=CAU",
           },
           {
-            id: "nm0025010",
-            name: "Emmanuel Amit",
-            profession: "actor",
-            poster: null,
+            id: "4028c6ec8606581f018606ecd4cf0019",
+            name: "Bong Joon-ho",
+            profession: "director",
+            poster:
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQuz0SwSA1xMBl4GryE23dP9jy49nC7dOyiYpU6onWZqJgqsNsFZFF_5G9JrXgzuNMN3A&usqp=CAU",
           },
         ],
         page: {
           size: 5,
-          totalElements: 1973,
-          totalPages: 395,
+          totalElements: 20,
+          totalPages: 2,
           number: 1,
         },
       })
@@ -231,48 +205,30 @@ export const handlers = [
       ctx.json({
         content: [
           {
-            id: "nm0001146",
-            name: "Donna Dixon",
-            profession: "actress,soundtrack",
-            poster:
-              "https://m.media-amazon.com/images/M/MV5BMTkyMTMyNTQxOF5BMl5BanBnXkFtZTcwNjEwNzYzMw@@._V1_UY317_CR7,0,214,317_AL_.jpg",
-          },
-          {
-            id: "nm0005092",
-            name: "Larry King",
-            profession: "producer,actor,director",
-            poster:
-              "https://m.media-amazon.com/images/M/MV5BMTI0NjY4MTYyOF5BMl5BanBnXkFtZTYwOTc3NDg1._V1_UY317_CR3,0,214,317_AL_.jpg",
-          },
-          {
-            id: "nm0010481",
-            name: "Tom Adair",
-            profession: "miscellaneous",
-            poster: null,
-          },
-          {
-            id: "nm0011178",
-            name: "Maria Adams",
-            profession: "actress",
-            poster: null,
-          },
-          {
-            id: "nm0025010",
-            name: "Emmanuel Amit",
+            id: "4028a5ec8601caf8018601d8f8d80000",
+            name: "Ma Dong-seok",
             profession: "actor",
-            poster: null,
+            poster:
+              "https://m.media-amazon.com/images/M/MV5BMjJkNTk0NGQtOGU3NS00M2JlLTg2NzktNjQ1ZTU2YzU0YWI2XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_.jpg",
           },
           {
-            id: "nm0025712",
-            name: "Glen Anastasiou",
-            profession: "art_department,production_designer,art_director",
-            poster: null,
+            name: "Kim Sung-kyu",
+            profession: "actor",
+            poster:
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQekyj9dfOHzBwYO8HSFOOKGkxD2SjYKVrxS8bAUO2j8TJty4Ti",
+          },
+          {
+            id: "4028a5ec8601f663018601ff3e880001",
+            name: "Song Joong-ki",
+            profession: "actor",
+            poster:
+              "https://upload.wikimedia.org/wikipedia/commons/1/13/Song_Joong-ki_at_Style_Icon_Asia_2016.jpg",
           },
         ],
         page: {
           size: 20,
-          totalElements: 1973,
-          totalPages: 99,
+          totalElements: 20,
+          totalPages: 2,
           number: 0,
         },
       })
@@ -281,23 +237,22 @@ export const handlers = [
   rest.get("http://localhost:8080/api/movies/:id", (req, res, ctx) => {
     return res(
       ctx.json({
-        id: "tt0389790",
-        title: "Bee Movie",
-        year: "2007",
-        released: "02 Nov 2007",
-        runtime: "91 min",
-        genre: "Animation, Adventure, Comedy",
-        director: "Simon J. Smith, Steve Hickner",
-        writer: "Jerry Seinfeld, Spike Feresten, Barry Marder",
-        actors: "Jerry Seinfeld, Renée Zellweger, Matthew Broderick",
-        plot: "Barry B. Benson, a bee just graduated from college, is disillusioned at his lone career choice: making honey. On a special trip outside the hive, Barry's life is saved by Vanessa, a florist in New York City. As their relationship ...",
-        language: "English",
-        country: "United States",
+        id: "4028c6ec8606581f018606dab4020011",
+        title: "The King and the Clown",
+        year: 2005,
+        rated: null,
+        released: null,
+        runtime: "01:59",
+        genre: "Drama,Thriller",
+        director: "Joon-ik Lee",
+        writer: null,
+        actors: "Woo-seong Kam,Jin-young Jung,Seong-Yeon Kang",
+        plot: "Two clowns living in Korea's Chosun Dynasty get arrested for staging a play that satirizes the king. They are dragged to the palace and threatened with execution but are given a chance to save their lives if they can make the king laugh.",
+        language: "Korean",
+        country: null,
+        awards: null,
         poster:
-          "https://m.media-amazon.com/images/M/MV5BMjE1MDYxOTA4MF5BMl5BanBnXkFtZTcwMDE0MDUzMw@@._V1_SX300.jpg",
-        metaScore: "54",
-        imdbRating: 6.1,
-        imdbVotes: "160,048",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSh9F0xhT6liypZZONdVRj85EX6W7lE-azwC8G-Sk5QwNAzlq8lj7fsu0Rq5JtnXvjbDKA&usqp=CAU",
       })
     );
   }),
@@ -306,17 +261,19 @@ export const handlers = [
       ctx.json({
         content: [
           {
-            id: "nm0272324",
-            name: "Spike Feresten",
-            profession: "writer,producer,miscellaneous",
+            id: "4028a5ec8601f66301860211a9440007",
+            name: "Lee Joon-gi",
+            birth: 1982,
+            death: null,
+            profession: "actor",
             poster:
-              "https://m.media-amazon.com/images/M/MV5BNDIxNzY1ODMwNF5BMl5BanBnXkFtZTcwODI2NzE1OQ@@._V1_UY317_CR12,0,214,317_AL_.jpg",
+              "https://6.viki.io/image/fccd19e396ed4b6d98aced78963bb3ee/dummy.jpeg?s=900x600&e=t",
           },
         ],
         page: {
           size: 20,
-          totalElements: 1973,
-          totalPages: 99,
+          totalElements: 20,
+          totalPages: 2,
           number: 0,
         },
       })
@@ -325,14 +282,13 @@ export const handlers = [
   rest.get("http://localhost:8080/api/crews/:id", (req, res, ctx) => {
     return res(
       ctx.json({
-        id: "nm0005092",
-        name: "Larry King",
-        birth: "1932",
-        death: "2021",
-        profession: "producer,actor,director",
+        id: "4028c6ec8606581f018606ecd4cf0019",
+        name: "Bong Joon-ho",
+        birth: 1969,
+        death: null,
+        profession: "director",
         poster:
-          "https://m.media-amazon.com/images/M/MV5BMTI0NjY4MTYyOF5BMl5BanBnXkFtZTYwOTc3NDg1._V1_UY317_CR3,0,214,317_AL_.jpg",
-        content: [],
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQuz0SwSA1xMBl4GryE23dP9jy49nC7dOyiYpU6onWZqJgqsNsFZFF_5G9JrXgzuNMN3A&usqp=CAU",
       })
     );
   }),
@@ -341,27 +297,25 @@ export const handlers = [
       ctx.json({
         content: [
           {
-            id: "tt0389790",
-            title: "Bee Movie",
-            year: "2007",
-            rated: "PG",
-            released: "02 Nov 2007",
-            runtime: "91 min",
-            genre: "Animation, Adventure, Comedy",
-            director: "Simon J. Smith, Steve Hickner",
-            writer: "Jerry Seinfeld, Spike Feresten, Barry Marder",
-            actors: "Jerry Seinfeld, Renée Zellweger, Matthew Broderick",
-            plot: "Barry B. Benson, a bee just graduated from college, is disillusioned at his lone career choice: making honey. On a special trip outside the hive, Barry's life is saved by Vanessa, a florist in New York City. As their relationship ...",
-            language: "English",
-            country: "United States",
-            awards: "1 win & 15 nominations",
+            id: "4028c6ec8606581f018606b28f60000d",
+            title: "Parasite",
+            year: 2019,
+            rated: null,
+            released: null,
+            runtime: "02:12",
+            genre: "Drama,Thriller",
+            director: "Bong Joon Ho",
+            writer: null,
+            actors: null,
+            plot: "Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kim clan.",
+            language: "Korean",
+            country: null,
+            awards: null,
             poster:
-              "https://m.media-amazon.com/images/M/MV5BMjE1MDYxOTA4MF5BMl5BanBnXkFtZTcwMDE0MDUzMw@@._V1_SX300.jpg",
-            metaScore: "54",
-            imdbRating: 6.1,
-            imdbVotes: "160,048",
-            type: "movie",
-            content: [],
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdzqjSRTrNTR77lCCfSLW2PfemI7JmRN-dzzKDWpBepoOKa8EVkU_toMsZArxxGkE_txs&usqp=CAU",
+            metaScore: null,
+            imdbRating: 8.5,
+            imdbVotes: "815,878",
           },
         ],
       })
@@ -372,8 +326,8 @@ export const handlers = [
       ctx.json({
         id: "8dfd88a8-fdb4-25aa-b85d-e10256aa68ea",
         username: "admin",
-        fullname: "Ali Karimi",
-        password: "112233",
+        fullname: "Yoona",
+        password: "123456",
         role: "ADMIN",
       })
     );
@@ -383,8 +337,8 @@ export const handlers = [
       ctx.json({
         id: "8dfd88a8-fdb4-25aa-b85d-e10256aa68ea",
         username: "admin",
-        fullname: "Ali Karimi",
-        password: "112233",
+        fullname: "Yoona",
+        password: "123456",
         role: "ADMIN",
       })
     );
@@ -394,8 +348,8 @@ export const handlers = [
       ctx.json({
         id: "8dfd88a8-fdb4-25aa-b85d-e10256aa68ea",
         username: "admin",
-        fullname: "Ali Karimi",
-        password: "112233",
+        fullname: "Yoona",
+        password: "123456",
         role: "ADMIN",
       })
     );
@@ -424,10 +378,9 @@ export const handlers = [
     );
   }),
   rest.post("http://localhost:8080/api/crews", (req, res, ctx) => {
-    console.log("this is called");
     return res(
       ctx.json({
-        name: "Bas",
+        name: "Bastian",
         birth: "1922",
         profession: "actor",
       })
@@ -436,8 +389,9 @@ export const handlers = [
   rest.post("http://localhost:8080/api/reviews", (req, res, ctx) => {
     return res(
       ctx.json({
-        movie: "http://localhost:8080/api/movies/tt0306841",
-        user: "http://localhost:8080/api/users/94501dc6-2006-7189-3eb7-a8fe1b14c588",
+        movie:
+          "http://localhost:8080/api/movies/4028c6ec8606581f018606dab4020011",
+        user: "http://localhost:8080/api/users/8dfd88a8-fdb4-25aa-b85d-e10256aa68ea",
         rate: 3.5,
         description: "test",
       })
@@ -450,13 +404,13 @@ export const handlers = [
         ctx.json({
           content: [
             {
-              id: "tt0389790",
+              id: "40280fec8602c26f0186032908f10000",
               rate: 3.5,
               description: "test1",
             },
             {
-              id: "tt0389790",
-              rate: 3.5,
+              id: "4028c6ec8606581f018606dcf8160012",
+              rate: 4,
               description: "test2",
             },
           ],
