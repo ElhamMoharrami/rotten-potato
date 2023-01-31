@@ -1,6 +1,5 @@
 import { screen, fireEvent } from "@testing-library/react";
 import { renderWithProviders } from "../../test-utils/testing-library-utils.js";
-import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import Signup from "../Signup";
 

@@ -1,7 +1,5 @@
 import { screen, fireEvent } from "@testing-library/react";
 import { renderWithProviders } from "../../test-utils/testing-library-utils.js";
-import { Router } from "react-router-dom";
-import { createMemoryHistory } from "history";
 import ToggleColorMode from "../../components/Theme/Theme";
 import Profile from "../Profile";
 
@@ -39,9 +37,9 @@ test("theme chages correctly", async () => {
   const themeButton = screen.getByTestId("theme-button");
   const formSubmit = screen.getByRole("button", { name: /submit/i });
 
-  expect(formSubmit).toHaveStyle("background-color: rgb(25, 118, 210)");
+  expect(formSubmit).toHaveStyle("background-color: rgb(255, 193, 7)");
   fireEvent.click(themeButton);
-  expect(formSubmit).toHaveStyle("background-color: rgb(144, 202, 249)");
+  expect(formSubmit).toHaveStyle("background-color: rgb(63, 81, 181)");
 });
 
 test("delete account works properly", () => {

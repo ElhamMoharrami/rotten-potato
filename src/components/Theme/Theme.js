@@ -2,7 +2,7 @@ import * as React from "react";
 import IconButton from "@mui/material/IconButton";
 import Box from "@mui/material/Box";
 import { ThemeProvider, useTheme, createTheme } from "@mui/material/styles";
-import { amber, Pink, grey, indigo } from "@mui/material/colors";
+import { amber, grey, indigo } from "@mui/material/colors";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { loginActions } from "../../store/login-slice";
@@ -63,21 +63,23 @@ export default function ToggleColorMode(props) {
       mode,
       ...(mode === "light"
         ? {
-            // palette values for light mode
             primary: amber,
             divider: amber[200],
+            background: {
+              default: grey[50],
+              paper: grey[50],
+            },
             text: {
               primary: grey[900],
               secondary: grey[800],
             },
           }
         : {
-            // palette values for dark mode
             primary: indigo,
             divider: indigo[700],
             background: {
-              default: indigo[900],
-              paper: indigo[900],
+              default: indigo[600],
+              paper: indigo[600],
             },
             text: {
               primary: "#fff",

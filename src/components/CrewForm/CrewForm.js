@@ -253,7 +253,6 @@ const CrewForm = (props) => {
                   value={crewData.birth || ""}
                   id="birth-input"
                   aria-describedby="birth-input"
-                  required
                 />
                 {!birthIsValid && (
                   <FormHelperText>

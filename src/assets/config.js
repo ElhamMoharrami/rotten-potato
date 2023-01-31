@@ -47,47 +47,7 @@ export const customStyles = {
   },
 };
 
-export const professions = [
-  "actor",
-  "actress",
-  "animation_department",
-  "art_department",
-  "art_director",
-  "assistant",
-  "assistant_director",
-  "camera_department",
-  "casting_department",
-  "casting_director",
-  "cinematographer",
-  "composer",
-  "costume_department",
-  "costume_designer",
-  "director",
-  "editor",
-  "editorial_department",
-  "executive",
-  "legal",
-  "location_management",
-  "make_up_department",
-  "manager",
-  "miscellaneous",
-  "music_department",
-  "producer",
-  "production_designer",
-  "production_manager",
-  "programmer",
-  "publicist",
-  "script_department",
-  "set_decorator",
-  "sound_department",
-  "soundtrack",
-  "special_effects",
-  "stunts",
-  "talent_agent",
-  "transportation_department",
-  "visual_effects",
-  "writer",
-];
+export const professions = ["actor", "actress", "director", "singer"];
 
 export const style = {
   position: "absolute",
@@ -99,7 +59,7 @@ export const style = {
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
-  opacity: "1"
+  opacity: "1",
 };
 
 export const drawerWidth = 350;

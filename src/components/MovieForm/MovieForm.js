@@ -62,7 +62,6 @@ const MovieForm = (props) => {
   const [movieData, setMovieData] = useState({});
   const [openTable, setOpenTable] = useState(false);
 
-  const [urlIsValid, setUrlIsValid] = useState(true);
   const [titleLengthIsValid, setTitleLengthIsValid] = useState(true);
   const [rateNumberIsValid, setRateNumberIsValid] = useState(true);
   const [imdbVotesIsValid, setImdbVotesIsValid] = useState(true);
@@ -123,9 +122,7 @@ const MovieForm = (props) => {
       ...prevState,
       [name]: value,
     }));
-    if (name === "poster") {
-      urlPatternValidation(value);
-    }
+   
     if (name === "title") {
       if (value.length > 200) {
         setTitleLengthIsValid(false);
@@ -204,16 +201,6 @@ const MovieForm = (props) => {
     }
   };
 
-  const urlPatternValidation = (url) => {
-    const regex = new RegExp(
-      "(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?"
-    );
-    const result = regex.test(url);
-    if (!result) {
-      setUrlIsValid(false);
-    }
-  };
-
   const handleSubmitTableData = () => {
     const crews = selectedTabledData.map((item) => {
       return `${BASEURL}/crews/${item}`;
@@ -263,7 +250,6 @@ const MovieForm = (props) => {
   }, [formState, movieData]);
 
   const formIsValid =
-    urlIsValid &&
     titleLengthIsValid &&
     rateNumberIsValid &&
     imdbVotesIsValid &&
@@ -510,7 +496,7 @@ const MovieForm = (props) => {
                     id="poster-input"
                     aria-describedby="poster-input"
                   />
-                  {!urlIsValid && <FormHelperText>invalid url.</FormHelperText>}
+                
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
