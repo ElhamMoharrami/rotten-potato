@@ -21,7 +21,7 @@ For the base structure of this website I used create-react-app using the command
 `npx create-react-app rotten-potato`.this project may seem as an amatuer clone of as mentioned
 "Rotten Tomato" but I try to change the base and add new features. testing is also a very important
 part of this project so I connected my code to "codecov" using Github actions. this project consists
-of react,javascript,html,css,sass code.
+of react,javascript,html and material ui code.
 
 ### run the project locally
 
@@ -33,6 +33,18 @@ this project has not been deployed yet but you can run it locally on your machin
 4. see the project in your browser running : `npm start`
 
 ### features
-this websites currently consists of a movie and an artists page. ypu can also choose the number of the items you want to have displayed on your page.
-using pagination has helped with showing data more user friendly.
+1. movies and crews pages.
+2. choose number of items per page.
+3. search and sort.
+4. create account.
+5. login.
+6. change fullname.
+7. change password.
+8. delete account.
+9. change theme.
+10. add new item to each page by admin.
+11. delete item by admin.
+12. item detail page.
+13. commit review for each movie.
+14. see other reviews for each movie.
 
