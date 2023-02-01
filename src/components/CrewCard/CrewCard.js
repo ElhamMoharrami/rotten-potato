@@ -14,14 +14,13 @@ import { deleteSelectedItem } from "../../store/api-call";
 import blankProfilePicture from "../../assets/images/blankProfilePicture.png";
 import Confirmation from "../Confirmation/Confirmation";
 
-const style = {textDecoration: "none" };
+const style = { textDecoration: "none" };
 
 const CrewCard = (props) => {
-  const { crew, movieDetail } = props;
+  const { crew, movieDetail,numberOfItemsOnPage } = props;
   const dispatch = useDispatch();
   const itemsPerPage = useSelector((state) => state.login.account.itemsPerPage);
   const currentPage = useSelector((state) => state.crews.data.page.currentPage);
-  const content = useSelector((state) => state.crews.data.content);
   const account = useSelector((state) => state.login.account);
   const [open, setOpen] = useState(false);
   const [openConfirm, setOpenConfirm] = useState(false);
@@ -33,17 +32,18 @@ const CrewCard = (props) => {
   const handleCloseConfirm = () => setOpenConfirm(false);
 
   const deleteHandler = () => {
-    const setCurrentPage = content.length < 1 ? currentPage - 1 : currentPage;
     dispatch(
       deleteSelectedItem(
         crew.id,
         crew.name,
         "crews",
         itemsPerPage,
-        setCurrentPage,
-        artistActions
+        currentPage,
+        artistActions,
+        numberOfItemsOnPage
       )
     );
+    dispatch(artistActions.setOpenAlert({ openAlert: true }));
   };
 
   return (
@@ -104,3 +104,4 @@ const CrewCard = (props) => {
 };
 
 export default CrewCard;
+
