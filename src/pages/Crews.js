@@ -45,7 +45,7 @@ const Artists = () => {
   };
 
   const card = (item) => {
-    return <CrewCard crew={item} />;
+    return <CrewCard numberOfItemsOnPage={data.content.length} crew={item} />;
   };
 
   const form = (close, open, actionType) => {
@@ -54,14 +54,12 @@ const Artists = () => {
 
   return (
     <Box>
-      {actionState.status !== "" && (
-        <AlertMessage
-          openAlert={openAlert}
-          handleCloseAlert={handleCloseAlert}
-          actionState={actionState}
-          title={actionState.title}
-        />
-      )}
+      <AlertMessage
+        openAlert={openAlert}
+        handleCloseAlert={handleCloseAlert}
+        actionState={actionState}
+        title={actionState.title}
+      />
 
       <SearchDrawer
         search={
