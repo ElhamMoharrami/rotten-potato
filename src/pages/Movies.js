@@ -45,7 +45,7 @@ const Movies = () => {
   };
 
   const card = (item) => {
-    return <MovieCard movie={item} />;
+    return <MovieCard numberOfItemsOnPage={data.content.length} movie={item} />;
   };
 
   const form = (close, open, actionType) => {
@@ -92,3 +92,4 @@ const Movies = () => {
 };
 
 export default Movies;
+
