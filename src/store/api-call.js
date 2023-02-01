@@ -93,7 +93,8 @@ export const deleteSelectedItem = (
   type,
   itemsPerPage,
   currentPage,
-  action
+  action,
+  numberOfItemsOnPage
 ) => {
   return async (dispatch) => {
     try {
@@ -102,16 +103,19 @@ export const deleteSelectedItem = (
         method: "DELETE",
       });
 
-      dispatch(fetchData(type, itemsPerPage, currentPage, action));
-
       dispatch(
         action.setActionState({
-          actionState: {
-            status: "success",
-            action: "delete",
-            title: title,
-          },
+          actionState: { status: "success", action: "delete", title: title },
         })
+      );
+
+      dispatch(
+        fetchData(
+          type,
+          itemsPerPage,
+          numberOfItemsOnPage === 1 ? currentPage - 1 : currentPage,
+          action
+        )
       );
     } catch (err) {
       dispatch(
@@ -416,3 +420,4 @@ export const fetchTableData = (type, size, currentPage, action) => {
     }
   };
 };
+
