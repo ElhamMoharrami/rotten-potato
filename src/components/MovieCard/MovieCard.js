@@ -16,14 +16,13 @@ import Confirmation from "../Confirmation/Confirmation";
 const style = { textDecoration: "none" };
 
 const MovieCard = (props) => {
-  const { artistDetail } = props;
+  const { artistDetail, numberOfItemsOnPage } = props;
   const { movie } = props;
   const dispatch = useDispatch();
   const currentPage = useSelector(
     (state) => state.movies.data.page.currentPage
   );
   const itemsPerPage = useSelector((state) => state.login.account.itemsPerPage);
-  const content = useSelector((state) => state.movies.data.content);
   const account = useSelector((state) => state.login.account);
   const [open, setOpen] = useState(false);
   const [openConfirm, setOpenConfirm] = useState(false);
@@ -35,17 +34,18 @@ const MovieCard = (props) => {
   const handleCloseConfirm = () => setOpenConfirm(false);
 
   const deleteHandler = () => {
-    const setCurrentPage = content.length < 1 ? currentPage - 1 : currentPage;
     dispatch(
       deleteSelectedItem(
         movie.id,
         movie.title,
         "movies",
         itemsPerPage,
-        setCurrentPage,
-        movieActions
+        currentPage,
+        movieActions,
+        numberOfItemsOnPage
       )
     );
+    dispatch(movieActions.setOpenAlert({ openAlert: true }));
   };
 
   return (
@@ -116,3 +116,4 @@ const MovieCard = (props) => {
 };
 
 export default MovieCard;
+
