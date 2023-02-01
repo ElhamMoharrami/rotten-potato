@@ -130,3 +130,4 @@ const CrewsDetail = () => {
 };
 
 export default CrewsDetail;
+
