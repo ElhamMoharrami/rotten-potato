@@ -44,7 +44,7 @@ const MovieDetail = () => {
   }, [dispatch, id]);
 
   return (
-    <Box sx={{ m: 5 }}>
+    <Box>
       {actionState.status !== "" && (
         <AlertMessage
           openAlert={openAlert}
@@ -53,7 +53,7 @@ const MovieDetail = () => {
           title={actionState.title}
         />
       )}
-      <Card>
+      <Card sx={{ margin: "10px" }}>
         <Grid container>
           <Grid
             item
@@ -169,10 +169,11 @@ const MovieDetail = () => {
             boxShadow:
               "rgba(114, 100, 165, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
           }}
+          align="center"
         >
-          movies
+          Movies
         </Typography>
-        <Box sx={{ margin: "10px" }}>
+        <Box sx={{ margin: "10px 10px 0 10px" }}>
           <Carousel
             swipeable={false}
             responsive={responsive}
@@ -185,8 +186,8 @@ const MovieDetail = () => {
             removeArrowOnDeviceType={["tablet", "mobile"]}
             itemClass="carousel-item-padding-40-px"
           >
-            {crews.map((item) => (
-              <CrewCard movieDetail={true} crew={item} key={item.id} />
+            {crews.map((item,index) => (
+              <CrewCard movieDetail={true} crew={item} key={index} />
             ))}
           </Carousel>
         </Box>
@@ -195,34 +196,29 @@ const MovieDetail = () => {
         <Box sx={{ marginTop: "20px" }}>
           <Typography
             sx={{
-              fontSize: "28px",
-              marginLeft: "20px",
-              marginRight: "20px",
-              alignContent: "center",
-              paddingLeft: "20px",
+              padding: "10px",
               boxShadow:
                 "rgba(114, 100, 165, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
             }}
+            align="center"
           >
             Reviews
           </Typography>
           <Box sx={{ marginTop: "20px" }}>
-            <React.Fragment>
-              {reviewsForDisplay.map((item, index) => (
-                <ReviewCard data-testid="review-data" data={item} key={index} />
-              ))}
-              {reviews.length > 1 && (
-                <Button
-                  type="button"
-                  onClick={() => setExpanded(!expanded)}
-                  fullWidth
-                  variant="text"
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  {expanded ? "Show Less" : "Show More"}
-                </Button>
-              )}
-            </React.Fragment>
+            {reviewsForDisplay.map((item, index) => (
+              <ReviewCard data-testid="review-data" data={item} key={index} />
+            ))}
+            {reviews.length > 1 && (
+              <Button
+                type="button"
+                onClick={() => setExpanded(!expanded)}
+                fullWidth
+                variant="text"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                {expanded ? "Show Less" : "Show More"}
+              </Button>
+            )}
           </Box>
         </Box>
       )}
@@ -231,3 +227,4 @@ const MovieDetail = () => {
 };
 
 export default MovieDetail;
+
