@@ -54,12 +54,14 @@ const Artists = () => {
 
   return (
     <Box>
-      <AlertMessage
-        openAlert={openAlert}
-        handleCloseAlert={handleCloseAlert}
-        actionState={actionState}
-        title={actionState.title}
-      />
+     {actionState.status !== "" && (
+        <AlertMessage
+          openAlert={openAlert}
+          handleCloseAlert={handleCloseAlert}
+          actionState={actionState}
+          title={actionState.title}
+        />
+      )}
 
       <SearchDrawer
         search={
