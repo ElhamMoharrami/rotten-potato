@@ -15,7 +15,7 @@ import ToggleColorMode from "./components/Theme/Theme";
 export default function App() {
   return (
     <ToggleColorMode>
-      <Box sx={{ bgcolor: "background.default", color: "text.primary" }}>
+      <Box >
         <NavBar />
 
         <Routes>
