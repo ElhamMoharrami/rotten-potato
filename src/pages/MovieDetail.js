@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -22,6 +22,8 @@ const MovieDetail = () => {
   const dispatch = useDispatch();
   const movie = useSelector((state) => state.movies.selectedItem);
   const crews = useSelector((state) => state.movies.detailList);
+  const movieCrews = crews.filter((item) => item.id);
+
   const account = useSelector((state) => state.login.account);
   const reviews = useSelector((state) => state.reviews.reviews);
   const actionState = useSelector((state) => state.reviews.actionState);
@@ -186,13 +188,29 @@ const MovieDetail = () => {
             removeArrowOnDeviceType={["tablet", "mobile"]}
             itemClass="carousel-item-padding-40-px"
           >
-            {crews.map((item,index) => (
+            {movieCrews.map((item, index) => (
               <CrewCard movieDetail={true} crew={item} key={index} />
             ))}
           </Carousel>
         </Box>
+        {movieCrews.length === 0 && (
+          <Box>
+            <Typography
+              sx={{
+                fontSize: 14,
+                textAlign: " center",
+                verticalAlign: "middle",
+                lineHeight: "90px",
+              }}
+              color="text.secondary"
+              gutterBottom
+            >
+              There is no crews for <span>{movie.title}</span>.
+            </Typography>
+          </Box>
+        )}
       </Box>
-      {reviews.length > 1 && (
+      {reviews.length >= 1 && (
         <Box sx={{ marginTop: "20px" }}>
           <Typography
             sx={{

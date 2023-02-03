@@ -1,4 +1,3 @@
-import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -18,6 +17,7 @@ const CrewsDetail = () => {
   const dispatch = useDispatch();
   const artist = useSelector((state) => state.crews.selectedItem);
   const movies = useSelector((state) => state.crews.detailList);
+  const artistMovies = movies.filter((item) => item.id);
 
   useEffect(() => {
     dispatch(fetchDetail(id, "crews", artistActions));
@@ -71,7 +71,7 @@ const CrewsDetail = () => {
               }}
               src={artist.poster !== null ? artist.poster : blankProfile}
               alt={artist.title}
-           />
+            />
           </Grid>
         </Grid>
       </Card>
@@ -87,7 +87,6 @@ const CrewsDetail = () => {
           movies
         </Typography>
         <Box>
-        
           <Box sx={{ margin: "10px", overflow: "hidden" }}>
             <Carousel
               swipeable={false}
@@ -101,28 +100,28 @@ const CrewsDetail = () => {
               removeArrowOnDeviceType={["tablet", "mobile"]}
               itemClass="carousel-item-padding-40-px"
             >
-              {movies.map((item) => (
+              {artistMovies.map((item) => (
                 <MovieCard artistDetail={true} movie={item} key={item.id} />
               ))}
             </Carousel>
           </Box>
-        
-        {/* {!movies[0].id ===undefined && (
-          <Box>
-            <Typography
-              sx={{
-                fontSize: 14,
-                textAlign: " center",
-                verticalAlign: "middle",
-                lineHeight: "90px",
-              }}
-              color="text.secondary"
-              gutterBottom
-            >
-              There is no movie for <span>{artist.name}</span>.
-            </Typography>
-          </Box>
-        )} */}
+
+          {artistMovies.length === 0 && (
+            <Box>
+              <Typography
+                sx={{
+                  fontSize: 14,
+                  textAlign: " center",
+                  verticalAlign: "middle",
+                  lineHeight: "90px",
+                }}
+                color="text.secondary"
+                gutterBottom
+              >
+                There is no movie for <span>{artist.name}</span>.
+              </Typography>
+            </Box>
+          )}
         </Box>
       </Box>
     </Box>
@@ -130,4 +129,3 @@ const CrewsDetail = () => {
 };
 
 export default CrewsDetail;
-

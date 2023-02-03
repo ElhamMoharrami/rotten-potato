@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createAccount, usernameCheck } from "../store/api-call";
@@ -75,10 +74,7 @@ const Signup = () => {
       setUsernameAlreadyExists(true);
     }
 
-    if (
-      signupForm.password === signupForm.confirmPassword &&
-      !userExists
-    ) {
+    if (signupForm.password === signupForm.confirmPassword && !userExists) {
       const dataObj = {
         username: signupForm.username,
         password: signupForm.password,

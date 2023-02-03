@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { useDispatch } from "react-redux";
 import { fetchSearch } from "../../../store/api-call";
 import { artistActions } from "../../../store/data-slice";

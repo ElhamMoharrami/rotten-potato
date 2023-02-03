@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useContext, createContext, useMemo } from "react";
 import IconButton from "@mui/material/IconButton";
 import Box from "@mui/material/Box";
 import { ThemeProvider, useTheme, createTheme } from "@mui/material/styles";
@@ -8,11 +8,11 @@ import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { loginActions } from "../../store/login-slice";
 import { useDispatch, useSelector } from "react-redux";
 
-const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
+const ColorModeContext = createContext({ toggleColorMode: () => {} });
 
 export function ThemeSelector() {
   const theme = useTheme();
-  const colorMode = React.useContext(ColorModeContext);
+  const colorMode = useContext(ColorModeContext);
   return (
     <Box
       sx={{
@@ -47,7 +47,7 @@ export default function ToggleColorMode(props) {
   const dispatch = useDispatch();
   const mode = useSelector((state) => state.login.account.theme);
 
-  const colorMode = React.useMemo(
+  const colorMode = useMemo(
     () => ({
       toggleColorMode: () => {
         dispatch(
@@ -74,11 +74,11 @@ export default function ToggleColorMode(props) {
               secondary: grey[800],
             },
           }
-        : 'dark'),
+        : "dark"),
     },
   });
 
-  const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
+  const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
 
   return (
     <ColorModeContext.Provider value={colorMode}>

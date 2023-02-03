@@ -1,5 +1,4 @@
 /* istanbul ignore file */
-import React from "react";
 import { useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";

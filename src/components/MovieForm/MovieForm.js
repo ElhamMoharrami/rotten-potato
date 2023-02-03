@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -52,6 +52,7 @@ const MovieForm = (props) => {
     page: 0,
     pageSize: 5,
   });
+  const rowData = pageState.data.filter((item) => item.id);
   const [selectedTabledData, setSelectedTableData] = useState([]);
   const [badge, setBadge] = useState(0);
   const crewData = useSelector((state) => state.movieCrewTable.data);
@@ -88,7 +89,8 @@ const MovieForm = (props) => {
   useEffect(() => {
     if (!isAddMode && actionType === "edit") {
       setMovieData(movie);
-      const movieCrewList = movieCrew.map((item) => item.id);
+      const movieCrews = movieCrew.filter((item) => item.id);
+      const movieCrewList = movieCrews.map((item) => item.id);
       setSelectedTableData(movieCrewList);
       setBadge(movieCrewList.length);
     }
@@ -122,7 +124,7 @@ const MovieForm = (props) => {
       ...prevState,
       [name]: value,
     }));
-   
+
     if (name === "title") {
       if (value.length > 200) {
         setTitleLengthIsValid(false);
@@ -496,7 +498,6 @@ const MovieForm = (props) => {
                     id="poster-input"
                     aria-describedby="poster-input"
                   />
-                
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
@@ -514,7 +515,7 @@ const MovieForm = (props) => {
                     <Box sx={{ ...style }}>
                       <div style={{ height: 400, width: "100%" }}>
                         <DataGrid
-                          rows={pageState.data}
+                          rows={rowData}
                           rowCount={pageState.total}
                           loading={pageState.isLoading}
                           page={pageState.page}

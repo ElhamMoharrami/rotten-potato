@@ -1,4 +1,3 @@
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ListData from "../components/ListData/ListData";
 import CrewCard from "../components/CrewCard/CrewCard";
@@ -54,7 +53,7 @@ const Artists = () => {
 
   return (
     <Box>
-     {actionState.status !== "" && (
+      {actionState.status !== "" && (
         <AlertMessage
           openAlert={openAlert}
           handleCloseAlert={handleCloseAlert}

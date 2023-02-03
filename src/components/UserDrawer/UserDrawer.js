@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import * as React from "react";
+import { useState } from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { AccountCircle } from "@mui/icons-material";
@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography";
 const UserDrawer = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
   const account = useSelector((state) => state.login.account);

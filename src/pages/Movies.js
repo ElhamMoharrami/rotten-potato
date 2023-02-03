@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ListData from "../components/ListData/ListData";
 import MovieCard from "../components/MovieCard/MovieCard";
@@ -92,4 +91,3 @@ const Movies = () => {
 };
 
 export default Movies;
-

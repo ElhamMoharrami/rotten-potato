@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import { useDispatch } from "react-redux";
 import { Typography } from "@mui/material";
@@ -9,12 +9,25 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import FormControl from "@mui/material/FormControl";
 import { commitComment } from "../../store/api-call";
 import { reviewsActions } from "../../store/reviews-slice";
+import { FormHelperText } from "@mui/material";
 
 const UserReview = (props) => {
   const dispatch = useDispatch();
   const { movieId, userId } = props;
-  const [value, setValue] = React.useState(0);
-  const [comment, setComment] = React.useState("");
+  const [value, setValue] = useState(0);
+  const [comment, setComment] = useState("");
+  const [commentIsValid, setCommentIsValid] = useState(true);
+
+  const onchangeHandler = (event) => {
+    const value = event.target.value;
+    console.log(value.length);
+    if (value.length >= 100) {
+      setCommentIsValid(false);
+    } else {
+      setCommentIsValid(true);
+    }
+    setComment(value);
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -25,7 +38,7 @@ const UserReview = (props) => {
       rate: value,
       description: comment,
     };
-    dispatch(commitComment(data,movieId));
+    dispatch(commitComment(data, movieId));
     dispatch(reviewsActions.setOpenAlert({ openAlert: true }));
   };
 
@@ -38,7 +51,7 @@ const UserReview = (props) => {
       <form onSubmit={submitHandler}>
         <FormControl fullWidth variant="standard">
           <OutlinedInput
-           inputProps={{ "data-testid": "review-comment" }}
+            inputProps={{ "data-testid": "review-comment" }}
             id="user-review"
             placeholder="Write Your Own Review"
             value={comment}
@@ -61,8 +74,13 @@ const UserReview = (props) => {
                 </Button>
               </InputAdornment>
             }
-            onChange={(event) => setComment(event.target.value)}
+            onChange={onchangeHandler}
           />
+          {!commentIsValid && (
+            <FormHelperText>
+              should not be longer than 100 characters.
+            </FormHelperText>
+          )}
         </FormControl>
       </form>
     </Box>

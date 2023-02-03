@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import {
@@ -50,6 +50,7 @@ const CrewForm = (props) => {
     page: 0,
     pageSize: 5,
   });
+  const rowData = pageState.data.filter((item) => item.id);
   const [selectedTabledData, setSelectedTableData] = useState([]);
   const [badge, setBadge] = useState(0);
   const movieData = useSelector((state) => state.crewMovieTable.data);
@@ -87,7 +88,8 @@ const CrewForm = (props) => {
   useEffect(() => {
     if (!isAddMode && actionType === "edit") {
       setCreweData(crew);
-      const crewMovieList = crewMovie.map((item) => item.id);
+      const crewMovies=crewMovie.filter((item)=>item.id)
+      const crewMovieList = crewMovies.map((item) => item.id);
       setSelectedTableData(crewMovieList);
       setBadge(crewMovieList.length);
     }
@@ -329,7 +331,7 @@ const CrewForm = (props) => {
                   <Box sx={{ ...style }}>
                     <div style={{ height: 400, width: "100%" }}>
                       <DataGrid
-                        rows={pageState.data}
+                        rows={rowData}
                         rowCount={pageState.total}
                         loading={pageState.isLoading}
                         page={pageState.page}

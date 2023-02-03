@@ -1,4 +1,3 @@
-import React from "react";
 import Box from "@mui/material/Box";
 import cinema from "../assets/images/cinema-equipment-table.jpg";
 
@@ -12,7 +11,7 @@ const myStyle = {
 };
 
 const Home = () => {
-  return <Box role='img' style={myStyle}></Box>;
+  return <Box role="img" style={myStyle}></Box>;
 };
 
 export default Home;
