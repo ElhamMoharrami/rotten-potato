@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { fetchData, fetchSearch } from "../../store/api-call";
 import Box from "@mui/material/Box";
@@ -6,7 +6,13 @@ import ShowList from "../ShowList/ShowList";
 import Pagination from "@mui/material/Pagination";
 import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
+import Select from "@mui/material/Select";
 import { style } from "../../assets/config";
+import { Grid } from "@mui/material";
+import { FormControl, InputLabel } from "@mui/material";
+import { options } from "../../assets/config";
+import { loginActions } from "../../store/login-slice";
+import MenuItem from "@mui/material/MenuItem";
 
 const ListData = (props) => {
   const {
@@ -25,6 +31,7 @@ const ListData = (props) => {
   const pageRangeDisplayed = 3;
   const initialData = localStorage.getItem(`${type}`);
   const isFirstRun = useRef(true);
+  const [listDataItemsPerPage, setListDataItemsPerPage] = useState("");
 
   useEffect(() => {
     if (!isSearching) {
@@ -53,6 +60,13 @@ const ListData = (props) => {
     initialData,
   ]);
 
+  const itemsPerPageHandler = (event) => {
+    setListDataItemsPerPage(event.target.value);
+    dispatch(
+      loginActions.setItemsPerPage({ itemsPerPage: event.target.value })
+    );
+  };
+
   const List = () => {
     if (pageCount === 0 && isSearching) {
       return (
@@ -71,19 +85,18 @@ const ListData = (props) => {
           </Typography>
         </Box>
       );
-    } 
-      return (
-        <Box>
-          <ShowList
-            pageCount={pageCount}
-            form={form}
-            type={type}
-            data={data.content}
-            card={card}
-          />
-        </Box>
-      );
-    
+    }
+    return (
+      <Box>
+        <ShowList
+          pageCount={pageCount}
+          form={form}
+          type={type}
+          data={data.content}
+          card={card}
+        />
+      </Box>
+    );
   };
 
   const handlePageClick = async (event, page) => {
@@ -107,13 +120,35 @@ const ListData = (props) => {
         }}
       >
         {pageCount !== 0 && (
-          <Pagination
-            boundaryCount={pageRangeDisplayed}
-            count={data.page.pageCount}
-            onChange={handlePageClick}
-            page={currentPage}
-            size="medium"
-          />
+          <Grid container>
+            <Grid item xs={6}>
+              <FormControl sx={{width:"50%"}}>
+              <InputLabel id="size-select">size</InputLabel>
+                <Select
+                  value={listDataItemsPerPage}
+                  labelId="select-label"
+                  variant="standard"
+                  label="size"
+                  onChange={itemsPerPageHandler}
+                >
+                  {options.map((option, index) => (
+                    <MenuItem value={option.value} key={index}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={6}>
+              <Pagination
+                boundaryCount={pageRangeDisplayed}
+                count={data.page.pageCount}
+                onChange={handlePageClick}
+                page={currentPage}
+                size="medium"
+              />
+            </Grid>
+          </Grid>
         )}
       </Box>
     </Box>
@@ -121,4 +156,3 @@ const ListData = (props) => {
 };
 
 export default ListData;
-

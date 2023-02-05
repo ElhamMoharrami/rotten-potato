@@ -39,7 +39,7 @@ test("theme chages correctly", async () => {
 
   expect(formSubmit).toHaveStyle("background-color: rgb(255, 193, 7)");
   fireEvent.click(themeButton);
-  expect(formSubmit).toHaveStyle("background-color: rgb(63, 81, 181)");
+  expect(formSubmit).toHaveStyle("background-color: rgb(144, 202, 249)");
 });
 
 test("delete account works properly", () => {

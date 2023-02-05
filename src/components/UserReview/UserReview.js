@@ -20,7 +20,6 @@ const UserReview = (props) => {
 
   const onchangeHandler = (event) => {
     const value = event.target.value;
-    console.log(value.length);
     if (value.length >= 100) {
       setCommentIsValid(false);
     } else {

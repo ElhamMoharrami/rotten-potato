@@ -63,3 +63,10 @@ export const style = {
 };
 
 export const drawerWidth = 350;
+
+export const options = [
+  { value: 10, label: "10" },
+  { value: 15, label: "15" },
+  { value: 20, label: "20" },
+  { value: 30, label: "30" },
+];

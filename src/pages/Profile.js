@@ -26,18 +26,14 @@ import {
   Box,
   InputLabel,
 } from "@mui/material";
-import {Pink} from '@mui/material/colors';
+import {options} from '../assets/config'
+
 
 const Profile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const account = useSelector((state) => state.login.account);
-  const options = [
-    { value: 10, label: "10" },
-    { value: 15, label: "15" },
-    { value: 20, label: "20" },
-    { value: 30, label: "30" },
-  ];
+  
 
   const [confirmPassMsg, setConfirmPassMsg] = useState(false);
   const actionState = useSelector((state) => state.login.actionState);

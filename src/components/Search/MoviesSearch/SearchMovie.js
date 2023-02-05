@@ -14,7 +14,6 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import Box from "@mui/material/Box";
-import { Margin } from "@mui/icons-material";
 
 const SearchMovie = (props) => {
   const { itemsPerPage, currentPage } = props;
