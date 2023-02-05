@@ -120,10 +120,10 @@ const ListData = (props) => {
         }}
       >
         {pageCount !== 0 && (
-          <Grid container>
+          <Grid sx={{ alignItems: "center" }} container>
             <Grid item xs={6}>
-              <FormControl sx={{width:"50%"}}>
-              <InputLabel id="size-select">size</InputLabel>
+              <FormControl sx={{ width: "50%" }}>
+                <InputLabel id="size-select">size</InputLabel>
                 <Select
                   value={listDataItemsPerPage}
                   labelId="select-label"
