@@ -252,6 +252,7 @@ export const login = (dataObj) => {
           fullname: data.fullname,
           id: data.id,
           isLoggedIn: true,
+          theme:'light'
         })
       );
       dispatch(
