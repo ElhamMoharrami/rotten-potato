@@ -212,6 +212,11 @@ export const createAccount = (dataObj) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dataObj),
       });
+      dispatch(
+        loginActions.setTheme({
+          theme:'light'
+        })
+      );
     } catch (err) {
       console.log(err);
     }
@@ -252,6 +257,7 @@ export const login = (dataObj) => {
           fullname: data.fullname,
           id: data.id,
           isLoggedIn: true,
+          theme:'light'
         })
       );
       dispatch(
@@ -304,7 +310,7 @@ export const updateAccount = (dataObj, action, mode) => {
           fullname: dataObj.fullname,
           id: dataObj.id,
           isLoggedIn: true,
-          theme:mode
+          theme: mode,
         })
       );
     } catch (err) {
@@ -328,6 +334,11 @@ export const deleteAccount = (id) => {
       await fetch(url, {
         method: "DELETE",
       });
+      dispatch(
+        loginActions.setTheme({
+          theme: "light",
+        })
+      );
     } catch (err) {
       console.log(err);
     }
