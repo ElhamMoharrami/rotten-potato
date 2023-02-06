@@ -106,7 +106,7 @@ const Signin = () => {
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "#1976d2" }}>
+        <Avatar sx={{ m: 1 }}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
@@ -176,7 +176,7 @@ const Signin = () => {
                 color={
                   actionState.status === "success" ? "success.main" : "error"
                 }
-                data-testid= "signinSuccess"
+                data-testid="signinSuccess"
               >
                 login {actionState.status}
               </Typography>
