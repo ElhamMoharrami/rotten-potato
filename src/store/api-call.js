@@ -252,7 +252,6 @@ export const login = (dataObj) => {
           fullname: data.fullname,
           id: data.id,
           isLoggedIn: true,
-          theme:'light'
         })
       );
       dispatch(
@@ -278,7 +277,7 @@ export const login = (dataObj) => {
   };
 };
 
-export const updateAccount = (dataObj, action) => {
+export const updateAccount = (dataObj, action, mode) => {
   return async (dispatch) => {
     try {
       const url = `${BASEURL}/users/${dataObj.id}`;
@@ -287,6 +286,7 @@ export const updateAccount = (dataObj, action) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dataObj),
       });
+
       dispatch(
         action.setActionState({
           actionState: {
@@ -304,6 +304,7 @@ export const updateAccount = (dataObj, action) => {
           fullname: dataObj.fullname,
           id: dataObj.id,
           isLoggedIn: true,
+          theme:mode
         })
       );
     } catch (err) {
@@ -421,4 +422,3 @@ export const fetchTableData = (type, size, currentPage, action) => {
     }
   };
 };
-

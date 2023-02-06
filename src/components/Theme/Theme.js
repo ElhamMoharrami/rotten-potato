@@ -63,7 +63,6 @@ export default function ToggleColorMode(props) {
       mode,
       ...(mode === "light"
         ? {
-            // palette values for light mode
             primary: amber,
             divider: amber[200],
             text: {

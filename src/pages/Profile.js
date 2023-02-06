@@ -26,14 +26,13 @@ import {
   Box,
   InputLabel,
 } from "@mui/material";
-import {options} from '../assets/config'
-
+import { options } from "../assets/config";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const account = useSelector((state) => state.login.account);
-  
+  const mode = useSelector((state) => state.login.account.theme);
 
   const [confirmPassMsg, setConfirmPassMsg] = useState(false);
   const actionState = useSelector((state) => state.login.actionState);
@@ -107,7 +106,7 @@ const Profile = () => {
         id: account.id,
         role: account.role,
       };
-      dispatch(updateAccount(dataObj, loginActions));
+      dispatch(updateAccount(dataObj, loginActions, mode));
     }
     if (
       profileForm.newPassword === profileForm.confirmPassword &&
@@ -121,7 +120,7 @@ const Profile = () => {
         id: account.id,
         role: account.role,
       };
-      dispatch(updateAccount(dataObj, loginActions));
+      dispatch(updateAccount(dataObj, loginActions, mode));
     }
     if (profileForm.newPassword !== profileForm.confirmPassword) {
       setConfirmPassMsg(true);
@@ -148,7 +147,7 @@ const Profile = () => {
   };
 
   return (
-    <Container  component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
         sx={{
