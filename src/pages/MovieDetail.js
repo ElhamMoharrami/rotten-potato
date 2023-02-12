@@ -16,6 +16,7 @@ import AlertMessage from "../components/Alert/Alert";
 import { reviewsActions } from "../store/reviews-slice";
 import ReviewCard from "../components/ReviewCard/ReviewCard";
 import Grid from "@mui/material/Unstable_Grid2";
+import { Item } from "../assets/config";
 
 const MovieDetail = () => {
   const { id } = useParams();
@@ -46,7 +47,8 @@ const MovieDetail = () => {
   }, [dispatch, id]);
 
   return (
-    <Box>
+    <Item>
+    
       {actionState.status !== "" && (
         <AlertMessage
           openAlert={openAlert}
@@ -240,7 +242,8 @@ const MovieDetail = () => {
           </Box>
         </Box>
       )}
-    </Box>
+    
+    </Item>
   );
 };
 

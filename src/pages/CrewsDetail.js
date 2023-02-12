@@ -11,6 +11,7 @@ import "react-multi-carousel/lib/styles.css";
 import Grid from "@mui/material/Unstable_Grid2";
 import { responsive } from "../assets/config";
 import blankProfile from "../assets/images/blankProfilePicture.png";
+import { Item } from "../assets/config";
 
 const CrewsDetail = () => {
   const { id } = useParams();
@@ -25,7 +26,7 @@ const CrewsDetail = () => {
   }, [dispatch, id]);
 
   return (
-    <Box sx={{ m: 5 }}>
+   <Item>
       <Card>
         <Grid container alignItems="stretch">
           <Grid
@@ -124,7 +125,7 @@ const CrewsDetail = () => {
           )}
         </Box>
       </Box>
-    </Box>
+      </Item>
   );
 };
 
